@@ -1,6 +1,3 @@
-# demo-pwa-vue
-Example from here https://vuejs.org/tutorial/#step-8
-
 ## Project setup
 ```
 npm install
