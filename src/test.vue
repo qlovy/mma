@@ -2,8 +2,8 @@
 <script>
     import { ref } from 'vue';
     export default {
-        name: "test"
-    }
+        name: "test",
+    };
 </script>
 
 <template>
