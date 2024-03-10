@@ -1,13 +1,8 @@
-<script setup>
-import { ref } from "vue";
-const title = ref("MMA");
-</script>
-
 <script>
 export default {
   name: 'monApp',
   props: {
-    msg: String
+    title: String
   }
 }
 </script>
