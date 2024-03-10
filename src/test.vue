@@ -7,3 +7,9 @@
         name: "test",
     };
 </script>
+
+<style>
+    #test {
+        background-color: blue;
+    }
+</style>
