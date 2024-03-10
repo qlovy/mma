@@ -1,10 +1,9 @@
 <template>
-    <monApp title="MMA"/>
+    <monApp />
 </template>
 
 <script>
 import monApp from "./components/monApp.vue";
-//import Todo from "@/components/Todo.vue";
 
 export default {
     name: "App",
