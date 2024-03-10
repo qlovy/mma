@@ -1,21 +1,22 @@
 <template>
-    <monApp />
+    <h1>MMA</h1>
 </template>
 
 <script>
-import monApp from "./components/monApp.vue";
+//import monApp from "./components/monApp.vue";
 
 export default {
     name: "App",
-    components: {
+    /*components: {
         monApp,
-    },
+    },*/
 };
 </script>
 
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
+    background-color: wheat;
     text-align: left;
     margin-top: 20px;
 }
