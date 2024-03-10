@@ -1,4 +1,4 @@
-<template>
+<template id="app">
     <h1>MMA</h1>
 </template>
 
