@@ -3,13 +3,9 @@
 </template>
 
 <script>
-//import monApp from "./components/monApp.vue";
 
 export default {
     name: "App",
-    /*components: {
-        monApp,
-    },*/
 };
 </script>
 
