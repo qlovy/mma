@@ -1,4 +1,4 @@
-<template>
+<template id="baj">
     <h1>MMA</h1>
     <p>This will not be display now</p>
 </template>
@@ -15,5 +15,8 @@ export default {
     background-color: #33cccc;
     text-align: left;
     margin-top: 20px;
+}
+#baj {
+    background-color: blue;
 }
 </style>
