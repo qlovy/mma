@@ -1,5 +1,4 @@
 <script>
-// création élément
 export default {
   name: 'monApp',
   props: {
