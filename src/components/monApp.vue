@@ -5,7 +5,7 @@ const title = ref("MMA");
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'monApp',
   props: {
     msg: String
   }
