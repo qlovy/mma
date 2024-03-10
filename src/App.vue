@@ -16,7 +16,7 @@ export default {
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
-    background-color: wheat;
+    background-color: #33cccc;
     text-align: left;
     margin-top: 20px;
 }
