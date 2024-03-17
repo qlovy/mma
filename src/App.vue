@@ -8,24 +8,36 @@ function toggleColor(){
 </script>
 
 <template id="app">
+  <!--Ubuntu Police-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+
   <div id="body">
     <h1 class="ubuntu-medium title">MMA</h1>
   </div>
-  <div class="boxes ubuntu-light" id="box-1">
-    <p>Some text</p>
+
+  <div class="card boxes" id="box-1">
+    <div class="card-body">
+      <h5 class="card-title ubuntu-regular">Force Poussée</h5>
+      <p class="card-text ubuntu-light-italic ">Lundi et Vendredi</p>
+    </div>
   </div>
-  <div class="boxes ubuntu-light" id="box-2">
-    <p>Some text</p>
+
+  <div class="card boxes">
+    <div class="card-body">
+      <h5 class="card-title ubuntu-regular">Force Tirage</h5>
+      <p class="card-text ubuntu-light-italic ">Mercredi et Samedi</p>
+    </div>
   </div>
-  <div class="boxes ubuntu-light" id="box-3">
-    <p>Some text</p>
+
+  <div class="card boxes">
+    <div class="card-body">
+      <h5 class="card-title ubuntu-regular">Jambes</h5>
+      <p class="car ubuntu-light-italic d-text">Jeudi</p>
+    </div>
   </div>
-  <div class="boxes ubuntu-light" id="box-4">
-    <p>Some text</p>
-  </div>
+
 
 </template>
 
@@ -36,7 +48,7 @@ export default {
 </script>
 
 <style>
-// For the color: https://paletton.com/#uid=13i0u0ksnFdhuNAn1IHCVyOCHoW
+/* For the color: https://paletton.com/#uid=13i0u0ksnFdhuNAn1IHCVyOCHoW */
 #body {
   position: absolute;
   background-color: #15baba;
@@ -47,38 +59,18 @@ export default {
 }
 
 .title {
+  padding-top: 20px;
   text-align: center;
+  font-size: 40px;
 }
 /*Les boîtes*/
 .boxes {
-  display: block;
+  margin: 50px 20px 0 20px;
   background-color: #00a2a2;
-  border-radius: 5px;
-  text-align: center;
-  padding: 30px;
-  top: 100px;
 }
 
 #box-1 {
-  position: absolute;
-  left: 40px;
-}
-
-#box-2 {
-  position: absolute;
-  right: 40px;
-}
-
-#box-3 {
-  position: absolute;
-  left: 40px;
-  top: 260px;
-}
-
-#box-4 {
-  position: absolute;
-  top: 260px;
-  right: 40px;
+  margin-top: 150px;
 }
 
 /*Font style from Google Font Ubuntu*/
@@ -118,5 +110,7 @@ export default {
   font-style: italic;
 }
 
+/*Bootstrap import*/
+@import '~bootstrap/dist/css/bootstrap.css';
 
 </style>
