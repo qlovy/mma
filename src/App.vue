@@ -1,9 +1,14 @@
 <script setup>
 import { ref } from 'vue';
-
-const color = ref('dark');
-function toggleColor(){
-  color.value = color.value === 'dark' ? 'white' : 'dark';
+const message = ref('');
+function messageNew (origin){
+  if (origin === 1) {
+    message.value = "Poussée";
+  }else if (origin === 2){
+    message.value = "Tirage"
+  }else{
+    message.value = "Jambes";
+  }
 }
 </script>
 
@@ -17,7 +22,7 @@ function toggleColor(){
     <h1 class="ubuntu-medium title">MMA</h1>
   </div>
 
-  <div class="card boxes" id="box-1">
+  <div class="card boxes" id="box-1" @click="messageNew(1)">
     <div class="card-body">
       <h5 class="card-title ubuntu-regular">Force Poussée</h5>
       <p class="card-text ubuntu-light-italic ">Lundi et Vendredi</p>
@@ -34,11 +39,25 @@ function toggleColor(){
   <div class="card boxes">
     <div class="card-body">
       <h5 class="card-title ubuntu-regular">Jambes</h5>
-      <p class="car ubuntu-light-italic d-text">Jeudi</p>
+      <p class="card-text ubuntu-light-italic">Jeudi</p>
     </div>
   </div>
 
+  <div id="newPage" v-if="message !== ''">
+    <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
 
+    <div class="card mx-5 mt-5 color-boxes">
+      <div class="card-body">
+        <h5 class="card-title ubuntu-regular">Pompes Pikes surrélevées</h5>
+        <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-success mt-4 mx-5">Go !</button>
+    <button type="button" class="btn btn-primary mt-4">Pause</button>
+    <button type="button" class="btn btn-danger mt-4 mx-5">Stop</button>
+
+  </div>
 </template>
 
 <script>
@@ -48,12 +67,17 @@ export default {
 </script>
 
 <style>
-/* For the color: https://paletton.com/#uid=13i0u0ksnFdhuNAn1IHCVyOCHoW */
+/* Pour la couleur: https://paletton.com/#uid=13i0u0ksnFdhuNAn1IHCVyOCHoW */
+
+div {
+  user-select: none;  /* Remove the double click capability to select text */
+}
+
 #body {
   position: absolute;
   background-color: #15baba;
-  width: 393px;
-  height: 852px;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
 }
@@ -63,7 +87,7 @@ export default {
   text-align: center;
   font-size: 40px;
 }
-/*Les boîtes*/
+
 .boxes {
   margin: 50px 20px 0 20px;
   background-color: #00a2a2;
@@ -71,6 +95,25 @@ export default {
 
 #box-1 {
   margin-top: 150px;
+}
+
+
+#newPage {
+  background-color: #37c5c5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#newPage h1 {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.color-boxes {
+  background-color: #60d4d4;
 }
 
 /*Font style from Google Font Ubuntu*/
