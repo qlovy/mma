@@ -207,6 +207,10 @@ div {
   font-style: italic;
 }
 
+#app {
+  background-color: #fff;
+}
+
 /*Bootstrap import*/
 @import '~bootstrap/dist/css/bootstrap.css';
 
