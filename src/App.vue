@@ -1,15 +1,55 @@
 <script setup>
-import { ref } from 'vue';
-const message = ref('');
+import { ref, onUnmounted, computed } from 'vue'
+const message = ref('')
+const part = ref(1)
 function messageNew (origin){
   if (origin === 1) {
-    message.value = "Poussée";
+    message.value = "Poussée"
   }else if (origin === 2){
     message.value = "Tirage"
   }else{
-    message.value = "Jambes";
+    message.value = "Jambes"
   }
 }
+
+function next(){
+  part.value++
+  reset()
+}
+
+// Timer
+const duration = ref(60000)
+const elapsed = ref(0)
+
+let lastTime
+let handle
+
+// Le décompte du temps
+const update = () => {
+  elapsed.value = duration.value - (performance.now() - lastTime)
+  // Quand le temps écoulé a atteint 0.
+  if (elapsed.value === 0) {
+    cancelAnimationFrame(handle)
+  } else {
+    handle = requestAnimationFrame(update)
+  }
+}
+
+// La réinitialisation du timer
+const reset = () => {
+  elapsed.value = duration.value
+  lastTime = performance.now()
+  update()
+}
+
+// L'évolution de la barre
+const progressRate = computed(() =>
+    Math.min(elapsed.value / duration.value, 1)
+)
+
+onUnmounted(() => {
+  cancelAnimationFrame(handle)
+})
 </script>
 
 <template id="app">
@@ -45,18 +85,32 @@ function messageNew (origin){
 
   <div id="newPage" v-if="message !== ''">
     <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
-
+    <!--L'exercice-->
     <div class="card mx-5 mt-5 color-boxes">
       <div class="card-body">
         <h5 class="card-title ubuntu-regular">Pompes Pikes surrélevées</h5>
         <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
       </div>
     </div>
+    <!--Panneau de commande-->
+    <button type="button" class="btn btn-primary mt-4 mx-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="collapseExample">Début</button>
+    <button type="button" class="btn btn-primary mt-4">Arrêt</button>
+    <!--Les instructions-->
+    <div class="collapse" id="instructions">
+      <div v-if="part % 2 !== 0" class="card card-body color-boxes mt-4 mx-5">
+        <p class="ubuntu-regular fs-4">Fait 6 pompes pikes</p>
+        <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
+      </div>
 
-    <button type="button" class="btn btn-success mt-4 mx-5">Go !</button>
-    <button type="button" class="btn btn-primary mt-4">Pause</button>
-    <button type="button" class="btn btn-danger mt-4 mx-5">Stop</button>
+      <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5">
+        <label
+        >Elapsed Time: <progress :value="progressRate"></progress
+        ></label>
 
+        <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
+      </div>
+      <button type="button" class="btn btn-primary mt-4 mx-5" @click="next()">Suivant</button>
+    </div>
   </div>
 </template>
 
