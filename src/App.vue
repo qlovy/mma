@@ -18,7 +18,7 @@ function next(){
 }
 
 // Timer
-const duration = ref(60000)
+const duration = ref(60000) // Définit à une seconde
 const elapsed = ref(0)
 
 let lastTime
@@ -27,9 +27,10 @@ let handle
 // Le décompte du temps
 const update = () => {
   elapsed.value = duration.value - (performance.now() - lastTime)
-  // Quand le temps écoulé a atteint 0.
-  if (elapsed.value === 0) {
+  // Quand le temps est écoulé.
+  if (elapsed.value  <= 0) {
     cancelAnimationFrame(handle)
+    part.value++   // Change de page automatiquement.
   } else {
     handle = requestAnimationFrame(update)
   }
@@ -102,9 +103,9 @@ onUnmounted(() => {
         <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
       </div>
 
-      <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5">
+      <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5 color-boxes">
         <label
-        >Elapsed Time: <progress :value="progressRate"></progress
+        >Rest Time: <progress :value="progressRate"></progress
         ></label>
 
         <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
