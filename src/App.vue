@@ -16,7 +16,7 @@ function messageNew (origin){
 
 function next(){
   part.value++
-  reset()
+  reset() // Lance le décompte
 }
 
 // Timer
@@ -113,7 +113,8 @@ onUnmounted(() => {
 
         <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
       </div>
-      <button type="button" class="btn btn-primary mt-4 mx-5" @click="next()">Suivant</button>
+      <!--Changement étape-->
+      <button type="button" class="btn btn-primary mt-4 mx-5" @click="next()" :disabled="elapsed > 0">Suivant</button>
     </div>
   </div>
 </template>
