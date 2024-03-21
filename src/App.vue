@@ -62,7 +62,7 @@ onUnmounted(() => {
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
 
   <div id="body" class="blue-theme-main">
-    <h1 class="ubuntu-medium title">MMA</h1>
+    <h1 class="ubuntu-medium title mt-4">MMA</h1>
   </div>
 
   <div class="card boxes blue-theme-main-boxes" id="box-1" @click="messageNew(1)">
