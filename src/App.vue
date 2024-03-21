@@ -7,8 +7,10 @@ function messageNew (origin){
     message.value = "Poussée"
   }else if (origin === 2){
     message.value = "Tirage"
-  }else{
+  }else if (origin === 3){
     message.value = "Jambes"
+  }else{
+    message.value = ""
   }
 }
 
@@ -59,35 +61,36 @@ onUnmounted(() => {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
 
-  <div id="body">
+  <div id="body" class="blue-theme-main">
     <h1 class="ubuntu-medium title">MMA</h1>
   </div>
 
-  <div class="card boxes" id="box-1" @click="messageNew(1)">
+  <div class="card boxes blue-theme-main-boxes" id="box-1" @click="messageNew(1)">
     <div class="card-body">
-      <h5 class="card-title ubuntu-regular">Force Poussée</h5>
-      <p class="card-text ubuntu-light-italic ">Lundi et Vendredi</p>
+      <h5 class="card-title ubuntu-regular fs-2">Force Poussée</h5>
+      <p class="card-text ubuntu-light-italic fs-5">Lundi et Vendredi</p>
     </div>
   </div>
 
-  <div class="card boxes">
+  <div class="card boxes blue-theme-main-boxes" @click="messageNew(2)">
     <div class="card-body">
-      <h5 class="card-title ubuntu-regular">Force Tirage</h5>
-      <p class="card-text ubuntu-light-italic ">Mercredi et Samedi</p>
+      <h5 class="card-title ubuntu-regular fs-2">Force Tirage</h5>
+      <p class="card-text ubuntu-light-italic fs-5">Mercredi et Samedi</p>
     </div>
   </div>
 
-  <div class="card boxes">
+  <div class="card boxes blue-theme-main-boxes" @click="messageNew(3)">
     <div class="card-body">
-      <h5 class="card-title ubuntu-regular">Jambes</h5>
-      <p class="card-text ubuntu-light-italic">Jeudi</p>
+      <h5 class="card-title ubuntu-regular fs-2">Jambes</h5>
+      <p class="card-text ubuntu-light-italic fs-5">Jeudi</p>
     </div>
   </div>
 
   <div id="newPage" v-if="message !== ''">
+    <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
     <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
     <!--L'exercice-->
-    <div class="card mx-5 mt-5 color-boxes">
+    <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
       <div class="card-body">
         <h5 class="card-title ubuntu-regular">Pompes Pikes surrélevées</h5>
         <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
@@ -98,12 +101,12 @@ onUnmounted(() => {
     <button type="button" class="btn btn-primary mt-4">Arrêt</button>
     <!--Les instructions-->
     <div class="collapse" id="instructions">
-      <div v-if="part % 2 !== 0" class="card card-body color-boxes mt-4 mx-5">
+      <div v-if="part % 2 !== 0" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
         <p class="ubuntu-regular fs-4">Fait 6 pompes pikes</p>
         <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
       </div>
 
-      <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5 color-boxes">
+      <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
         <label
         >Rest Time: <progress :value="progressRate"></progress
         ></label>
@@ -125,12 +128,11 @@ export default {
 /* Pour la couleur: https://paletton.com/#uid=13i0u0ksnFdhuNAn1IHCVyOCHoW */
 
 div {
-  user-select: none;  /* Remove the double click capability to select text */
+  user-select: none;  /* Enlève la selection du texte dû au double clique */
 }
 
 #body {
   position: absolute;
-  background-color: #15baba;
   width: 100%;
   height: 100%;
   top: 0;
@@ -138,18 +140,17 @@ div {
 }
 
 .title {
-  padding-top: 20px;
+  padding-top: 30px;
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
 }
 
 .boxes {
-  margin: 50px 20px 0 20px;
-  background-color: #00a2a2;
+  margin: 0 30px 70px 30px;
 }
 
 #box-1 {
-  margin-top: 150px;
+  margin-top: 200px;
 }
 
 
@@ -167,9 +168,26 @@ div {
   padding-top: 30px;
 }
 
-.color-boxes {
+/*Pour thème coloré (déclinaison de bleu)*/
+
+/*La page principale*/
+.blue-theme-main {
+  background-color: #15baba;
+}
+
+.blue-theme-main-boxes {
+  background-color: #00a2a2;
+}
+
+/*La page d'exercice*/
+.blue-theme-newPage {
+
+}
+
+.blue-theme-newPage-boxes {
   background-color: #60d4d4;
 }
+
 
 /*Font style from Google Font Ubuntu*/
 .ubuntu-light {
