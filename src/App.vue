@@ -86,7 +86,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div id="newPage" v-if="message !== ''">
+  <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
     <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
     <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
     <!--L'exercice-->
@@ -155,7 +155,6 @@ div {
 
 
 #newPage {
-  background-color: #37c5c5;
   position: absolute;
   top: 0;
   left: 0;
@@ -181,7 +180,7 @@ div {
 
 /*La page d'exercice*/
 .blue-theme-newPage {
-
+  background-color: #37c5c5;
 }
 
 .blue-theme-newPage-boxes {
