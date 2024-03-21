@@ -19,6 +19,11 @@ function next(){
   reset() // Lance le décompte
 }
 
+function init(){
+  elapsed.value = 0
+  part.value = 1
+}
+
 // Timer
 const duration = ref(60000) // Définit à une seconde
 const elapsed = ref(0)
@@ -96,9 +101,8 @@ onUnmounted(() => {
         <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
       </div>
     </div>
-    <!--Panneau de commande-->
-    <button type="button" class="btn btn-primary mt-4 mx-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="collapseExample">Début</button>
-    <button type="button" class="btn btn-primary mt-4">Arrêt</button>
+    <!--Bouton qui débute la session, affiche la section collapse-->
+    <button type="button" class="btn btn-primary mt-4 mx-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" @click="init()">Début / Arrêt</button>
     <!--Les instructions-->
     <div class="collapse" id="instructions">
       <div v-if="part % 2 !== 0" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
@@ -113,7 +117,7 @@ onUnmounted(() => {
 
         <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
       </div>
-      <!--Changement étape-->
+      <!--Changement étape--><!--Fix Me: le bouton reste désactivé après un arrêt-->
       <button type="button" class="btn btn-primary mt-4 mx-5" @click="next()" :disabled="elapsed > 0">Suivant</button>
     </div>
   </div>
