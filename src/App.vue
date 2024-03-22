@@ -118,7 +118,7 @@ onUnmounted(() => {
         <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
       </div>
       <!--Changement étape--><!--Fix Me: le bouton reste désactivé après un arrêt-->
-      <button type="button" class="btn btn-primary mt-4 mx-5" @click="next()" :disabled="elapsed > 0">Suivant</button>
+      <button type="button" class="btn btn-primary mt-4 mx-5" @click="next()">Suivant</button>
     </div>
   </div>
 </template>
