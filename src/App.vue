@@ -25,7 +25,7 @@ function init(){
 }
 
 // Timer
-const duration = ref(60000) // Définit à une seconde
+const duration = ref(10000) // Définit à une seconde
 const elapsed = ref(0)
 
 let lastTime
@@ -94,10 +94,16 @@ onUnmounted(() => {
   <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
     <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
     <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
-    <!--L'exercice-->
+    <!--Les exercices-->
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
-      <div class="card-body">
+      <!--Le premier exercice-->
+      <div class="card-body" v-if="part < 12">
         <h5 class="card-title ubuntu-regular">Pompes Pikes surrélevées</h5>
+        <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
+      </div>
+      <!--Le deuxième exercice-->
+      <div class="card-body" v-else>
+        <h5 class="card-title ubuntu-regular">Pseudo Pompes</h5>
         <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
       </div>
     </div>
@@ -106,8 +112,16 @@ onUnmounted(() => {
     <!--Les instructions-->
     <div class="collapse" id="instructions">
       <div v-if="part % 2 !== 0" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
-        <p class="ubuntu-regular fs-4">Fait 6 pompes pikes</p>
-        <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
+        <!--Ex1-->
+        <div v-if="part < 12">
+          <p class="ubuntu-regular fs-4">Fait 6 pompes pikes</p>
+          <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
+        </div>
+        <!--Ex2-->
+        <div v-else>
+          <p class="ubuntu-regular fs-4">Fait 6 pseudos pompes</p>
+          <p class="ubuntu-light-italic fs-6">Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.</p>
+        </div>
       </div>
 
       <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
