@@ -102,9 +102,13 @@ onUnmounted(() => {
         <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
       </div>
       <!--Le deuxième exercice-->
-      <div class="card-body" v-else>
+      <div class="card-body" v-else-if="part < 24">
         <h5 class="card-title ubuntu-regular">Pseudo Pompes</h5>
         <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
+      </div>
+      <!--Le message de fin de série-->
+      <div class="card-body" v-else>
+        <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
@@ -118,13 +122,13 @@ onUnmounted(() => {
           <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
         </div>
         <!--Ex2-->
-        <div v-else>
+        <div v-else-if="part < 24">
           <p class="ubuntu-regular fs-4">Fait 6 pseudos pompes</p>
           <p class="ubuntu-light-italic fs-6">Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.</p>
         </div>
       </div>
 
-      <div v-if="part % 2 === 0" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
+      <div v-if="part % 2 === 0 && part < 24" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
         <label
         >Rest Time: <progress :value="progressRate"></progress
         ></label>
