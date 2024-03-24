@@ -6,7 +6,10 @@ const exercisesText = ref(
                 ['Pseudo Pompes'], ['6 séries de 6 reps avec une minute de récupération'], ['Fait 6 pompes pikes'],
                 ['Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'], ['Fait 6 pseudos pompes'],
                 ['Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.']  ],
-            [ [''], [''] ] ])
+      [ ['Tractions'], ['5 séries de 6 reps avec une minute de récupération'], ['Front lever row'], 
+        ['5 séries de 5 secondes avec une minute de récupération'] ] ])
+        // Idée: ajout automatique de div ou tout en dur
+const series = ref([[6], [5]])
 const part = ref(1)
 const type = ref(-1)
 
