@@ -1,16 +1,28 @@
 <script setup>
 import { ref, onUnmounted, computed } from 'vue'
 const message = ref('')
+const exercisesText = ref(
+    [ [   ['Pompes Pikes surrélevées'], ['6 séries de 6 reps avec une minute de récupération'],
+                ['Pseudo Pompes'], ['6 séries de 6 reps avec une minute de récupération'], ['Fait 6 pompes pikes'],
+                ['Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'], ['Fait 6 pseudos pompes'],
+                ['Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.']  ],
+            [ [''], [''] ] ])
 const part = ref(1)
+const type = ref(-1)
+
 function messageNew (origin){
   if (origin === 1) {
-    message.value = "Poussée"
+    message.value = 'Poussée'
+    type.value = 0
   }else if (origin === 2){
-    message.value = "Tirage"
+    message.value = 'Tirage'
+    type.value = 1
   }else if (origin === 3){
-    message.value = "Jambes"
+    message.value = 'Jambes'
+    type.value = 2
   }else{
-    message.value = ""
+    message.value = ''
+    type.value = -1
   }
 }
 
@@ -25,7 +37,7 @@ function init(){
 }
 
 // Timer
-const duration = ref(10000) // Définit à une seconde
+const duration = ref(1000) // Définit à 60 secondes
 const elapsed = ref(0)
 
 let lastTime
@@ -98,13 +110,13 @@ onUnmounted(() => {
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
       <!--Le premier exercice-->
       <div class="card-body" v-if="part < 12">
-        <h5 class="card-title ubuntu-regular">Pompes Pikes surrélevées</h5>
-        <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
+        <h5 class="card-title ubuntu-regular">{{ exercisesText[type][0][0] }}</h5>
+        <p class="card-text ubuntu-light-italic">{{ exercisesText[type][1][0] }}</p>
       </div>
       <!--Le deuxième exercice-->
       <div class="card-body" v-else-if="part < 24">
-        <h5 class="card-title ubuntu-regular">Pseudo Pompes</h5>
-        <p class="card-text ubuntu-light-italic">6 séries de 6 reps avec une minute de récupération</p>
+        <h5 class="card-title ubuntu-regular">{{ exercisesText[type][2][0] }}</h5>
+        <p class="card-text ubuntu-light-italic">{{ exercisesText[type][3][0] }}</p>
       </div>
       <!--Le message de fin de série-->
       <div class="card-body" v-else>
@@ -115,16 +127,16 @@ onUnmounted(() => {
     <button type="button" class="btn btn-primary mt-4 mx-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" @click="init()">Début / Arrêt</button>
     <!--Les instructions-->
     <div class="collapse" id="instructions">
-      <div v-if="part % 2 !== 0" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
+      <div v-if="part % 2 !== 0 && part < 24" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
         <!--Ex1-->
         <div v-if="part < 12">
-          <p class="ubuntu-regular fs-4">Fait 6 pompes pikes</p>
-          <p class="ubuntu-light-italic fs-6">Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.</p>
+          <p class="ubuntu-regular fs-4">{{ exercisesText[type][4][0] }}</p>
+          <p class="ubuntu-light-italic fs-6">{{ exercisesText[type][5][0] }}</p>
         </div>
         <!--Ex2-->
-        <div v-else-if="part < 24">
-          <p class="ubuntu-regular fs-4">Fait 6 pseudos pompes</p>
-          <p class="ubuntu-light-italic fs-6">Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.</p>
+        <div v-else>
+          <p class="ubuntu-regular fs-4">{{ exercisesText[type][6][0] }}</p>
+          <p class="ubuntu-light-italic fs-6">{{ exercisesText[type][7][0] }}</p>
         </div>
       </div>
 
@@ -135,8 +147,8 @@ onUnmounted(() => {
 
         <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
       </div>
-      <!--Changement étape--><!--Fix Me: le bouton reste désactivé après un arrêt-->
-      <button v-if="part % 2 === 1" type="button" class="btn btn-primary mt-4 mx-5" @click="next()">Suivant</button>
+      <!--Changement étape-->
+      <button v-if="part % 2 === 1 && part < 24" type="button" class="btn btn-primary mt-4 mx-5" @click="next()">Suivant</button>
     </div>
   </div>
 </template>
