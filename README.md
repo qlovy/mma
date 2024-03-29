@@ -26,6 +26,7 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 
 - [ ] Change the program "Poussée" --> make it correct
 - [ ] Add program "Tirage" and "Jambes"
+- [ ] Remove the time after last exercise ?
 
 ### Ideas
 

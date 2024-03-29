@@ -8,11 +8,13 @@ const exercisesText = ref(
                 ['Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.']  ],
       [ ['Tractions'], ['5 séries de 6 reps avec une minute de récupération'], ['Front lever row'], 
         ['5 séries de 5 secondes avec une minute de récupération'] ] ])
-        // Idée: ajout automatique de div ou tout en dur
-const series = ref([[6], [5]])
-const part = ref(1)
+        // Idée : ajout automatique de div ou tout en dur
+const series = ref([[6, 6], [5, 5, 1, 4], [4, 3, 4, 4, 1]])
 const type = ref(-1)
-
+const serie = ref(0)
+const restTime = ref(false)
+const endSession = ref(false)
+const nbExercise = ref(0)
 function messageNew (origin){
   if (origin === 1) {
     message.value = 'Poussée'
@@ -29,14 +31,33 @@ function messageNew (origin){
   }
 }
 
+// Maybe remove the part variable and use True or False ??
+// ---> In progress ...
+// On utilise une booléene plutôt qu'un compteur (restTime)
+
 function next(){
-  part.value++
+  restTime.value = true // Affichage du timer
   reset() // Lance le décompte
+}
+
+function manageSession() {
+  serie.value++ // Compte le nombre de séries
+  // Si le nombre de séries faites correspondent à celles qui doivent être faites
+  if (serie.value === series.value[type.value][nbExercise.value]){
+    nbExercise.value++ // Compte le nombre d'exercices fait
+    serie.value = 0    // Reset le compteur de séries
+    // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire (longeure du tableau des séries)
+    if (nbExercise.value === series.value[type.value].length){
+      endSession.value = true  // Définis la fin de la séance
+    }
+  }
 }
 
 function init(){
   elapsed.value = 0
-  part.value = 1
+  serie.value = 0
+  endSession.value = false
+  nbExercise.value = 0
 }
 
 // Timer
@@ -52,7 +73,8 @@ const update = () => {
   // Quand le temps est écoulé.
   if (elapsed.value  <= 0) {
     cancelAnimationFrame(handle)
-    part.value++   // Change de page automatiquement.
+    restTime.value = false
+    manageSession()
   } else {
     handle = requestAnimationFrame(update)
   }
@@ -111,28 +133,28 @@ onUnmounted(() => {
     <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
     <!--Les exercices-->
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
+      <!--Le message de fin de série-->
+      <div class="card-body" v-if="endSession">
+        <h5 class="card-title ubuntu-regular">Bravo !</h5>
+      </div>
       <!--Le premier exercice-->
-      <div class="card-body" v-if="part < 12">
+      <div class="card-body" v-else-if="nbExercise < 1">
         <h5 class="card-title ubuntu-regular">{{ exercisesText[type][0][0] }}</h5>
         <p class="card-text ubuntu-light-italic">{{ exercisesText[type][1][0] }}</p>
       </div>
       <!--Le deuxième exercice-->
-      <div class="card-body" v-else-if="part < 24">
+      <div class="card-body" v-else>
         <h5 class="card-title ubuntu-regular">{{ exercisesText[type][2][0] }}</h5>
         <p class="card-text ubuntu-light-italic">{{ exercisesText[type][3][0] }}</p>
-      </div>
-      <!--Le message de fin de série-->
-      <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
     <button type="button" class="btn btn-primary mt-4 mx-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" @click="init()">Début / Arrêt</button>
     <!--Les instructions-->
     <div class="collapse" id="instructions">
-      <div v-if="part % 2 !== 0 && part < 24" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
+      <div v-if="!restTime && !endSession" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
         <!--Ex1-->
-        <div v-if="part < 12">
+        <div v-if="nbExercise < 1">
           <p class="ubuntu-regular fs-4">{{ exercisesText[type][4][0] }}</p>
           <p class="ubuntu-light-italic fs-6">{{ exercisesText[type][5][0] }}</p>
         </div>
@@ -141,17 +163,18 @@ onUnmounted(() => {
           <p class="ubuntu-regular fs-4">{{ exercisesText[type][6][0] }}</p>
           <p class="ubuntu-light-italic fs-6">{{ exercisesText[type][7][0] }}</p>
         </div>
+
+        <!--Changement étape-->
+        <button type="button" class="btn btn-primary mt-4" @click="next()">Suivant</button>
       </div>
 
-      <div v-if="part % 2 === 0 && part < 24" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
+      <div v-else-if="!endSession" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
         <label
         >Rest Time: <progress :value="progressRate"></progress
         ></label>
 
         <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
       </div>
-      <!--Changement étape-->
-      <button v-if="part % 2 === 1 && part < 24" type="button" class="btn btn-primary mt-4 mx-5" @click="next()">Suivant</button>
     </div>
   </div>
 </template>
