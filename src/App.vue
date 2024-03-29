@@ -8,7 +8,8 @@ const exercisesText = ref(
                 ['Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.']  ],
       [ ['Tractions'], ['5 séries de 6 reps avec une minute de récupération'], ['Front lever row'], 
         ['5 séries de 5 secondes avec une minute de récupération'] ] ])
-        // Idée : ajout automatique de div ou tout en dur
+        // TODO: Ajout automatique des divs en fonction du tableau ci-dessus
+        // TODO: Faire un dictionnaire avec tous les éléments pour les exercices
 const series = ref([[6, 6], [5, 5, 1, 4], [4, 3, 4, 4, 1]])
 const type = ref(-1)
 const serie = ref(0)
