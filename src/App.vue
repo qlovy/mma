@@ -10,12 +10,36 @@ const exercisesText = ref(
         ['5 séries de 5 secondes avec une minute de récupération'] ] ])
         // TODO: Ajout automatique des divs en fonction du tableau ci-dessus
         // TODO: Faire un dictionnaire avec tous les éléments pour les exercices
+const dictonnaryExercices = ref({
+  poussee: {
+    ex1: createExercice('Pompes Pikes surrélevées', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
+    ex2: createExercice('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.')
+  },
+  tirage: {
+    ex1: createExercice('Traction', 5, 6, 60, ''),
+    ex2: createExercice('Front lever row', 5, "5 s", 60, ''),
+    ex3: createExercice('Hanging', 1, "60 s", 60, ''),
+    ex4: createExercice('Dips', 4, 6, 60, '')
+  },
+  jambes: {
+    ex1: createExercice('Flexions plantaires', 4, 20, 30, ''),
+    ex2: createExercice('Split squat', 3, 10, 60, ''),
+    ex3: createExercice('Curl nordique', 4, 5, 60, ''),
+    ex4: createExercice('Squat complet', 4, 10, 30, ''),
+    ex5: createExercice('Chaise', 1, "60 s", 30, '')
+  }
+})
+console.log(dictonnaryExercices.value)
 const series = ref([[6, 6], [5, 5, 1, 4], [4, 3, 4, 4, 1]])
 const type = ref(-1)
 const serie = ref(0)
 const restTime = ref(false)
 const endSession = ref(false)
 const nbExercise = ref(0)
+
+function createExercice(name, series, reps, rest_in_s, advice){
+  return {nom: name, series: series, repetions: reps, recuperation: rest_in_s, conseil: advice}
+}
 function messageNew (origin){
   if (origin === 1) {
     message.value = 'Poussée'
