@@ -99,6 +99,7 @@ onUnmounted(() => {
 </script>
 
 <template id="app">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!--Ubuntu Police-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
