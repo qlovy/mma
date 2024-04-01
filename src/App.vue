@@ -132,7 +132,7 @@ onUnmounted(() => {
 
   <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
     <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
-    <h1 class="ubuntu-medium">Entrainement {{ message }}</h1>
+    <h1 class="ubuntu-medium fs-1">Entrainement {{ message }}</h1>
     <!--Les exercices-->
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
       <!--Le message de fin de série-->
@@ -141,41 +141,44 @@ onUnmounted(() => {
       </div>
       <!--Le premier exercice-->
       <div class="card-body" v-else-if="nbExercise < 1">
-        <h5 class="card-title ubuntu-regular">{{ exercisesText[type][0][0] }}</h5>
-        <p class="card-text ubuntu-light-italic">{{ exercisesText[type][1][0] }}</p>
+        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesText[type][0][0] }}</h5>
+        <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][1][0] }}</p>
       </div>
       <!--Le deuxième exercice-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular">{{ exercisesText[type][2][0] }}</h5>
-        <p class="card-text ubuntu-light-italic">{{ exercisesText[type][3][0] }}</p>
+        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesText[type][2][0] }}</h5>
+        <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][3][0] }}</p>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
-    <button type="button" class="btn btn-primary mt-4 mx-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" @click="init()">Début / Arrêt</button>
+    <button type="button" class="btn btn-primary mt-4 ms-5 fs-5 w-75 mb-5" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" @click="init()">Début / Arrêt</button>
+
     <!--Les instructions-->
     <div class="collapse" id="instructions">
-      <div v-if="!restTime && !endSession" class="card card-body blue-theme-newPage-boxes mt-4 mx-5">
-        <!--Ex1-->
-        <div v-if="nbExercise < 1">
-          <p class="ubuntu-regular fs-4">{{ exercisesText[type][4][0] }}</p>
-          <p class="ubuntu-light-italic fs-6">{{ exercisesText[type][5][0] }}</p>
+      <div v-if="!endSession" class="card card-body blue-theme-newPage-boxes mt-2 mx-5">
+        <!--Les exercices-->
+        <div v-if="!restTime">
+          <!--Ex1-->
+          <div v-if="nbExercise < 1">
+            <p class="card-title ubuntu-regular fs-3">{{ exercisesText[type][4][0] }}</p>
+            <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][5][0] }}</p>
+          </div>
+          <!--Ex2-->
+          <div v-else>
+            <p class="card-title ubuntu-regular fs-3">{{ exercisesText[type][6][0] }}</p>
+            <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][7][0] }}</p>
+          </div>
+
+          <!--Changement étape-->
+          <button type="button" class="btn btn-primary mt-4 fs-5 w-100" @click="next()">Suivant</button>
         </div>
-        <!--Ex2-->
         <div v-else>
-          <p class="ubuntu-regular fs-4">{{ exercisesText[type][6][0] }}</p>
-          <p class="ubuntu-light-italic fs-6">{{ exercisesText[type][7][0] }}</p>
+          <!--Le temps de pause-->
+          <label class="fs-4"
+          >Temps de repos <progress :value="progressRate"></progress
+          ></label>
+          <div class="fs-5">{{ (elapsed / 1000).toFixed(1) }}s</div>
         </div>
-
-        <!--Changement étape-->
-        <button type="button" class="btn btn-primary mt-4" @click="next()">Suivant</button>
-      </div>
-
-      <div v-else-if="!endSession" class="card card-body mt-4 mx-5 blue-theme-newPage-boxes">
-        <label
-        >Rest Time: <progress :value="progressRate"></progress
-        ></label>
-
-        <div>{{ (elapsed / 1000).toFixed(1) }}s</div>
       </div>
     </div>
   </div>
