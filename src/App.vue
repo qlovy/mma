@@ -3,7 +3,7 @@ import { ref, onUnmounted, computed } from 'vue'
 const message = ref('')
 const dictonnaryExercices = ref({
   poussee: {
-    1: createExercice('Pompes Pikes surrélevées', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
+    1: createExercice('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
     2: createExercice('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
     alternate: true
   },
@@ -45,29 +45,40 @@ function messageNew (origin){
     type.value = "jambes"
   }else{
     message.value = ''
+    init()  // Réinitialise tous les exercices quand on quitte une session
   }
 }
 
-// Maybe remove the part variable and use True or False ??
-// ---> In progress ...
-// On utilise une booléene plutôt qu'un compteur (restTime)
-
 function next() {
   restTime.value = true // Affichage du timer
-  duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 1000
+  // Si l'option d'alternance est activée et qu'on a complété une série
+  if (dictonnaryExercices.value[type.value].alternate && serie.value % 2 === 0){
+    duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 500
+  }else{
+    duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 1000
+  }
   reset() // Lance le décompte
 }
 
 
 function manageSession() {
   serie.value++
-  // Si le nombre de séries faites correspondent à celles qui doivent être faites
-  if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series){
-    nbExercise.value++ // Compte le nombre d'exercices fait
-    serie.value = 0    // Reset le compteur de séries
-    // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-    if (nbExercise.value > Object.keys(dictonnaryExercices.value[type.value]).length){
+  if (dictonnaryExercices.value[type.value].alternate){
+    nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
+    // Si le nombre de séries faites correspondent à celles qui doivent être faites
+    if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series * 2){
+      serie.value = 0    // Reset le compteur de séries
       endSession.value = true  // Définis la fin de la séance
+    }
+  }else{
+    // Si le nombre de séries faites correspondent à celles qui doivent être faites
+    if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series){
+      nbExercise.value++ // Compte le nombre d'exercices fait
+      serie.value = 0    // Reset le compteur de séries
+      // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
+      if (nbExercise.value > Object.keys(dictonnaryExercices.value[type.value]).length){
+        endSession.value = true  // Définis la fin de la séance
+      }
     }
   }
 }
