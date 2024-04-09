@@ -170,8 +170,8 @@ onUnmounted(() => {
       </div>
       <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].repetitions }} x {{ dictonnaryExercices[type][nbExercise].series }}, {{ dictonnaryExercices[type][nbExercise].recuperation }} secondes</p>
+        <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }} {{ dictonnaryExercices[type].alternate ? "en alternance" : "" }}</h5>
+        <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].repetitions }} reps x {{ dictonnaryExercices[type][nbExercise].series }} séries, {{ dictonnaryExercices[type][nbExercise].recuperation }} secondes</p>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
