@@ -1,58 +1,50 @@
 <script setup>
 import { ref, onUnmounted, computed } from 'vue'
 const message = ref('')
-const exercisesText = ref(
-    [ [   ['Pompes Pikes surrélevées'], ['6 séries de 6 reps avec une minute de récupération'],
-                ['Pseudo Pompes'], ['6 séries de 6 reps avec une minute de récupération'], ['Fait 6 pompes pikes'],
-                ['Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'], ['Fait 6 pseudos pompes'],
-                ['Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.']  ],
-      [ ['Tractions'], ['5 séries de 6 reps avec une minute de récupération'], ['Front lever row'], 
-        ['5 séries de 5 secondes avec une minute de récupération'] ] ])
-        // TODO: Ajout automatique des divs en fonction du tableau ci-dessus
-        // TODO: Faire un dictionnaire avec tous les éléments pour les exercices
 const dictonnaryExercices = ref({
   poussee: {
-    ex1: createExercice('Pompes Pikes surrélevées', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
-    ex2: createExercice('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.')
+    1: createExercice('Pompes Pikes surrélevées', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
+    2: createExercice('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
+    alternate: true
   },
   tirage: {
-    ex1: createExercice('Traction', 5, 6, 60, ''),
-    ex2: createExercice('Front lever row', 5, "5 s", 60, ''),
-    ex3: createExercice('Hanging', 1, "60 s", 60, ''),
-    ex4: createExercice('Dips', 4, 6, 60, '')
+    1: createExercice('Traction', 5, 6, 60, ''),
+    2: createExercice('Front lever row', 5, "5 s", 60, ''),
+    3: createExercice('Hanging', 1, "60 s", 60, ''),
+    4: createExercice('Dips', 4, 6, 60, ''),
+    alternate: false
   },
   jambes: {
-    ex1: createExercice('Flexions plantaires', 4, 20, 30, ''),
-    ex2: createExercice('Split squat', 3, 10, 60, ''),
-    ex3: createExercice('Curl nordique', 4, 5, 60, ''),
-    ex4: createExercice('Squat complet', 4, 10, 30, ''),
-    ex5: createExercice('Chaise', 1, "60 s", 30, '')
+    1: createExercice('Flexions plantaires', 4, 20, 30, ''),
+    2: createExercice('Split squat', 3, 10, 60, ''),
+    3: createExercice('Curl nordique', 4, 5, 60, ''),
+    4: createExercice('Squat complet', 4, 10, 30, ''),
+    5: createExercice('Chaise', 1, "60 s", 30, ''),
+    alternate: false
   }
 })
-console.log(dictonnaryExercices.value)
-const series = ref([[6, 6], [5, 5, 1, 4], [4, 3, 4, 4, 1]])
-const type = ref(-1)
+// TODO: Ajout automatique des divs en fonction du tableau ci-dessus
 const serie = ref(0)
+const type = ref("")
 const restTime = ref(false)
 const endSession = ref(false)
-const nbExercise = ref(0)
+const nbExercise = ref(1)
 
 function createExercice(name, series, reps, rest_in_s, advice){
-  return {nom: name, series: series, repetions: reps, recuperation: rest_in_s, conseil: advice}
+  return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
 function messageNew (origin){
   if (origin === 1) {
     message.value = 'Poussée'
-    type.value = 0
+    type.value = "poussee"
   }else if (origin === 2){
     message.value = 'Tirage'
-    type.value = 1
+    type.value = "tirage"
   }else if (origin === 3){
     message.value = 'Jambes'
-    type.value = 2
+    type.value = "jambes"
   }else{
     message.value = ''
-    type.value = -1
   }
 }
 
@@ -60,43 +52,45 @@ function messageNew (origin){
 // ---> In progress ...
 // On utilise une booléene plutôt qu'un compteur (restTime)
 
-function next(){
+function next() {
   restTime.value = true // Affichage du timer
+  duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 1000
   reset() // Lance le décompte
 }
 
+
 function manageSession() {
-  serie.value++ // Compte le nombre de séries
+  serie.value++
   // Si le nombre de séries faites correspondent à celles qui doivent être faites
-  if (serie.value === series.value[type.value][nbExercise.value]){
+  if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series){
     nbExercise.value++ // Compte le nombre d'exercices fait
     serie.value = 0    // Reset le compteur de séries
-    // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire (longeure du tableau des séries)
-    if (nbExercise.value === series.value[type.value].length){
+    // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
+    if (nbExercise.value > Object.keys(dictonnaryExercices.value[type.value]).length){
       endSession.value = true  // Définis la fin de la séance
     }
   }
 }
 
+
 function init(){
-  elapsed.value = 0
-  serie.value = 0
+  countdown.value = 0
   endSession.value = false
-  nbExercise.value = 0
+  nbExercise.value = 1
 }
 
 // Timer
-const duration = ref(1000) // Définit à 60 secondes
-const elapsed = ref(0)
+const duration = ref(1000) // Définit la valeur à 1 seconde
+const countdown = ref(0)
 
 let lastTime
 let handle
 
 // Le décompte du temps
 const update = () => {
-  elapsed.value = duration.value - (performance.now() - lastTime)
+  countdown.value = duration.value - (performance.now() - lastTime)
   // Quand le temps est écoulé.
-  if (elapsed.value  <= 0) {
+  if (countdown.value  <= 0) {
     cancelAnimationFrame(handle)
     restTime.value = false
     manageSession()
@@ -107,14 +101,14 @@ const update = () => {
 
 // La réinitialisation du timer
 const reset = () => {
-  elapsed.value = duration.value
+  countdown.value = duration.value
   lastTime = performance.now()
   update()
 }
 
 // L'évolution de la barre
 const progressRate = computed(() =>
-    Math.min(elapsed.value / duration.value, 1)
+    Math.min(countdown.value / duration.value, 1)
 )
 
 onUnmounted(() => {
@@ -155,23 +149,18 @@ onUnmounted(() => {
   </div>
 
   <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
+    <!--Bouton pour fermer la page-->
     <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
     <h1 class="ubuntu-medium fs-1">Entrainement {{ message }}</h1>
-    <!--Les exercices-->
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
       <!--Le message de fin de série-->
       <div class="card-body" v-if="endSession">
         <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
-      <!--Le premier exercice-->
-      <div class="card-body" v-else-if="nbExercise < 1">
-        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesText[type][0][0] }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][1][0] }}</p>
-      </div>
-      <!--Le deuxième exercice-->
+      <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesText[type][2][0] }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][3][0] }}</p>
+        <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }}</h5>
+        <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].repetitions }} x {{ dictonnaryExercices[type][nbExercise].series }}, {{ dictonnaryExercices[type][nbExercise].recuperation }} secondes</p>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
@@ -182,17 +171,9 @@ onUnmounted(() => {
       <div v-if="!endSession" class="card card-body blue-theme-newPage-boxes mt-2 mx-5">
         <!--Les exercices-->
         <div v-if="!restTime">
-          <!--Ex1-->
-          <div v-if="nbExercise < 1">
-            <p class="card-title ubuntu-regular fs-3">{{ exercisesText[type][4][0] }}</p>
-            <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][5][0] }}</p>
-          </div>
-          <!--Ex2-->
-          <div v-else>
-            <p class="card-title ubuntu-regular fs-3">{{ exercisesText[type][6][0] }}</p>
-            <p class="card-text ubuntu-light-italic fs-5">{{ exercisesText[type][7][0] }}</p>
-          </div>
-
+          <!--Exercices-->
+          <p class="card-title ubuntu-regular fs-3">Fait {{ dictonnaryExercices[type][nbExercise].repetitions }} répetitions</p>
+          <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].conseil }}</p>
           <!--Changement étape-->
           <button type="button" class="btn btn-primary mt-4 fs-5 w-100" @click="next()">Suivant</button>
         </div>
@@ -201,7 +182,7 @@ onUnmounted(() => {
           <label class="fs-4"
           >Temps de repos <progress :value="progressRate"></progress
           ></label>
-          <div class="fs-5">{{ (elapsed / 1000).toFixed(1) }}s</div>
+          <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
         </div>
       </div>
     </div>
