@@ -29,6 +29,9 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [ ] Remove the time after last exercise ?
 - [ ] Add warm-up
 - [ ] remove single-file component (SFC)
+- [ ] notifications ?
+- [ ] Son à la fin d'un timer
+- [ ] Changement de l'exercice pendant le temps de repos ?
 
 ### Ideas
 
