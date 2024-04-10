@@ -71,7 +71,6 @@ function next() {
   }
 }
 
-
 function manageSession() {
   serie.value++
   if (dictonnaryExercices.value[type.value].alternate){
@@ -92,6 +91,26 @@ function manageSession() {
         nbExercise.value++ // Compte le nombre d'exercices fait
       }
     }
+  }
+}
+
+// Définis les informations à afficher en dessous du nom de l'exercice
+function infoExercice(repetition, series, timeToRest){
+  let s = (series === 1 ? " serie" : " series") // Change l'orthorgraphe en fonction du nombre affiché
+  // Si repetition est une chaîne de caractère
+  if (typeof repetition === "string"){
+    return repetition + " x " + series + s + ", " + timeToRest + " secondes"
+  }else{
+    return repetition + " reps x " + series + s + ", " + timeToRest + " secondes"
+  }
+}
+
+// Définis les instructions à afficher
+function instructionExercice(repetition){
+  if (typeof repetition === "string"){
+    return "Tiens pendant " + repetition + "econdes"
+  }else{
+    return "Fait " + repetition + " répétions"
   }
 }
 
@@ -175,7 +194,7 @@ onUnmounted(() => {
       <!--Les exercices-->
       <div class="card-body" v-else>
         <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }}{{ dictonnaryExercices[type].alternate ? " en alternance" : "" }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].repetitions }} reps x {{ dictonnaryExercices[type][nbExercise].series }} séries, {{ dictonnaryExercices[type][nbExercise].recuperation }} secondes</p>
+        <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(dictonnaryExercices[type][nbExercise].repetitions, dictonnaryExercices[type][nbExercise].series, dictonnaryExercices[type][nbExercise].recuperation) }}</p>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
@@ -184,10 +203,12 @@ onUnmounted(() => {
     <!--Les instructions-->
     <div class="collapse" id="instructions">
       <div v-if="!endSession" class="card card-body blue-theme-newPage-boxes mt-2 mx-5">
-        <!--Les exercices-->
         <div v-if="!restTime">
-          <!--Exercices-->
-          <p class="card-title ubuntu-regular fs-3">Fait {{ dictonnaryExercices[type][nbExercise].repetitions }} répetitions</p>
+          <!--L'instruction-->
+          <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(dictonnaryExercices[type][nbExercise].repetitions) }}</p>
+          <!--Compteur de série-->
+          <p class="card-text ubuntu-light-italic fs-5">Plus que {{ dictonnaryExercices[type][nbExercise].series - serie }}{{ dictonnaryExercices[type][nbExercise].series - serie === 1 ? " série" : " séries" }}</p>
+          <!--Le conseil-->
           <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].conseil }}</p>
           <!--Changement étape-->
           <button type="button" class="btn btn-primary mt-4 fs-5 w-100" @click="next()">Suivant</button>
