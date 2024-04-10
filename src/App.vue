@@ -49,15 +49,26 @@ function messageNew (origin){
   }
 }
 
+function init(){
+  countdown.value = 0
+  endSession.value = false
+  nbExercise.value = 1
+  restTime.value = false
+  serie.value = 0
+}
+
 function next() {
   restTime.value = true // Affichage du timer
   // Si l'option d'alternance est activée et qu'on a complété une série
   if (dictonnaryExercices.value[type.value].alternate && serie.value % 2 === 0){
-    duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 500
+    //duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 500
   }else{
-    duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 1000
+    //duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 1000
   }
-  reset() // Lance le décompte
+  manageSession()
+  if (!endSession.value){
+    reset() // Lance le décompte
+  }
 }
 
 
@@ -73,21 +84,15 @@ function manageSession() {
   }else{
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
     if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series){
-      nbExercise.value++ // Compte le nombre d'exercices fait
       serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value > Object.keys(dictonnaryExercices.value[type.value]).length){
+      if (nbExercise.value === Object.keys(dictonnaryExercices.value[type.value]).length - 1){
         endSession.value = true  // Définis la fin de la séance
+      }else{
+        nbExercise.value++ // Compte le nombre d'exercices fait
       }
     }
   }
-}
-
-
-function init(){
-  countdown.value = 0
-  endSession.value = false
-  nbExercise.value = 1
 }
 
 // Timer
@@ -104,7 +109,6 @@ const update = () => {
   if (countdown.value  <= 0) {
     cancelAnimationFrame(handle)
     restTime.value = false
-    manageSession()
   } else {
     handle = requestAnimationFrame(update)
   }
@@ -170,7 +174,7 @@ onUnmounted(() => {
       </div>
       <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }} {{ dictonnaryExercices[type].alternate ? "en alternance" : "" }}</h5>
+        <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }}{{ dictonnaryExercices[type].alternate ? " en alternance" : "" }}</h5>
         <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].repetitions }} reps x {{ dictonnaryExercices[type][nbExercise].series }} séries, {{ dictonnaryExercices[type][nbExercise].recuperation }} secondes</p>
       </div>
     </div>
