@@ -30,8 +30,8 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [ ] Add warm-up
 - [ ] remove single-file component (SFC)
 - [ ] A sound at the end of the timer or a notification
-- [ ] Change the exercice while the rest time ?
-- [ ] Show the state of series ?
+- [x] Change the exercice while the rest time ?
+- [x] Show the state of series ?
 - [x] upgrade the information (repetions in seconds, ...) ==> do a function<
 
 ### Ideas
