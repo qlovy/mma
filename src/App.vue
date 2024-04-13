@@ -1,25 +1,25 @@
 <script setup>
 import { ref, onUnmounted, computed } from 'vue'
 const message = ref('')
-const dictonnaryExercices = ref({
+const exercisesBook = ref({
   poussee: {
-    1: createExercice('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
-    2: createExercice('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
+    1: createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
+    2: createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
     alternate: true
   },
   tirage: {
-    1: createExercice('Traction', 5, 6, 60, ''),
-    2: createExercice('Front lever row', 5, "5 s", 60, ''),
-    3: createExercice('Hanging', 1, "60 s", 60, ''),
-    4: createExercice('Dips', 4, 6, 60, ''),
+    1: createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
+    2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, ralentir le plus possible le mouvement.'),
+    3: createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
+    4: createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.'),
     alternate: false
   },
   jambes: {
-    1: createExercice('Flexions plantaires', 4, 20, 30, ''),
-    2: createExercice('Split squat', 3, 10, 60, ''),
-    3: createExercice('Curl nordique', 4, 5, 60, ''),
-    4: createExercice('Squat complet', 4, 10, 30, ''),
-    5: createExercice('Chaise', 1, "60 s", 30, ''),
+    1: createExercise('Flexions plantaires', 4, 20, 30, 'Poser son pied sur une surface surélevée, sur une jambe. Le pied ne doit pas toucher le sol. Puis on monte le talon, faire levier'),
+    2: createExercise('Split squat', 4, 10, 60, 'Un pied devant, un pied derrière. L\'espacement entre les deux pieds doit être assez large pour que quand on descend le genoux ne touche pas le sol.'),
+    3: createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
+    4: createExercise('Squat complet', 4, 10, 30, 'Pied à la largeur d\'épaules, reste en position basse environ une 1 seconde avant de remonter.'),
+    5: createExercise('Chaise', 1, "60 s", 30, 'Dos contre un mur, les genoux à angle droit.'),
     alternate: false
   }
 })
@@ -30,7 +30,7 @@ const restTime = ref(false)
 const endSession = ref(false)
 const nbExercise = ref(1)
 
-function createExercice(name, series, reps, rest_in_s, advice){
+function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
 function messageNew (origin){
@@ -60,10 +60,10 @@ function init(){
 function next() {
   restTime.value = true // Affichage du timer
   // Si l'option d'alternance est activée et qu'on a complété une série
-  if (dictonnaryExercices.value[type.value].alternate && serie.value % 2 === 0){
-    //duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 500
+  if (exercisesBook.value[type.value].alternate && serie.value % 2 === 0){
+    //duration.value = exerciceBooks.value[type.value][nbExercise.value].recuperation * 500
   }else{
-    //duration.value = dictonnaryExercices.value[type.value][nbExercise.value].recuperation * 1000
+    //duration.value = exerciceBooks.value[type.value][nbExercise.value].recuperation * 1000
   }
   manageSession()
   if (!endSession.value){
@@ -73,19 +73,19 @@ function next() {
 
 function manageSession() {
   serie.value++
-  if (dictonnaryExercices.value[type.value].alternate){
+  if (exercisesBook.value[type.value].alternate){
     nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series * 2){
+    if (serie.value === exercisesBook.value[type.value][nbExercise.value].series * 2){
       serie.value = 0    // Reset le compteur de séries
       endSession.value = true  // Définis la fin de la séance
     }
   }else{
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie.value === dictonnaryExercices.value[type.value][nbExercise.value].series){
+    if (serie.value === exercisesBook.value[type.value][nbExercise.value].series){
       serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value === Object.keys(dictonnaryExercices.value[type.value]).length - 1){
+      if (nbExercise.value === Object.keys(exercisesBook.value[type.value]).length - 1){
         endSession.value = true  // Définis la fin de la séance
       }else{
         nbExercise.value++ // Compte le nombre d'exercices fait
@@ -193,8 +193,8 @@ onUnmounted(() => {
       </div>
       <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ dictonnaryExercices[type][nbExercise].nom }}{{ dictonnaryExercices[type].alternate ? " en alternance" : "" }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(dictonnaryExercices[type][nbExercise].repetitions, dictonnaryExercices[type][nbExercise].series, dictonnaryExercices[type][nbExercise].recuperation) }}</p>
+        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesBook[type][nbExercise].nom }}{{ exercisesBook[type].alternate ? " en alternance" : "" }}</h5>
+        <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(exercisesBook[type][nbExercise].repetitions, exercisesBook[type][nbExercise].series, exercisesBook[type][nbExercise].recuperation) }}</p>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
@@ -205,11 +205,11 @@ onUnmounted(() => {
       <div v-if="!endSession" class="card card-body blue-theme-newPage-boxes mt-2 mx-5">
         <div v-if="!restTime">
           <!--L'instruction-->
-          <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(dictonnaryExercices[type][nbExercise].repetitions) }}</p>
+          <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(exercisesBook[type][nbExercise].repetitions) }}</p>
           <!--Compteur de série-->
-          <p class="card-text ubuntu-light-italic fs-5">Plus que {{ dictonnaryExercices[type][nbExercise].series - serie }}{{ dictonnaryExercices[type][nbExercise].series - serie === 1 ? " série" : " séries" }}</p>
+          <p class="card-text ubuntu-light-italic fs-5">Plus que {{ exercisesBook[type][nbExercise].series - serie }}{{ exercisesBook[type][nbExercise].series - serie === 1 ? " série" : " séries" }}</p>
           <!--Le conseil-->
-          <p class="card-text ubuntu-light-italic fs-5">{{ dictonnaryExercices[type][nbExercise].conseil }}</p>
+          <p class="card-text ubuntu-light-italic fs-5">{{ exercisesBook[type][nbExercise].conseil }}</p>
           <!--Changement étape-->
           <button type="button" class="btn btn-primary mt-4 fs-5 w-100" @click="next()">Suivant</button>
         </div>
