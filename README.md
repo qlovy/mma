@@ -32,8 +32,8 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [ ] A sound at the end of the timer or a notification
 - [x] Change the exercice while the rest time ?
 - [x] Show the state of series ?
-- [x] upgrade the information (repetions in seconds, ...) ==> do a function
-- [ ] add a button for skip an exercice (like a help button...)
+- [x] upgrade the information (repetitions in seconds, ...) ==> do a function
+- [x] add a button for skip an exercice (like a help button...)
 - [x] add advice for each exercices 
 
 ### Ideas
