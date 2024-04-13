@@ -9,7 +9,7 @@ const exercisesBook = ref({
   },
   tirage: {
     1: createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
-    2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, ralentir le plus possible le mouvement.'),
+    2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
     3: createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
     4: createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.'),
     alternate: false
@@ -29,6 +29,8 @@ const type = ref("")
 const restTime = ref(false)
 const endSession = ref(false)
 const nbExercise = ref(1)
+
+const help = ref(false)
 
 function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -193,7 +195,9 @@ onUnmounted(() => {
   <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
     <!--Bouton pour fermer la page-->
     <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
+    <!--Titre de l'entrainement-->
     <h1 class="ubuntu-medium fs-1">Entrainement {{ message }}</h1>
+    <!--Annonce du nom de l'exercice à faire-->
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
       <!--Le message de fin de série-->
       <div class="card-body" v-if="endSession">
@@ -230,6 +234,21 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+
+    <!--Bouton pour la page d'aide-->
+    <button type="button" class="btn fixed-bottom ms-2 mb-2" @click="help = true">Besoin d'aide ?</button>
+    <!--Page d'aide-->
+    <Transition>
+      <div id="help-page" v-if="help" class="fixed-bottom mb-3">
+        <div class="card card-body mx-3">
+          <!--Bouton pour fermer la page-->
+          <button type="button" class="btn-close" aria-label="Close" @click="help = false"></button>
+          <p class="card-text ubuntu-regular fs-3 mx-auto">Que voulez-vous faire ?</p>
+          <!--Action: passer l'exercice-->
+          <button type="button" class="btn ubuntu-light fs-5" @click="nbExercise++; help=false">Passer un exercice</button>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -268,20 +287,6 @@ div {
   margin-top: 200px;
 }
 
-
-#newPage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-#newPage h1 {
-  text-align: center;
-  padding-top: 30px;
-}
-
 /*Pour thème coloré (déclinaison de bleu)*/
 
 /*La page principale*/
@@ -302,6 +307,24 @@ div {
   background-color: #60d4d4;
 }
 
+/* La page de chaque exercice*/
+#newPage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#newPage h1 {
+  text-align: center;
+  padding-top: 30px;
+}
+
+/*La page d'aide*/
+#help-page {
+
+}
 
 /*Font style from Google Font Ubuntu*/
 .ubuntu-light {
@@ -342,6 +365,18 @@ div {
 
 #app {
   background-color: #fff;
+}
+
+
+/* Pour la transition */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 
 /*Bootstrap import*/
