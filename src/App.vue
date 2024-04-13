@@ -33,6 +33,14 @@ const nbExercise = ref(1)
 function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
+
+// Détermine le nombre d'exercices dans un thème donné
+function howManyExercises(dictionnary){
+  let array = Object.keys(dictionnary)  // Récupère toutes les clés de l'objet
+  let final_array = array.filter((i) => !isNaN(parseInt(i)))  // Filtre pour ne ressortir qu'avec ceux qui se convertissent en nombre
+  return final_array.length   // Renvoie la longueur du tableau soit le nombre d'exercices
+}
+
 function messageNew (origin){
   if (origin === 1) {
     message.value = 'Poussée'
@@ -85,7 +93,7 @@ function manageSession() {
     if (serie.value === exercisesBook.value[type.value][nbExercise.value].series){
       serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value === Object.keys(exercisesBook.value[type.value]).length - 1){
+      if (nbExercise.value === howManyExercises(exercisesBook.value[type.value])){
         endSession.value = true  // Définis la fin de la séance
       }else{
         nbExercise.value++ // Compte le nombre d'exercices fait
