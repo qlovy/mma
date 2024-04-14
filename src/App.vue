@@ -3,12 +3,22 @@ import { ref, onUnmounted, computed } from 'vue'
 const message = ref('')
 const exercisesBook = ref({
   poussee: {
-    
+    echauffement: {
+      1: createExercise('Tourner les poignets', 1, '30 s', 1,'Ne pas aller trop fort. Sentir que sa chauffe.'),
+      2: createExercise('Assouplissement des poignets', 1, '30 s', 1,'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
+      3: createExercise('Tourner les coudes', 1, '30 s', 1,'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+      4: createExercise('Tourner les épaules', 1, '30 s', 1,'Faire des grands cercles en avant et en arrière. Aller doucement.')
+    },
     1: createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
     2: createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
     alterne: true
   },
   tirage: {
+    echauffement: {
+      1: createExercise('Tourner les coudes', 1, '30 s', 1,'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+      2: createExercise('Tourner les épaules', 1, '30 s', 1,'Faire des grands cercles en avant et en arrière. Aller doucement.'),
+      3: createExercise('Burpies', 1, 10, 1,'Bien faire le mouvement.')
+    },
     1: createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
     2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
     3: createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
@@ -16,6 +26,9 @@ const exercisesBook = ref({
     alterne: false
   },
   jambes: {
+    echauffement: {
+      1: createExercise('Jeu du parcours', 1, '60 s', 1,'Courir sur place avec des sauts à intervalles irréguliers')
+    },
     1: createExercise('Flexions plantaires', 4, 20, 30, 'Poser son pied sur une surface surélevée, sur une jambe. Le pied ne doit pas toucher le sol. Puis on monte le talon, faire levier'),
     2: createExercise('Split squat', 4, 10, 60, 'Un pied devant, un pied derrière. L\'espacement entre les deux pieds doit être assez large pour que quand on descend le genoux ne touche pas le sol.'),
     3: createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
@@ -28,8 +41,9 @@ const serie = ref(0)
 const type = ref("")
 const restTime = ref(false)
 const endSession = ref(false)
+const warmup = ref(false)
 const nbExercise = ref(1)
-
+const actualUseRef = ref(exercisesBook.value.poussee.echauffement["1"])
 const help = ref(false)
 
 function createExercise(name, series, reps, rest_in_s, advice){
@@ -43,7 +57,30 @@ function howManyExercises(dictionnary){
   return final_array.length   // Renvoie la longueur du tableau soit le nombre d'exercices
 }
 
+// Gère l'assignation de la valeur actuelle de référence
+function manageActualUseRef(){
+  // Si l'échauffement est activé
+  if (warmup.value){
+    // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
+    try {
+      // S'il n'y a pas d'erreur
+      actualUseRef.value = exercisesBook.value[type.value].echauffement[nbExercise.value] // La page de l'échauffement
+    }catch (TypeError){
+      // En cas de "TypeError" (due à une valeur undefined
+      actualUseRef.value = exercisesBook.value.poussee.echauffement["1"] // Valeur tampon
+    }
+  }else {
+    try {
+      actualUseRef.value = exercisesBook.value[type.value][nbExercise.value] // La page de l'exercice
+    }catch (TypeError){
+      actualUseRef.value = exercisesBook.value.poussee.echauffement["1"]
+    }
+  }
+}
+
+// Gère à le choix de l'exercice
 function messageNew (origin){
+  // Si on a choisi la session Poussée
   if (origin === 1) {
     message.value = 'Poussée'
     type.value = "poussee"
@@ -54,11 +91,16 @@ function messageNew (origin){
     message.value = 'Jambes'
     type.value = "jambes"
   }else{
+    // Pour quitter la page d'exerice
     message.value = ''
     init()  // Réinitialise tous les exercices quand on quitte une session
   }
+  // Initialise l'échauffement
+  warmup.value = true
+  manageActualUseRef()
 }
 
+// Initialise le début d'une session
 function init(){
   countdown.value = 0
   endSession.value = false
@@ -67,38 +109,60 @@ function init(){
   serie.value = 0
 }
 
+// Gère l'évolution de la session
 function next() {
   restTime.value = true // Affichage du timer
-  // Si l'option d'alternance est activée et qu'on a complété une série
-  if (exercisesBook.value[type.value].alterne && serie.value % 2 === 0){
-    //duration.value = exerciceBooks.value[type.value][nbExercise.value].recuperation * 500
+  if (warmup.value){
+    duration.value = exercisesBook.value[type.value].echauffement[nbExercise.value].recuperation * 1000
+  }else if (exercisesBook.value[type.value].alterne && serie.value % 2 === 0){
+    // Si l'option d'alternance est activée et qu'on a complété une série
+    duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 500
   }else{
-    //duration.value = exerciceBooks.value[type.value][nbExercise.value].recuperation * 1000
+    duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 1000
   }
   manageSession()
+  manageActualUseRef()
+  //  Si la session n'est pas finie
   if (!endSession.value){
     reset() // Lance le décompte
   }
 }
 
+// Gère le déroulement de la session
 function manageSession() {
   serie.value++
-  if (exercisesBook.value[type.value].alterne){
-    nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
+  // Si l'échauffement est actif
+  if (warmup.value){
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie.value === exercisesBook.value[type.value][nbExercise.value].series * 2){
-      serie.value = 0    // Reset le compteur de séries
-      endSession.value = true  // Définis la fin de la séance
-    }
-  }else{
-    // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie.value === exercisesBook.value[type.value][nbExercise.value].series){
+    if (serie.value === exercisesBook.value[type.value].echauffement[nbExercise.value].series){
       serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value === howManyExercises(exercisesBook.value[type.value])){
-        endSession.value = true  // Définis la fin de la séance
+      if (nbExercise.value === howManyExercises(exercisesBook.value[type.value].echauffement)){
+        warmup.value = false // Définis la fin de l'échauffement
+        nbExercise.value = 0
       }else{
         nbExercise.value++ // Compte le nombre d'exercices fait
+      }
+    }
+  }else{
+    // Si l'exercice à l'option d'alternance
+    if (exercisesBook.value[type.value].alterne){
+      nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
+      // Si le nombre de séries faites correspondent à celles qui doivent être faites
+      if (serie.value === exercisesBook.value[type.value][nbExercise.value].series * 2){
+        serie.value = 0    // Reset le compteur de séries
+        endSession.value = true  // Définis la fin de la séance
+      }
+    }else{
+      // Si le nombre de séries faites correspondent à celles qui doivent être faites
+      if (serie.value === exercisesBook.value[type.value][nbExercise.value].series){
+        serie.value = 0    // Reset le compteur de séries
+        // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
+        if (nbExercise.value === howManyExercises(exercisesBook.value[type.value])){
+          endSession.value = true  // Définis la fin de la séance
+        }else{
+          nbExercise.value++ // Compte le nombre d'exercices fait
+        }
       }
     }
   }
@@ -205,8 +269,8 @@ onUnmounted(() => {
       </div>
       <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesBook[type][nbExercise].nom }}{{ exercisesBook[type].alterne ? " en alternance" : "" }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(exercisesBook[type][nbExercise].repetitions, exercisesBook[type][nbExercise].series, exercisesBook[type][nbExercise].recuperation) }}</p>
+        <h5 class="card-title ubuntu-regular fs-3">{{ actualUseRef.nom }}{{ !warmup ? exercisesBook[type].alterne ? " en alternance" : "" : "" }}</h5>
+        <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(actualUseRef.repetitions, actualUseRef.series, actualUseRef.recuperation) }}</p>
       </div>
     </div>
     <!--Bouton qui débute la session, affiche la section collapse-->
@@ -217,11 +281,11 @@ onUnmounted(() => {
       <div v-if="!endSession" class="card card-body blue-theme-newPage-boxes mt-2 mx-5">
         <div v-if="!restTime">
           <!--L'instruction-->
-          <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(exercisesBook[type][nbExercise].repetitions) }}</p>
+          <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(actualUseRef.repetitions) }}</p>
           <!--Compteur de série-->
-          <p class="card-text ubuntu-light-italic fs-5">Plus que {{ exercisesBook[type][nbExercise].series - serie }}{{ exercisesBook[type][nbExercise].series - serie === 1 ? " série" : " séries" }}</p>
+          <p class="card-text ubuntu-light-italic fs-5">Plus que {{ actualUseRef.series - serie }}{{ actualUseRef.series - serie === 1 ? " série" : " séries" }}</p>
           <!--Le conseil-->
-          <p class="card-text ubuntu-light-italic fs-5">{{ exercisesBook[type][nbExercise].conseil }}</p>
+          <p class="card-text ubuntu-light-italic fs-5">{{ actualUseRef.conseil }}</p>
           <!--Changement étape-->
           <button type="button" class="btn btn-primary mt-4 fs-5 w-100" @click="next()">Suivant</button>
         </div>
