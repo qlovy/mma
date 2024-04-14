@@ -3,16 +3,17 @@ import { ref, onUnmounted, computed } from 'vue'
 const message = ref('')
 const exercisesBook = ref({
   poussee: {
+    
     1: createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
     2: createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
-    alternate: true
+    alterne: true
   },
   tirage: {
     1: createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
     2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
     3: createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
     4: createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.'),
-    alternate: false
+    alterne: false
   },
   jambes: {
     1: createExercise('Flexions plantaires', 4, 20, 30, 'Poser son pied sur une surface surélevée, sur une jambe. Le pied ne doit pas toucher le sol. Puis on monte le talon, faire levier'),
@@ -20,10 +21,9 @@ const exercisesBook = ref({
     3: createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
     4: createExercise('Squat complet', 4, 10, 30, 'Pied à la largeur d\'épaules, reste en position basse environ une 1 seconde avant de remonter.'),
     5: createExercise('Chaise', 1, "60 s", 30, 'Dos contre un mur, les genoux à angle droit.'),
-    alternate: false
+    alterne: false
   }
 })
-// TODO: Ajout automatique des divs en fonction du tableau ci-dessus
 const serie = ref(0)
 const type = ref("")
 const restTime = ref(false)
@@ -70,7 +70,7 @@ function init(){
 function next() {
   restTime.value = true // Affichage du timer
   // Si l'option d'alternance est activée et qu'on a complété une série
-  if (exercisesBook.value[type.value].alternate && serie.value % 2 === 0){
+  if (exercisesBook.value[type.value].alterne && serie.value % 2 === 0){
     //duration.value = exerciceBooks.value[type.value][nbExercise.value].recuperation * 500
   }else{
     //duration.value = exerciceBooks.value[type.value][nbExercise.value].recuperation * 1000
@@ -83,7 +83,7 @@ function next() {
 
 function manageSession() {
   serie.value++
-  if (exercisesBook.value[type.value].alternate){
+  if (exercisesBook.value[type.value].alterne){
     nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
     if (serie.value === exercisesBook.value[type.value][nbExercise.value].series * 2){
@@ -205,7 +205,7 @@ onUnmounted(() => {
       </div>
       <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesBook[type][nbExercise].nom }}{{ exercisesBook[type].alternate ? " en alternance" : "" }}</h5>
+        <h5 class="card-title ubuntu-regular fs-3">{{ exercisesBook[type][nbExercise].nom }}{{ exercisesBook[type].alterne ? " en alternance" : "" }}</h5>
         <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(exercisesBook[type][nbExercise].repetitions, exercisesBook[type][nbExercise].series, exercisesBook[type][nbExercise].recuperation) }}</p>
       </div>
     </div>
