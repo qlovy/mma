@@ -27,14 +27,15 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [x] Change the program "Poussée" --> make it correct
 - [x] Add program "Tirage" and "Jambes"
 - [x] Remove the time after last exercise
-- [ ] Add warm-up
+- [x] Add warm-up
 - [ ] remove single-file component (SFC)
 - [ ] A sound at the end of the timer or a notification
 - [x] Change the exercice while the rest time ?
 - [x] Show the state of series ?
 - [x] upgrade the information (repetitions in seconds, ...) ==> do a function
 - [x] add a button for skip an exercice (like a help button...)
-- [x] add advice for each exercices 
+- [x] add advice for each exercices
+- [ ] add a timer for exercise with time (more than 10 seconds)
 
 ### Ideas
 
