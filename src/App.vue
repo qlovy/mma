@@ -91,7 +91,7 @@ function messageNew (origin){
     message.value = 'Jambes'
     type.value = "jambes"
   }else{
-    // Pour quitter la page d'exerice
+    // Pour quitter la page d'exercice
     message.value = ''
     init()  // Réinitialise tous les exercices quand on quitte une session
   }
@@ -139,7 +139,7 @@ function manageSession() {
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
       if (nbExercise.value === howManyExercises(exercisesBook.value[type.value].echauffement)){
         warmup.value = false // Définis la fin de l'échauffement
-        nbExercise.value = 0
+        nbExercise.value = 1 // Réinitialise l'exercice
       }else{
         nbExercise.value++ // Compte le nombre d'exercices fait
       }
