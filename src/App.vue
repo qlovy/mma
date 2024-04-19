@@ -53,7 +53,7 @@ function createExercise(name, series, reps, rest_in_s, advice){
 // Détermine le nombre d'exercices dans un thème donné
 function howManyExercises(dictionnary){
   let array = Object.keys(dictionnary)  // Récupère toutes les clés de l'objet
-  let final_array = array.filter((i) => !isNaN(parseInt(i)))  // Filtre pour ne ressortir qu'avec ceux qui se convertissent en nombre
+  let final_array = array.filter((i) => !isNaN(parseInt(i)))  // Filtre pour ne ressortir qu'avec ceux qui se convertissent en nombre (donc les 1, 2, 3, ...)
   return final_array.length   // Renvoie la longueur du tableau soit le nombre d'exercices
 }
 
@@ -66,7 +66,7 @@ function manageActualUseRef(){
       // S'il n'y a pas d'erreur
       actualUseRef.value = exercisesBook.value[type.value].echauffement[nbExercise.value] // La page de l'échauffement
     }catch (TypeError){
-      // En cas de "TypeError" (due à une valeur undefined
+      // En cas de "TypeError" (due à une valeur undefined)
       actualUseRef.value = exercisesBook.value.poussee.echauffement["1"] // Valeur tampon
     }
   }else {
@@ -78,7 +78,7 @@ function manageActualUseRef(){
   }
 }
 
-// Gère à le choix de l'exercice
+// Gère le choix de l'exercice
 function messageNew (origin){
   // Si on a choisi la session Poussée
   if (origin === 1) {
@@ -107,19 +107,23 @@ function init(){
   nbExercise.value = 1
   restTime.value = false
   serie.value = 0
+  warmup.value = true
 }
 
-// Gère l'évolution de la session
+// Gère le passage d'une série à une autre ou d'un exercice à un autre
 function next() {
-  restTime.value = true // Affichage du timer
+  restTime.value = true // Définis l'affichage du timer
+  // Définis le temps de repos
+  // Si l'échauffement est actif
   if (warmup.value){
     duration.value = exercisesBook.value[type.value].echauffement[nbExercise.value].recuperation * 1000
   }else if (exercisesBook.value[type.value].alterne && serie.value % 2 === 0){
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 500
+    duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
   }else{
     duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 1000
   }
+  // Actualise la session
   manageSession()
   manageActualUseRef()
   //  Si la session n'est pas finie
@@ -130,7 +134,7 @@ function next() {
 
 // Gère le déroulement de la session
 function manageSession() {
-  serie.value++
+  serie.value++   // Compte le nombre de séries
   // Si l'échauffement est actif
   if (warmup.value){
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
@@ -181,6 +185,7 @@ function infoExercice(repetition, series, timeToRest){
 
 // Définis les instructions à afficher
 function instructionExercice(repetition){
+  // Si le paramètre repetition contient une chaîne de caractère
   if (typeof repetition === "string"){
     return "Tiens pendant " + repetition + "econdes"
   }else{
