@@ -35,7 +35,7 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [x] upgrade the information (repetitions in seconds, ...) ==> do a function
 - [x] add a button for skip an exercice (like a help button...)
 - [x] add advice for each exercices
-- [ ] add a timer for exercise with time (more than 10 seconds)
+- [x] add a timer for exercise with time (more than 10 seconds)
 - [ ] change the background color on the top and bottom on iphone
 
 ### Ideas

@@ -45,6 +45,7 @@ const warmup = ref(false)
 const nbExercise = ref(1)
 const actualUseRef = ref(exercisesBook.value.poussee.echauffement["1"])
 const help = ref(false)
+const timeExercise = ref(false)
 
 function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -187,10 +188,20 @@ function infoExercice(repetition, series, timeToRest){
 function instructionExercice(repetition){
   // Si le paramètre repetition contient une chaîne de caractère
   if (typeof repetition === "string"){
+    // Le chiffre contenu dans la chaine de caractère est plus petit que 10
+    if (parseInt(repetition.slice(0, 2)) > 10){
+      timeExercise.value = true
+    }
     return "Tiens pendant " + repetition + "econdes"
   }else{
     return "Fait " + repetition + " répétions"
   }
+}
+
+// Lance un timer pour un exercice
+function launchExerciseTimer(repetition){
+  duration.value = parseInt(repetition.slice(0, 2)) * 1000
+  reset()
 }
 
 // Timer
@@ -205,6 +216,7 @@ const update = () => {
   countdown.value = duration.value - (performance.now() - lastTime)
   // Quand le temps est écoulé.
   if (countdown.value  <= 0) {
+    countdown.value = 0
     cancelAnimationFrame(handle)
     restTime.value = false
   } else {
@@ -287,12 +299,19 @@ onUnmounted(() => {
         <div v-if="!restTime">
           <!--L'instruction-->
           <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(actualUseRef.repetitions) }}</p>
+          <div v-if="timeExercise">
+            <label class="fs-4"
+            >Temps d'exercice <progress :value="progressRate"></progress
+            ></label>
+            <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
+            <button type="button" class="btn btn-primary mb-2 mt-2" @click="launchExerciseTimer(actualUseRef.repetitions)">Lancer</button>
+          </div>
           <!--Compteur de série-->
           <p class="card-text ubuntu-light-italic fs-5">Plus que {{ actualUseRef.series - serie }}{{ actualUseRef.series - serie === 1 ? " série" : " séries" }}</p>
           <!--Le conseil-->
           <p class="card-text ubuntu-light-italic fs-5">{{ actualUseRef.conseil }}</p>
           <!--Changement étape-->
-          <button type="button" class="btn btn-primary mt-4 fs-5 w-100" @click="next()">Suivant</button>
+          <button type="button" class="btn btn-primary mt-2 fs-5 w-100" @click="next()">Suivant</button>
         </div>
         <div v-else>
           <!--Le temps de pause-->
