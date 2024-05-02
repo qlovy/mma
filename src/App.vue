@@ -242,6 +242,7 @@ onUnmounted(() => {
 </script>
 
 <template id="app">
+  <!--Permet aux bandeaux de fond (haut et bas sur Iphone) d'être la même couleur que le body-->
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!--Ubuntu Police-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -354,6 +355,7 @@ div {
 }
 
 #body {
+  background-color: #15baba;  /* Pour forcer la couleur du fond sur Iphone */
   position: absolute;
   width: 100%;
   height: 100%;
