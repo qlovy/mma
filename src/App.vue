@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onUnmounted, computed } from 'vue'
+import {ref, onUnmounted, computed, onMounted} from 'vue'
 const message = ref('')
 const exercisesBook = ref({
   poussee: {
@@ -46,6 +46,7 @@ const nbExercise = ref(1)
 const actualUseRef = ref(exercisesBook.value.poussee.echauffement["1"])
 const help = ref(false)
 const timeExercise = ref(false)
+const test = ref(null)
 
 function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -238,6 +239,10 @@ const progressRate = computed(() =>
 
 onUnmounted(() => {
   cancelAnimationFrame(handle)
+})
+
+onMounted(() => {
+  test.value.textContent = 'hey'
 })
 </script>
 
