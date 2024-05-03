@@ -191,10 +191,11 @@ function instructionExercice(repetition){
   if (typeof repetition === "string"){
     // Le chiffre contenu dans la chaine de caractère est plus petit que 10
     if (parseInt(repetition.slice(0, 2)) > 10){
-      timeExercise.value = true
+      timeExercise.value = true // Définis l'affichage du temps d'exercice
     }
     return "Tiens pendant " + repetition + "econdes"
   }else{
+    timeExercise.value = false  // Fait disparaître l'affichage du temps d'exercice
     return "Fait " + repetition + " répétions"
   }
 }
@@ -220,6 +221,10 @@ const update = () => {
     countdown.value = 0
     cancelAnimationFrame(handle)
     restTime.value = false
+    if (timeExercise.value === true){
+      next()
+      timeExercise.value = false
+    }
   } else {
     handle = requestAnimationFrame(update)
   }
@@ -241,9 +246,6 @@ onUnmounted(() => {
   cancelAnimationFrame(handle)
 })
 
-onMounted(() => {
-  test.value.textContent = 'hey'
-})
 </script>
 
 <template id="app">
@@ -317,7 +319,7 @@ onMounted(() => {
           <!--Le conseil-->
           <p class="card-text ubuntu-light-italic fs-5">{{ actualUseRef.conseil }}</p>
           <!--Changement étape-->
-          <button type="button" class="btn btn-primary mt-2 fs-5 w-100" @click="next()">Suivant</button>
+          <button type="button" class="btn btn-primary mt-2 fs-5 w-100" @click="next()" v-if="!timeExercise">Suivant</button>
         </div>
         <div v-else>
           <!--Le temps de pause-->
