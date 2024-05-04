@@ -3,6 +3,8 @@ import {ref, onUnmounted, computed, onMounted} from 'vue'
 const message = ref('')
 const exercisesBook = ref({
   poussee: {
+    nom: 'Force Poussée',
+    jour: 'Lundi et Vendredi',
     echauffement: {
       1: createExercise('Tourner les poignets', 1, '30 s', 1,'Ne pas aller trop fort. Sentir que sa chauffe.'),
       2: createExercise('Assouplissement des poignets', 1, '30 s', 1,'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
@@ -14,6 +16,8 @@ const exercisesBook = ref({
     alterne: true
   },
   tirage: {
+    nom: 'Force Tirage',
+    jour: 'Mercredi et Samedi',
     echauffement: {
       1: createExercise('Tourner les coudes', 1, '30 s', 1,'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
       2: createExercise('Tourner les épaules', 1, '30 s', 1,'Faire des grands cercles en avant et en arrière. Aller doucement.'),
@@ -26,6 +30,8 @@ const exercisesBook = ref({
     alterne: false
   },
   jambes: {
+    nom: 'Jambes',
+    jour: 'Jeudi',
     echauffement: {
       1: createExercise('Jeu du parcours', 1, '60 s', 1,'Courir sur place avec des sauts à intervalles irréguliers')
     },
@@ -206,6 +212,13 @@ function launchExerciseTimer(repetition){
   reset()
 }
 
+// Aide
+function skipExercise(){
+  nbExercise.value++
+  help.value=false
+  next()
+}
+
 // Timer
 const duration = ref(1000) // Définit la valeur à 1 seconde
 const countdown = ref(0)
@@ -260,6 +273,14 @@ onUnmounted(() => {
     <h1 class="ubuntu-medium title mt-4">MMA</h1>
   </div>
 
+  <div class="card boxes blue-theme-main-boxes" v-for="item in exercisesBook">
+    <div class="card-body">
+      <h5 class="card-title ubuntu-regular fs-2">{{ item.nom }}</h5>
+      <p class="card-text ubuntu-light-italic fs-5">{{ item.jour }}</p>
+    </div>
+  </div>
+
+  <!--
   <div class="card boxes blue-theme-main-boxes" id="box-1" @click="messageNew(1)">
     <div class="card-body">
       <h5 class="card-title ubuntu-regular fs-2">Force Poussée</h5>
@@ -280,6 +301,7 @@ onUnmounted(() => {
       <p class="card-text ubuntu-light-italic fs-5">Jeudi</p>
     </div>
   </div>
+  -->
 
   <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
     <!--Bouton pour fermer la page-->
@@ -341,7 +363,7 @@ onUnmounted(() => {
           <button type="button" class="btn-close" aria-label="Close" @click="help = false"></button>
           <p class="card-text ubuntu-regular fs-3 mx-auto">Que voulez-vous faire ?</p>
           <!--Action: passer l'exercice-->
-          <button type="button" class="btn ubuntu-light fs-5" @click="nbExercise++; help=false">Passer un exercice</button>
+          <button type="button" class="btn ubuntu-light fs-5" @click="skipExercise()">Passer un exercice</button>
         </div>
       </div>
     </Transition>
