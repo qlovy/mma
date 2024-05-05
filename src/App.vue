@@ -1,22 +1,19 @@
 <script setup>
-import {ref, onUnmounted, computed, onMounted} from 'vue'
-const message = ref('')
-const exercisesBook = ref({
-  poussee: {
-    nom: 'Force Poussée',
-    jour: 'Lundi et Vendredi',
-    echauffement: {
-      1: createExercise('Tourner les poignets', 1, '30 s', 1,'Ne pas aller trop fort. Sentir que sa chauffe.'),
-      2: createExercise('Assouplissement des poignets', 1, '30 s', 1,'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
-      3: createExercise('Tourner les coudes', 1, '30 s', 1,'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
-      4: createExercise('Tourner les épaules', 1, '30 s', 1,'Faire des grands cercles en avant et en arrière. Aller doucement.')
-    },
-    1: createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
-    2: createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
-    alterne: true
-  },
-  tirage: {
-    nom: 'Force Tirage',
+import {ref, onUnmounted, computed} from 'vue'
+const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
+let exercisesBook = [
+    [{nom: 'Force Poussée',
+      jour: 'Lundi et Vendredi',
+      echauffement: {
+        1: createExercise('Tourner les poignets', 1, '30 s', 1,'Ne pas aller trop fort. Sentir que sa chauffe.'),
+        2: createExercise('Assouplissement des poignets', 1, '30 s', 1,'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
+        3: createExercise('Tourner les coudes', 1, '30 s', 1,'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+        4: createExercise('Tourner les épaules', 1, '30 s', 1,'Faire des grands cercles en avant et en arrière. Aller doucement.')
+      },
+      1: createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
+      2: createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
+      alterne: true}],
+  [{nom: 'Force Tirage',
     jour: 'Mercredi et Samedi',
     echauffement: {
       1: createExercise('Tourner les coudes', 1, '30 s', 1,'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
@@ -27,10 +24,8 @@ const exercisesBook = ref({
     2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
     3: createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
     4: createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.'),
-    alterne: false
-  },
-  jambes: {
-    nom: 'Jambes',
+    alterne: false}],
+  [{nom: 'Jambes',
     jour: 'Jeudi',
     echauffement: {
       1: createExercise('Jeu du parcours', 1, '60 s', 1,'Courir sur place avec des sauts à intervalles irréguliers')
@@ -40,19 +35,19 @@ const exercisesBook = ref({
     3: createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
     4: createExercise('Squat complet', 4, 10, 30, 'Pied à la largeur d\'épaules, reste en position basse environ une 1 seconde avant de remonter.'),
     5: createExercise('Chaise', 1, "60 s", 30, 'Dos contre un mur, les genoux à angle droit.'),
-    alterne: false
-  }
-})
+    alterne: false}]
+]
+
 const serie = ref(0)
-const type = ref("")
+const type = ref(0)
 const restTime = ref(false)
 const endSession = ref(false)
 const warmup = ref(false)
 const nbExercise = ref(1)
-const actualUseRef = ref(exercisesBook.value.poussee.echauffement["1"])
+const actualUseRef = ref(exercisesBook[0][0].echauffement["1"])
 const help = ref(false)
 const timeExercise = ref(false)
-const test = ref(null)
+const exercisePage = ref( false) // Nécessaire d'utiliser un ref quand on l'utilise dans le html (par exemple dans un v-if)
 
 function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -68,44 +63,37 @@ function howManyExercises(dictionnary){
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef(){
   // Si l'échauffement est activé
-  if (warmup.value){
+  if (warmup){
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      actualUseRef.value = exercisesBook.value[type.value].echauffement[nbExercise.value] // La page de l'échauffement
+      actualUseRef.value = exercisesBook[type][0].echauffement[nbExercise] // La page de l'échauffement
     }catch (TypeError){
       // En cas de "TypeError" (due à une valeur undefined)
-      actualUseRef.value = exercisesBook.value.poussee.echauffement["1"] // Valeur tampon
+      actualUseRef.value = exercisesBook[0][0].echauffement["1"] // Valeur tampon
     }
   }else {
     try {
-      actualUseRef.value = exercisesBook.value[type.value][nbExercise.value] // La page de l'exercice
+      actualUseRef.value = exercisesBook[type][nbExercise] // La page de l'exercice
     }catch (TypeError){
-      actualUseRef.value = exercisesBook.value.poussee.echauffement["1"]
+      actualUseRef.value = exercisesBook[0][0].echauffement["1"]
     }
   }
 }
 
 // Gère le choix de l'exercice
 function messageNew (origin){
-  // Si on a choisi la session Poussée
-  if (origin === 1) {
-    message.value = 'Poussée'
-    type.value = "poussee"
-  }else if (origin === 2){
-    message.value = 'Tirage'
-    type.value = "tirage"
-  }else if (origin === 3){
-    message.value = 'Jambes'
-    type.value = "jambes"
-  }else{
-    // Pour quitter la page d'exercice
-    message.value = ''
-    init()  // Réinitialise tous les exercices quand on quitte une session
+  for (let i=0; i<exercisesBook.length; i++){
+    if (origin === i){
+      type.value = origin
+      message.value = 'Entrainement '+ exercisesBook[origin][0].nom
+      // Initialise l'échauffement
+      exercisePage.value = true
+      warmup.value = true
+      manageActualUseRef()
+      break
+    }
   }
-  // Initialise l'échauffement
-  warmup.value = true
-  manageActualUseRef()
 }
 
 // Initialise le début d'une session
@@ -123,19 +111,19 @@ function next() {
   restTime.value = true // Définis l'affichage du timer
   // Définis le temps de repos
   // Si l'échauffement est actif
-  if (warmup.value){
-    duration.value = exercisesBook.value[type.value].echauffement[nbExercise.value].recuperation * 1000
-  }else if (exercisesBook.value[type.value].alterne && serie.value % 2 === 0){
+  if (warmup){
+    duration.value = exercisesBook[type].echauffement[nbExercise].recuperation * 1000
+  }else if (exercisesBook[type].alterne && serie % 2 === 0){
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
+    duration.value = exercisesBook[type][nbExercise].recuperation * 500  // le temps est réduit de moitié
   }else{
-    duration.value = exercisesBook.value[type.value][nbExercise.value].recuperation * 1000
+    duration.value = exercisesBook[type][nbExercise].recuperation * 1000
   }
   // Actualise la session
   manageSession()
   manageActualUseRef()
   //  Si la session n'est pas finie
-  if (!endSession.value){
+  if (!endSession){
     reset() // Lance le décompte
   }
 }
@@ -215,7 +203,7 @@ function launchExerciseTimer(repetition){
 // Aide
 function skipExercise(){
   nbExercise.value++
-  help.value=false
+  help.value = false
   next()
 }
 
@@ -234,7 +222,7 @@ const update = () => {
     countdown.value = 0
     cancelAnimationFrame(handle)
     restTime.value = false
-    if (timeExercise.value === true){
+    if (timeExercise === true){
       next()
       timeExercise.value = false
     }
@@ -273,13 +261,15 @@ onUnmounted(() => {
     <h1 class="ubuntu-medium title mt-4">MMA</h1>
   </div>
 
-  <div class="card boxes blue-theme-main-boxes" v-for="item in exercisesBook">
+  <div class="card boxes blue-theme-main-boxes" v-for="(item, index) in exercisesBook" @click="messageNew(index)">
     <div class="card-body">
-      <h5 class="card-title ubuntu-regular fs-2">{{ item.nom }}</h5>
-      <p class="card-text ubuntu-light-italic fs-5">{{ item.jour }}</p>
+      <h5 class="card-title ubuntu-regular fs-2">{{ item[0].nom }}</h5>
+      <p class="card-text ubuntu-light-italic fs-5">{{ item[0].jour }}</p>
     </div>
   </div>
 
+  <p v-if="exercisePage">sjflkjasf</p>
+  <p v-else>dsfasdfasdfas</p>
   <!--
   <div class="card boxes blue-theme-main-boxes" id="box-1" @click="messageNew(1)">
     <div class="card-body">
@@ -303,11 +293,11 @@ onUnmounted(() => {
   </div>
   -->
 
-  <div id="newPage" class="blue-theme-newPage" v-if="message !== ''">
+  <div id="newPage" class="blue-theme-newPage" v-if="exercisePage">
     <!--Bouton pour fermer la page-->
-    <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="messageNew(0)"></button>
+    <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="exercisePage = false"></button>
     <!--Titre de l'entrainement-->
-    <h1 class="ubuntu-medium fs-1">Entrainement {{ message }}</h1>
+    <h1 class="ubuntu-medium fs-1">{{ message }}</h1>
     <!--Annonce du nom de l'exercice à faire-->
     <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
       <!--Le message de fin de série-->
@@ -316,7 +306,7 @@ onUnmounted(() => {
       </div>
       <!--Les exercices-->
       <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{ actualUseRef.nom }}{{ !warmup ? exercisesBook[type].alterne ? " en alternance" : "" : "" }}</h5>
+        <h5 class="card-title ubuntu-regular fs-3">{{ actualUseRef.nom }}{{ !warmup && exercisesBook[type][0].alterne ? " en alternance" : "" }}</h5>
         <p class="card-text ubuntu-light-italic fs-5">{{ infoExercice(actualUseRef.repetitions, actualUseRef.series, actualUseRef.recuperation) }}</p>
       </div>
     </div>
