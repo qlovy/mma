@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onUnmounted, computed} from 'vue'
+import {ref, onUnmounted, computed, onMounted, onUpdated} from 'vue'
 const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
 let exercisesBook = [
     [{nom: 'Force Poussée',
@@ -48,6 +48,7 @@ const actualUseRef = ref(exercisesBook[0][0].echauffement["1"])
 const help = ref(false)
 const timeExercise = ref(false)
 const exercisePage = ref( false) // Nécessaire d'utiliser un ref quand on l'utilise dans le html (par exemple dans un v-if)
+const firstBox = ref()
 
 function createExercise(name, series, reps, rest_in_s, advice){
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -82,11 +83,14 @@ function manageActualUseRef(){
 }
 
 // Gère le choix de l'exercice
-function messageNew (origin){
+function messageNew (index){
+  if (index === 0){
+    firstBox.value.id = 'box-1'
+  }
   for (let i=0; i<exercisesBook.length; i++){
-    if (origin === i){
-      type.value = origin
-      message.value = 'Entrainement '+ exercisesBook[origin][0].nom
+    if (index === i){
+      type.value = index
+      message.value = 'Entrainement '+ exercisesBook[index][0].nom
       // Initialise l'échauffement
       exercisePage.value = true
       warmup.value = true
@@ -247,6 +251,11 @@ onUnmounted(() => {
   cancelAnimationFrame(handle)
 })
 
+onUpdated(() => {
+  firstBox.value.style.color = 'red'
+  firstBox.value.id = 'box-1'
+})
+
 </script>
 
 <template id="app">
@@ -261,15 +270,13 @@ onUnmounted(() => {
     <h1 class="ubuntu-medium title mt-4">MMA</h1>
   </div>
 
-  <div class="card boxes blue-theme-main-boxes" v-for="(item, index) in exercisesBook" @click="messageNew(index)">
+  <div class="card boxes blue-theme-main-boxes" v-for="(item, index) in exercisesBook" @click="messageNew(index)" ref="firstBox">
     <div class="card-body">
       <h5 class="card-title ubuntu-regular fs-2">{{ item[0].nom }}</h5>
       <p class="card-text ubuntu-light-italic fs-5">{{ item[0].jour }}</p>
     </div>
   </div>
 
-  <p v-if="exercisePage">sjflkjasf</p>
-  <p v-else>dsfasdfasdfas</p>
   <!--
   <div class="card boxes blue-theme-main-boxes" id="box-1" @click="messageNew(1)">
     <div class="card-body">
