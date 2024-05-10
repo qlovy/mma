@@ -75,14 +75,14 @@ function manageActualUseRef() {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      actualUseRef.value = exercisesBook[type].echauffement[nbExercise] // La page de l'échauffement
+      actualUseRef.value = exercisesBook[type.value].echauffement[nbExercise.value] // La page de l'échauffement
     } catch (TypeError) {
       // En cas de "TypeError" (due à une valeur undefined)
       actualUseRef.value = exercisesBook[0].echauffement["1"] // Valeur tampon
     }
   } else {
     try {
-      actualUseRef.value = exercisesBook[type][nbExercise] // La page de l'exercice
+      actualUseRef.value = exercisesBook[type.value][nbExercise.value] // La page de l'exercice
     } catch (TypeError) {
       actualUseRef.value = exercisesBook[0].echauffement["1"]
     }
@@ -120,12 +120,12 @@ function next() {
   // Définis le temps de repos
   // Si l'échauffement est actif
   if (warmup) {
-    duration.value = exercisesBook[type].echauffement[nbExercise].recuperation * 1000
+    duration.value = exercisesBook[type.value].echauffement[nbExercise.value].recuperation * 1000
   } else if (exercisesBook[type].alterne && serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = exercisesBook[type][nbExercise].recuperation * 500  // le temps est réduit de moitié
+    duration.value = exercisesBook[type.value][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
   } else {
-    duration.value = exercisesBook[type][nbExercise].recuperation * 1000
+    duration.value = exercisesBook[type.value][nbExercise.value].recuperation * 1000
   }
   // Actualise la session
   manageSession()
@@ -142,10 +142,10 @@ function manageSession() {
   // Si l'échauffement est actif
   if (warmup.value) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie.value === exercisesBook.value[type.value].echauffement[nbExercise.value].series) {
+    if (serie.value === exercisesBook[type.value].echauffement[nbExercise.value].series) {
       serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value === howManyExercises(exercisesBook.value[type.value].echauffement)) {
+      if (nbExercise.value === howManyExercises(exercisesBook[type.value].echauffement)) {
         warmup.value = false // Définis la fin de l'échauffement
         nbExercise.value = 1 // Réinitialise l'exercice
       } else {
@@ -157,16 +157,16 @@ function manageSession() {
     if (exercisesBook.value[type.value].alterne) {
       nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (serie.value === exercisesBook.value[type.value][nbExercise.value].series * 2) {
+      if (serie.value === exercisesBook[type.value][nbExercise.value].series * 2) {
         serie.value = 0    // Reset le compteur de séries
         endSession.value = true  // Définis la fin de la séance
       }
     } else {
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (serie.value === exercisesBook.value[type.value][nbExercise.value].series) {
+      if (serie.value === exercisesBook[type.value][nbExercise.value].series) {
         serie.value = 0    // Reset le compteur de séries
         // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (nbExercise.value === howManyExercises(exercisesBook.value[type.value])) {
+        if (nbExercise.value === howManyExercises(exercisesBook[type.value])) {
           endSession.value = true  // Définis la fin de la séance
         } else {
           nbExercise.value++ // Compte le nombre d'exercices fait
@@ -230,7 +230,7 @@ const update = () => {
     countdown.value = 0
     cancelAnimationFrame(handle)
     restTime.value = false
-    if (timeExercise === true) {
+    if (timeExercise.value === true) {
       next()
       timeExercise.value = false
     }
@@ -253,12 +253,6 @@ const progressRate = computed(() =>
 
 onUnmounted(() => {
   cancelAnimationFrame(handle)
-})
-
-onUpdated(() => {
-  console.log(firstBox)
-  firstBox.value.style.color = 'red'
-  firstBox.value.id = 'box-1'
 })
 
 </script>
