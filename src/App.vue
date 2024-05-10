@@ -1,5 +1,8 @@
 <script setup>
-import {ref, onUnmounted, computed, onUpdated} from 'vue'
+import {ref, onUnmounted, computed} from 'vue'
+
+// Les macros ou objets
+import exerciseSet from './components/exerciseSet.vue'
 
 const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
 let exercisesBook = [
@@ -267,43 +270,10 @@ onUnmounted(() => {
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
 
-  <div id="body" class="blue-theme-main">
-    <h1 class="ubuntu-medium title mt-4 mb-4">MMA</h1>
+  <exercise-set :array="exercisesBook" @func="messageNew"/>
 
-    <div class="card boxes blue-theme-main-boxes" v-for="(item, index) in exercisesBook" @click="messageNew(index)"
-         ref="firstBox">
-      <div class="card-body">
-        <h5 class="card-title ubuntu-regular fs-2">{{ item.nom }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">{{ item.jour }}</p>
-      </div>
-    </div>
 
-  </div>
-
-  <!--
-  <div class="card boxes blue-theme-main-boxes" id="box-1" @click="messageNew(1)">
-    <div class="card-body">
-      <h5 class="card-title ubuntu-regular fs-2">Force Poussée</h5>
-      <p class="card-text ubuntu-light-italic fs-5">Lundi et Vendredi</p>
-    </div>
-  </div>
-
-  <div class="card boxes blue-theme-main-boxes" @click="messageNew(2)">
-    <div class="card-body">
-      <h5 class="card-title ubuntu-regular fs-2">Force Tirage</h5>
-      <p class="card-text ubuntu-light-italic fs-5">Mercredi et Samedi</p>
-    </div>
-  </div>
-
-  <div class="card boxes blue-theme-main-boxes" @click="messageNew(3)">
-    <div class="card-body">
-      <h5 class="card-title ubuntu-regular fs-2">Jambes</h5>
-      <p class="card-text ubuntu-light-italic fs-5">Jeudi</p>
-    </div>
-  </div>
-  -->
-
-  <div id="newPage" class="blue-theme-newPage" v-if="exercisePage">
+  <div id="exerciseDetails" class="blue-theme-newPage" v-if="exercisePage">
     <!--Bouton pour fermer la page-->
     <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="exercisePage = false"></button>
     <!--Titre de l'entrainement-->
@@ -398,40 +368,6 @@ div {
   user-select: none; /* Enlève la selection du texte dû au double clique */
 }
 
-#body {
-  background-color: #15baba; /* Pour forcer la couleur du fond sur Iphone */
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.title {
-  padding-top: 30px;
-  text-align: center;
-  font-size: 50px;
-}
-
-.boxes {
-  margin: 0 30px 70px 30px;
-}
-
-#box-1 {
-  margin-top: 200px;
-}
-
-/*Pour thème coloré (déclinaison de bleu)*/
-
-/*La page principale*/
-.blue-theme-main {
-  background-color: #15baba;
-}
-
-.blue-theme-main-boxes {
-  background-color: #00a2a2;
-}
-
 /*La page d'exercice*/
 .blue-theme-newPage {
   background-color: #37c5c5;
@@ -442,7 +378,7 @@ div {
 }
 
 /* La page de chaque exercice*/
-#newPage {
+#exerciseDetails {
   position: absolute;
   top: 0;
   left: 0;
@@ -450,7 +386,7 @@ div {
   height: 100%;
 }
 
-#newPage h1 {
+#exerciseDetails h1 {
   text-align: center;
   padding-top: 30px;
 }
