@@ -2,7 +2,7 @@
 import {ref, onUnmounted, computed} from 'vue'
 
 // Les macros ou objets
-import exerciseSet from './components/exerciseSet.vue'
+import exerciseList from './components/exercise-list.vue'
 
 const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
 let exercisesBook = [
@@ -58,7 +58,6 @@ const actualUseRef = ref(exercisesBook[0].echauffement["1"])
 const help = ref(false)
 const timeExercise = ref(false)
 const exercisePage = ref(false) // Nécessaire d'utiliser un ref quand on l'utilise dans le html (par exemple dans un v-if)
-const firstBox = ref()
 
 function createExercise(name, series, reps, rest_in_s, advice) {
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -270,7 +269,7 @@ onUnmounted(() => {
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
 
-  <exercise-set :array="exercisesBook" @func="messageNew"/>
+  <exercise-list :array="exercisesBook" @func="messageNew"/>
 
 
   <div id="exerciseDetails" class="blue-theme-newPage" v-if="exercisePage">
