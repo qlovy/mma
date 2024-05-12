@@ -2,7 +2,8 @@
 import {ref, onUnmounted, computed} from 'vue'
 
 // Les macros ou objets
-import exerciseList from './components/exercise-list.vue'
+import exerciseList from './components/exerciseList.vue'
+import exerciseDetails from './components/exerciseDetails.vue'
 
 const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
 let exercisesBook = [
@@ -63,13 +64,6 @@ function createExercise(name, series, reps, rest_in_s, advice) {
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
 
-// Détermine le nombre d'exercices dans un thème donné
-function howManyExercises(dictionnary) {
-  let array = Object.keys(dictionnary)  // Récupère toutes les clés de l'objet
-  let final_array = array.filter((i) => !isNaN(parseInt(i)))  // Filtre pour ne ressortir qu'avec ceux qui se convertissent en nombre (donc les 1, 2, 3, ...)
-  return final_array.length   // Renvoie la longueur du tableau soit le nombre d'exercices
-}
-
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
   // Si l'échauffement est activé
@@ -116,146 +110,12 @@ function init() {
   warmup.value = true
 }
 
-// Gère le passage d'une série à une autre ou d'un exercice à un autre
-function next() {
-  restTime.value = true // Définis l'affichage du timer
-  // Définis le temps de repos
-  // Si l'échauffement est actif
-  if (warmup) {
-    duration.value = exercisesBook[type.value].echauffement[nbExercise.value].recuperation * 1000
-  } else if (exercisesBook[type].alterne && serie % 2 === 0) {
-    // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = exercisesBook[type.value][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
-  } else {
-    duration.value = exercisesBook[type.value][nbExercise.value].recuperation * 1000
-  }
-  // Actualise la session
-  manageSession()
-  manageActualUseRef()
-  //  Si la session n'est pas finie
-  if (!endSession) {
-    reset() // Lance le décompte
-  }
-}
-
-// Gère le déroulement de la session
-function manageSession() {
-  serie.value++   // Compte le nombre de séries
-  // Si l'échauffement est actif
-  if (warmup.value) {
-    // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie.value === exercisesBook[type.value].echauffement[nbExercise.value].series) {
-      serie.value = 0    // Reset le compteur de séries
-      // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value === howManyExercises(exercisesBook[type.value].echauffement)) {
-        warmup.value = false // Définis la fin de l'échauffement
-        nbExercise.value = 1 // Réinitialise l'exercice
-      } else {
-        nbExercise.value++ // Compte le nombre d'exercices fait
-      }
-    }
-  } else {
-    // Si l'exercice à l'option d'alternance
-    if (exercisesBook.value[type.value].alterne) {
-      nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
-      // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (serie.value === exercisesBook[type.value][nbExercise.value].series * 2) {
-        serie.value = 0    // Reset le compteur de séries
-        endSession.value = true  // Définis la fin de la séance
-      }
-    } else {
-      // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (serie.value === exercisesBook[type.value][nbExercise.value].series) {
-        serie.value = 0    // Reset le compteur de séries
-        // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (nbExercise.value === howManyExercises(exercisesBook[type.value])) {
-          endSession.value = true  // Définis la fin de la séance
-        } else {
-          nbExercise.value++ // Compte le nombre d'exercices fait
-        }
-      }
-    }
-  }
-}
-
-// Définis les informations à afficher en dessous du nom de l'exercice
-function infoExercice(repetition, series, timeToRest) {
-  let s = (series === 1 ? " serie" : " series") // Change l'orthorgraphe en fonction du nombre affiché
-  // Si repetition est une chaîne de caractère
-  if (typeof repetition === "string") {
-    return repetition + " x " + series + s + ", " + timeToRest + " secondes"
-  } else {
-    return repetition + " reps x " + series + s + ", " + timeToRest + " secondes"
-  }
-}
-
-// Définis les instructions à afficher
-function instructionExercice(repetition) {
-  // Si le paramètre repetition contient une chaîne de caractère
-  if (typeof repetition === "string") {
-    // Le chiffre contenu dans la chaine de caractère est plus petit que 10
-    if (parseInt(repetition.slice(0, 2)) > 10) {
-      timeExercise.value = true // Définis l'affichage du temps d'exercice
-    }
-    return "Tiens pendant " + repetition + "econdes"
-  } else {
-    timeExercise.value = false  // Fait disparaître l'affichage du temps d'exercice
-    return "Fait " + repetition + " répétions"
-  }
-}
-
-// Lance un timer pour un exercice
-function launchExerciseTimer(repetition) {
-  duration.value = parseInt(repetition.slice(0, 2)) * 1000
-  reset()
-}
-
 // Aide
 function skipExercise() {
   nbExercise.value++
   help.value = false
   next()
 }
-
-// Timer
-const duration = ref(1000) // Définit la valeur à 1 seconde
-const countdown = ref(0)
-
-let lastTime
-let handle
-
-// Le décompte du temps
-const update = () => {
-  countdown.value = duration.value - (performance.now() - lastTime)
-  // Quand le temps est écoulé.
-  if (countdown.value <= 0) {
-    countdown.value = 0
-    cancelAnimationFrame(handle)
-    restTime.value = false
-    if (timeExercise.value === true) {
-      next()
-      timeExercise.value = false
-    }
-  } else {
-    handle = requestAnimationFrame(update)
-  }
-}
-
-// La réinitialisation du timer
-const reset = () => {
-  countdown.value = duration.value
-  lastTime = performance.now()
-  update()
-}
-
-// L'évolution de la barre
-const progressRate = computed(() =>
-    Math.min(countdown.value / duration.value, 1)
-)
-
-onUnmounted(() => {
-  cancelAnimationFrame(handle)
-})
 
 </script>
 
@@ -269,89 +129,10 @@ onUnmounted(() => {
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
 
-  <exercise-list :array="exercisesBook" @func="messageNew"/>
+  <exercise-list id="body" :array="exercisesBook" @func="messageNew"/>
 
+  <exercise-details id="exerciseDetails" v-if="exercisePage"/>
 
-  <div id="exerciseDetails" class="blue-theme-newPage" v-if="exercisePage">
-    <!--Bouton pour fermer la page-->
-    <button type="button" class="btn-close mt-3 ms-3" aria-label="Close" @click="exercisePage = false"></button>
-    <!--Titre de l'entrainement-->
-    <h1 class="ubuntu-medium fs-1">{{ message }}</h1>
-    <!--Annonce du nom de l'exercice à faire-->
-    <div class="card mx-5 mt-5 blue-theme-newPage-boxes">
-      <!--Le message de fin de série-->
-      <div class="card-body" v-if="endSession">
-        <h5 class="card-title ubuntu-regular">Bravo !</h5>
-      </div>
-      <!--Les exercices-->
-      <div class="card-body" v-else>
-        <h5 class="card-title ubuntu-regular fs-3">{{
-            actualUseRef.nom
-          }}{{ !warmup && exercisesBook[type].alterne ? " en alternance" : "" }}</h5>
-        <p class="card-text ubuntu-light-italic fs-5">
-          {{ infoExercice(actualUseRef.repetitions, actualUseRef.series, actualUseRef.recuperation) }}</p>
-      </div>
-    </div>
-    <!--Bouton qui débute la session, affiche la section collapse-->
-    <button type="button" class="btn btn-primary mt-4 ms-5 fs-5 w-75 mb-5" data-bs-toggle="collapse"
-            data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" @click="init()">Début /
-      Arrêt
-    </button>
-
-    <!--Les instructions-->
-    <div class="collapse" id="instructions">
-      <div v-if="!endSession" class="card card-body blue-theme-newPage-boxes mt-2 mx-5">
-        <div v-if="!restTime">
-          <!--L'instruction-->
-          <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(actualUseRef.repetitions) }}</p>
-          <div v-if="timeExercise">
-            <label class="fs-4"
-            >Temps d'exercice
-              <progress :value="progressRate"></progress
-              >
-            </label>
-            <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
-            <button type="button" class="btn btn-primary mb-2 mt-2"
-                    @click="launchExerciseTimer(actualUseRef.repetitions)">Lancer
-            </button>
-          </div>
-          <!--Compteur de série-->
-          <p class="card-text ubuntu-light-italic fs-5">Plus que {{
-              actualUseRef.series - serie
-            }}{{ actualUseRef.series - serie === 1 ? " série" : " séries" }}</p>
-          <!--Le conseil-->
-          <p class="card-text ubuntu-light-italic fs-5">{{ actualUseRef.conseil }}</p>
-          <!--Changement étape-->
-          <button type="button" class="btn btn-primary mt-2 fs-5 w-100" @click="next()" v-if="!timeExercise">Suivant
-          </button>
-        </div>
-        <div v-else>
-          <!--Le temps de pause-->
-          <label class="fs-4"
-          >Temps de repos
-            <progress :value="progressRate"></progress
-            >
-          </label>
-          <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
-        </div>
-      </div>
-    </div>
-
-    <!--Bouton pour la page d'aide-->
-    <button type="button" class="btn fixed-bottom ms-2 mb-2" @click="help = true">Besoin d'aide ?</button>
-    <!--Page d'aide-->
-    <Transition>
-      <div id="help-page" v-if="help" class="fixed-bottom mb-3">
-        <div class="card card-body mx-3">
-          <!--Bouton pour fermer la page-->
-          <button type="button" class="btn-close" aria-label="Close" @click="help = false"></button>
-          <p class="card-text ubuntu-regular fs-3 mx-auto">Que voulez-vous faire ?</p>
-          <!--Action: passer l'exercice-->
-          <button type="button" class="btn ubuntu-light fs-5" @click="skipExercise()">Passer un exercice</button>
-        </div>
-      </div>
-    </Transition>
-  </div>
 </template>
 
 <script>
@@ -363,16 +144,25 @@ export default {
 <style>
 /* Pour la couleur: https://paletton.com/#uid=13i0u0ksnFdhuNAn1IHCVyOCHoW */
 
+#body {
+  background-color: #15baba; /* Pour forcer la couleur du fond sur Iphone */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
 div {
   user-select: none; /* Enlève la selection du texte dû au double clique */
 }
 
 /*La page d'exercice*/
-.blue-theme-newPage {
+.blue-theme {
   background-color: #37c5c5;
 }
 
-.blue-theme-newPage-boxes {
+.blue-theme-boxes {
   background-color: #60d4d4;
 }
 
