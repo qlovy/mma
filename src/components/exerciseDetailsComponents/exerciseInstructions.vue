@@ -7,6 +7,8 @@ const props = defineProps({
   exercisesBook: Array
 })
 
+const emit = defineEmits(['manageSession'])
+
 // Définis les instructions à afficher
 function instructionExercice(repetition) {
   // Si le paramètre repetition contient une chaîne de caractère
@@ -33,17 +35,16 @@ function next() {
   props.feats.restTime = true // Définis l'affichage du timer
   // Définis le temps de repos
   // Si l'échauffement est actif
-  if (warmup) {
-    duration.value = props.exercisesBook[type.value].echauffement[nbExercise.value].recuperation * 1000
-  } else if (props.exercisesBook[type].alterne && serie % 2 === 0) {
+  if (props.feats.warmup) {
+    duration.value = props.exercisesBook[props.feats.type].echauffement[props.feats.nbExercise].recuperation * 1000
+  } else if (props.exercisesBook[props.feats.type].alterne && props.feats.serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = props.exercisesBook[type.value][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
+    duration.value = props.exercisesBook[props.feats.type][props.feats.nbExercise].recuperation * 500  // le temps est réduit de moitié
   } else {
-    duration.value = props.exercisesBook[type.value][nbExercise.value].recuperation * 1000
+    duration.value = props.exercisesBook[props.feats.type][props.feats.nbExercise].recuperation * 1000
   }
-  // Actualise la session
-  manageSession()
-  manageActualUseRef()
+  // Appelle les fonctions du composant "parent"
+  emit('manageSession')
   //  Si la session n'est pas finie
   if (!props.feats.endSession) {
     reset() // Lance le décompte

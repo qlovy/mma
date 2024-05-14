@@ -129,9 +129,9 @@ function skipExercise() {
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
 
-  <exercise-list id="body" :array="exercisesBook" @func="messageNew"/>
+  <exercise-list id="body" :array="exercisesBook" @func="messageNew" v-if="!exercisePage"/>
 
-  <exercise-details id="exerciseDetails" v-if="exercisePage"/>
+  <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" v-else/>
 
 </template>
 
