@@ -110,13 +110,6 @@ function init() {
   warmup.value = true
 }
 
-// Aide
-function skipExercise() {
-  nbExercise.value++
-  help.value = false
-  next()
-}
-
 </script>
 
 <template id="app">
@@ -131,7 +124,7 @@ function skipExercise() {
 
   <exercise-list id="body" :array="exercisesBook" @func="messageNew" v-if="!exercisePage"/>
 
-  <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" v-else/>
+  <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" :actual-use-ref="actualUseRef" :exercises-book="exercisesBook" :feats="{type: type, serie: serie, warmup: warmup, endSession: endSession}" @close="exercisePage = false" v-else/>
 
 </template>
 

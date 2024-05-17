@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onUnmounted, ref} from 'vue'
+import {computed, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps({
   actualUseRef: Object,
@@ -8,6 +8,11 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['manageSession'])
+
+watch(() => props.feats.callNext, () => {
+  next()
+  props.feats.callNext = false
+})
 
 // Définis les instructions à afficher
 function instructionExercice(repetition) {

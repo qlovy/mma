@@ -2,7 +2,7 @@
 import exerciseInformation from './exerciseDetailsComponents/exerciseInformations.vue'
 import exerciseInstructions from './exerciseDetailsComponents/exerciseInstructions.vue'
 import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
-
+import { ref } from 'vue'
 const props = defineProps({
   message: String,
   actualUseRef: Object,
@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['manageActualUseRef', 'close', 'init'])
+const callNext = ref(false)
 
 // Détermine le nombre d'exercices dans un thème donné
 function howManyExercises(dictionnary) {
@@ -60,6 +61,9 @@ function manageSession() {
   emit('manageActualUseRef')
 }
 
+function skipExercise(){
+  callNext.value = true
+}
 </script>
 
 <template>
@@ -88,10 +92,10 @@ function manageSession() {
       Arrêt
     </button>
 
-    <exercise-instructions id="instructions" :actual-use-ref="actualUseRef" :exercises-book="props.exercisesBook"
-                           :feats="{timeExercise: props.feats.timeExercise, restTime: props.feats.restTime,endSession:  props.feats.endSession, warmup: props.feats.warmup}"
+    <exercise-instructions ref="exeInstr" id="instructions" :actual-use-ref="actualUseRef" :exercises-book="props.exercisesBook"
+                           :feats="{timeExercise: props.feats.timeExercise, restTime: props.feats.restTime,endSession:  props.feats.endSession, warmup: props.feats.warmup, callNext: callNext}"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help />
+    <exercise-help @skip-exercise="skipExercise()"/>
   </div>
 </template>
