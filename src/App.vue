@@ -66,6 +66,7 @@ function createExercise(name, series, reps, rest_in_s, advice) {
 
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
+  console.log(nbExercise.value)
   // Si l'échauffement est activé
   if (warmup) {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
@@ -102,7 +103,6 @@ function messageNew(index) {
 
 // Initialise le début d'une session
 function init() {
-  countdown.value = 0
   endSession.value = false
   nbExercise.value = 1
   restTime.value = false
@@ -124,7 +124,10 @@ function init() {
 
   <exercise-list id="body" :array="exercisesBook" @func="messageNew" v-if="!exercisePage"/>
 
-  <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" :actual-use-ref="actualUseRef" :exercises-book="exercisesBook" :feats="{type: type, serie: serie, warmup: warmup, endSession: endSession}" @close="exercisePage = false" v-else/>
+  <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" :actual-use-ref="actualUseRef"
+                    :exercises-book="exercisesBook"
+                    :feats="{type: type, serie: serie, warmup: warmup, endSession: endSession, nbExercise: nbExercise, restTime: restTime}"
+                    @close="exercisePage = false" @init="init()" v-else/>
 
 </template>
 

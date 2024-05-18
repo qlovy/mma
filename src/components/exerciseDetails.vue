@@ -31,9 +31,10 @@ function manageSession() {
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
       if (props.feats.nbExercise === howManyExercises(props.exercisesBook[props.feats.type].echauffement)) {
         props.feats.warmup = false // Définis la fin de l'échauffement
-        props.feats.nbExercise = 1 // Réinitialise l'exercice
+        props.feats.nbExercise = 1 // Réinitialise l'exercice pour l'entrainement qui suit
       } else {
-        props.feats.nbExercise++ // Compte le nombre d'exercices fait
+        props.feats.nbExercise++ // Compte le nombre d'exercices faits
+        console.log(props.feats.nbExercise)
       }
     }
   } else {
@@ -53,7 +54,7 @@ function manageSession() {
         if (props.feats.nbExercise === howManyExercises(props.exercisesBook[props.feats.type])) {
           props.feats.endSession = true  // Définis la fin de la séance
         } else {
-          props.feats.nbExercise++ // Compte le nombre d'exercices fait
+          props.feats.nbExercise++ // Compte le nombre d'exercices faits
         }
       }
     }
@@ -93,9 +94,21 @@ function skipExercise(){
     </button>
 
     <exercise-instructions ref="exeInstr" id="instructions" :actual-use-ref="actualUseRef" :exercises-book="props.exercisesBook"
-                           :feats="{timeExercise: props.feats.timeExercise, restTime: props.feats.restTime,endSession:  props.feats.endSession, warmup: props.feats.warmup, callNext: callNext}"
+                           :feats="{timeExercise: props.feats.timeExercise, restTime: props.feats.restTime, endSession:  props.feats.endSession, warmup: props.feats.warmup, callNext: callNext, serie: props.feats.serie, type: props.feats.type, nbExercise: props.feats.nbExercise}"
                            class="collapse" @manage-session="manageSession"/>
 
     <exercise-help @skip-exercise="skipExercise()"/>
   </div>
 </template>
+
+<script>
+export default {
+  name: "exerciseDetails",
+  props: {
+    message: String,
+    actualUseRef: Object,
+    exercisesBook: Array,
+    feats: Object
+  }
+}
+</script>

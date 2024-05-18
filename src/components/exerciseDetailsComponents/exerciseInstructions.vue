@@ -38,6 +38,7 @@ function launchExerciseTimer(repetition) {
 // Gère le passage d'une série à une autre ou d'un exercice à un autre
 function next() {
   props.feats.restTime = true // Définis l'affichage du timer
+
   // Définis le temps de repos
   // Si l'échauffement est actif
   if (props.feats.warmup) {
@@ -48,6 +49,7 @@ function next() {
   } else {
     duration.value = props.exercisesBook[props.feats.type][props.feats.nbExercise].recuperation * 1000
   }
+
   // Appelle les fonctions du composant "parent"
   emit('manageSession')
   //  Si la session n'est pas finie
@@ -105,7 +107,7 @@ onUnmounted(() => {
     <div v-if="!props.feats.endSession" class="card card-body blue-theme-boxes mt-2 mx-5">
       <div v-if="!props.feats.restTime">
         <!--L'instruction-->
-        <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(actualUseRef.repetitions) }}</p>
+        <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(props.actualUseRef.repetitions) }}</p>
         <div v-if="props.feats.timeExercise">
           <label class="fs-4"
           >Temps d'exercice
@@ -114,17 +116,17 @@ onUnmounted(() => {
           </label>
           <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
           <button class="btn btn-primary mb-2 mt-2" type="button"
-                  @click="launchExerciseTimer(actualUseRef.repetitions)">Lancer
+                  @click="launchExerciseTimer(props.actualUseRef.repetitions)">Lancer
           </button>
         </div>
         <!--Compteur de série-->
         <p class="card-text ubuntu-light-italic fs-5">Plus que {{
-            actualUseRef.series - serie
-          }}{{ actualUseRef.series - serie === 1 ? " série" : " séries" }}</p>
+            props.actualUseRef.series - props.feats.serie
+          }}{{ props.actualUseRef.series - props.feats.serie === 1 ? " série" : " séries" }}</p>
         <!--Le conseil-->
-        <p class="card-text ubuntu-light-italic fs-5">{{ actualUseRef.conseil }}</p>
+        <p class="card-text ubuntu-light-italic fs-5">{{ props.actualUseRef.conseil }}</p>
         <!--Changement étape-->
-        <button v-if="!timeExercise" class="btn btn-primary mt-2 fs-5 w-100" type="button" @click="next()">Suivant
+        <button v-if="!props.feats.timeExercise" class="btn btn-primary mt-2 fs-5 w-100" type="button" @click="next()">Suivant
         </button>
       </div>
       <div v-else>
@@ -138,6 +140,13 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style>
-
-</style>
+<script>
+export default {
+  name: "exerciseInstructions",
+  props: {
+    actualUseRef: Object,
+    feats: Object,
+    exercisesBook: Array
+  }
+}
+</script>

@@ -19,9 +19,19 @@ function infoExercise(repetition, series, timeToRest) {
 <template>
   <div>
     <h5 class="card-title ubuntu-regular fs-3">{{
-        actualUseRef.nom
-      }}{{ alternating? " en alternance" : "" }}</h5>
+        props.actualUseRef.nom
+      }}{{ props.alternating? " en alternance" : "" }}</h5>
     <p class="card-text ubuntu-light-italic fs-5">
-      {{ infoExercise(actualUseRef.repetitions, actualUseRef.series, actualUseRef.recuperation) }}</p>
+      {{ infoExercise(props.actualUseRef.repetitions, props.actualUseRef.series, props.actualUseRef.recuperation) }}</p>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'exerciseInformations',
+  props: {
+    actualUseRef: Object,
+    alternating: Boolean,
+  }
+}
+</script>
