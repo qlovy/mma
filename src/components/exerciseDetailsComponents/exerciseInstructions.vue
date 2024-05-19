@@ -3,15 +3,28 @@ import {computed, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps({
   actualUseRef: Object,
-  feats: Object,
-  exercisesBook: Array
+  exercisesBook: Array,
+  type: Number
 })
 
+// Appel une fonction extérieure
 const emit = defineEmits(['manageSession'])
 
-watch(() => props.feats.callNext, () => {
+// Les variables syncronisées entre les composants
+
+const serie = defineModel('serie')
+const nbExercise = defineModel('nbExercise')
+const restTime = defineModel('restTime')
+const warmup = defineModel('warmup')
+const endSession = defineModel('endSession')
+const callNext = defineModel('callNext')
+
+// Variables spécifiques au bloc
+const timeExercise = ref(false)
+
+watch(() => callNext, () => {
   next()
-  props.feats.callNext = false
+  callNext.value = false
 })
 
 // Définis les instructions à afficher
@@ -20,11 +33,11 @@ function instructionExercice(repetition) {
   if (typeof repetition === "string") {
     // Le chiffre contenu dans la chaine de caractère est plus petit que 10
     if (parseInt(repetition.slice(0, 2)) > 10) {
-      props.feats.timeExercise = true // Définis l'affichage du temps d'exercice
+      timeExercise.value = true // Définis l'affichage du temps d'exercice
     }
     return "Tiens pendant " + repetition + "econdes"
   } else {
-    props.feats.timeExercise = false  // Fait disparaître l'affichage du temps d'exercice
+    timeExercise.value = false  // Fait disparaître l'affichage du temps d'exercice
     return "Fait " + repetition + " répétions"
   }
 }
@@ -37,23 +50,23 @@ function launchExerciseTimer(repetition) {
 
 // Gère le passage d'une série à une autre ou d'un exercice à un autre
 function next() {
-  props.feats.restTime = true // Définis l'affichage du timer
+  restTime.value = true // Définis l'affichage du timer
 
   // Définis le temps de repos
   // Si l'échauffement est actif
-  if (props.feats.warmup) {
-    duration.value = props.exercisesBook[props.feats.type].echauffement[props.feats.nbExercise].recuperation * 1000
-  } else if (props.exercisesBook[props.feats.type].alterne && props.feats.serie % 2 === 0) {
+  if (warmup) {
+    duration.value = props.exercisesBook[props.type].echauffement[nbExercise.value].recuperation * 1000
+  } else if (props.exercisesBook[props.type].alterne && serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = props.exercisesBook[props.feats.type][props.feats.nbExercise].recuperation * 500  // le temps est réduit de moitié
+    duration.value = props.exercisesBook[props.type][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
   } else {
-    duration.value = props.exercisesBook[props.feats.type][props.feats.nbExercise].recuperation * 1000
+    duration.value = props.exercisesBook[props.type][nbExercise.value].recuperation * 1000
   }
 
   // Appelle les fonctions du composant "parent"
   emit('manageSession')
   //  Si la session n'est pas finie
-  if (!props.feats.endSession) {
+  if (!endSession.value) {
     reset() // Lance le décompte
   }
 }
@@ -75,10 +88,10 @@ const update = () => {
   if (countdown.value <= 0) {
     countdown.value = 0
     cancelAnimationFrame(handle)
-    props.feats.restTime = false
-    if (props.feats.timeExercise === true) {
+    restTime.value = false
+    if (timeExercise.value === true) {
       next()
-      props.feats.timeExercise = false
+      timeExercise.value = false
     }
   } else {
     handle = requestAnimationFrame(update)
@@ -104,11 +117,11 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <div v-if="!props.feats.endSession" class="card card-body blue-theme-boxes mt-2 mx-5">
-      <div v-if="!props.feats.restTime">
+    <div v-if="!endSession" class="card card-body blue-theme-boxes mt-2 mx-5">
+      <div v-if="!restTime">
         <!--L'instruction-->
         <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(props.actualUseRef.repetitions) }}</p>
-        <div v-if="props.feats.timeExercise">
+        <div v-if="timeExercise">
           <label class="fs-4"
           >Temps d'exercice
             <progress :value="progressRate"></progress
@@ -121,12 +134,12 @@ onUnmounted(() => {
         </div>
         <!--Compteur de série-->
         <p class="card-text ubuntu-light-italic fs-5">Plus que {{
-            props.actualUseRef.series - props.feats.serie
-          }}{{ props.actualUseRef.series - props.feats.serie === 1 ? " série" : " séries" }}</p>
+            props.actualUseRef.series - serie
+          }}{{ props.actualUseRef.series - serie === 1 ? " série" : " séries" }}</p>
         <!--Le conseil-->
         <p class="card-text ubuntu-light-italic fs-5">{{ props.actualUseRef.conseil }}</p>
         <!--Changement étape-->
-        <button v-if="!props.feats.timeExercise" class="btn btn-primary mt-2 fs-5 w-100" type="button" @click="next()">Suivant
+        <button v-if="!timeExercise" class="btn btn-primary mt-2 fs-5 w-100" type="button" @click="next()">Suivant
         </button>
       </div>
       <div v-else>

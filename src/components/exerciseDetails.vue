@@ -1,17 +1,26 @@
 <script setup>
+import { ref } from 'vue'
+
+//Les composants
 import exerciseInformation from './exerciseDetailsComponents/exerciseInformations.vue'
 import exerciseInstructions from './exerciseDetailsComponents/exerciseInstructions.vue'
 import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
-import { ref } from 'vue'
+
 const props = defineProps({
-  message: String,
   actualUseRef: Object,
   exercisesBook: Array,
-  feats: Object
+  type: Number,
+  message: String
 })
 
-const emit = defineEmits(['manageActualUseRef', 'close', 'init'])
+const serie = defineModel('serie')
+const nbExercise = defineModel('nbExercise')
+const restTime = defineModel('restTime')
+const warmup = defineModel('warmup')
+const endSession = defineModel('endSession')
 const callNext = ref(false)
+
+const emit = defineEmits(['manageActualUseRef', 'close', 'init'])
 
 // Détermine le nombre d'exercices dans un thème donné
 function howManyExercises(dictionnary) {
@@ -22,39 +31,38 @@ function howManyExercises(dictionnary) {
 
 // Gère le déroulement de la session
 function manageSession() {
-  props.feats.serie++   // Compte le nombre de séries
+  serie.value++   // Compte le nombre de séries
   // Si l'échauffement est actif
-  if (props.feats.warmup) {
+  if (warmup) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (props.feats.serie === props.exercisesBook[props.feats.type].echauffement[props.feats.nbExercise].series) {
-      props.feats.serie = 0    // Reset le compteur de séries
+    if (serie === props.exercisesBook[props.type].echauffement[nbExercise.value].series) {
+      serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (props.feats.nbExercise === howManyExercises(props.exercisesBook[props.feats.type].echauffement)) {
-        props.feats.warmup = false // Définis la fin de l'échauffement
-        props.feats.nbExercise = 1 // Réinitialise l'exercice pour l'entrainement qui suit
+      if (nbExercise.value === howManyExercises(props.exercisesBook[props.type].echauffement)) {
+        warmup.value = false // Définis la fin de l'échauffement
+        nbExercise.value = 1 // Réinitialise l'exercice
       } else {
-        props.feats.nbExercise++ // Compte le nombre d'exercices faits
-        console.log(props.feats.nbExercise)
+        nbExercise.value++ // Compte le nombre d'exercices fait
       }
     }
   } else {
     // Si l'exercice à l'option d'alternance
-    if (props.exercisesBook[props.feats.type].alterne) {
-      props.feats.nbExercise === 1 ? props.feats.nbExercise++ : props.feats.nbExercise-- // Alternance entre les deux exercices
+    if (props.exercisesBook[props.type].alterne) {
+      nbExercise.value === 1 ? nbExercise.value++ : nbExercise.value-- // Alternance entre les deux exercices
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (props.feats.serie === props.exercisesBook[props.feats.type][props.feats.nbExercise].series * 2) {
-        props.feats.serie = 0    // Reset le compteur de séries
-        props.feats.endSession = true  // Définis la fin de la séance
+      if (serie.value === props.exercisesBook[props.type][nbExercise.value].series * 2) {
+        serie.value = 0    // Reset le compteur de séries
+        endSession.value = true  // Définis la fin de la séance
       }
     } else {
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (props.feats.serie === props.exercisesBook[props.feats.type][props.feats.nbExercise].series) {
-        props.feats.serie = 0    // Reset le compteur de séries
+      if (serie.value === props.exercisesBook[props.type][nbExercise.value].series) {
+        serie.value = 0    // Reset le compteur de séries
         // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (props.feats.nbExercise === howManyExercises(props.exercisesBook[props.feats.type])) {
-          props.feats.endSession = true  // Définis la fin de la séance
+        if (nbExercise.value === howManyExercises(props.exercisesBook[props.type])) {
+          endSession.value = true  // Définis la fin de la séance
         } else {
-          props.feats.nbExercise++ // Compte le nombre d'exercices faits
+          nbExercise.value++ // Compte le nombre d'exercices fait
         }
       }
     }
@@ -62,9 +70,6 @@ function manageSession() {
   emit('manageActualUseRef')
 }
 
-function skipExercise(){
-  callNext.value = true
-}
 </script>
 
 <template>
@@ -78,11 +83,11 @@ function skipExercise(){
     <!--Annonce du nom de l'exercice à faire-->
     <div class="card mx-5 mt-5 blue-theme-boxes">
       <!--Le message de fin de série-->
-      <div v-if="props.feats.endSession" class="card-body">
+      <div v-if="endSession" class="card-body">
         <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
       <exercise-information v-else :actual-use-ref="actualUseRef"
-                            :alternating="!props.feats.warmup && props.exercisesBook[props.feats.type].alterne"
+                            :alternating="!warmup && props.exercisesBook[props.type].alterne"
                             class="card-body"/>
     </div>
 
@@ -93,22 +98,11 @@ function skipExercise(){
       Arrêt
     </button>
 
-    <exercise-instructions ref="exeInstr" id="instructions" :actual-use-ref="actualUseRef" :exercises-book="props.exercisesBook"
-                           :feats="{timeExercise: props.feats.timeExercise, restTime: props.feats.restTime, endSession:  props.feats.endSession, warmup: props.feats.warmup, callNext: callNext, serie: props.feats.serie, type: props.feats.type, nbExercise: props.feats.nbExercise}"
+    <exercise-instructions id="instructions" :actual-use-ref="actualUseRef" :exercises-book="props.exercisesBook"
+                           :type="props.type"
+                           v-model:serie="serie" v-model:nb-exercise="nbExercise" v-model:rest-time="restTime" v-model:warmup="warmup" v-model:endSession="endSession" v-model:callNext="callNext"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help @skip-exercise="skipExercise()"/>
+    <exercise-help @skip-exercise="callNext=true"/>
   </div>
 </template>
-
-<script>
-export default {
-  name: "exerciseDetails",
-  props: {
-    message: String,
-    actualUseRef: Object,
-    exercisesBook: Array,
-    feats: Object
-  }
-}
-</script>

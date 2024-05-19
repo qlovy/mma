@@ -66,7 +66,6 @@ function createExercise(name, series, reps, rest_in_s, advice) {
 
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
-  console.log(nbExercise.value)
   // Si l'échauffement est activé
   if (warmup) {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
@@ -108,6 +107,7 @@ function init() {
   restTime.value = false
   serie.value = 0
   warmup.value = true
+  manageActualUseRef()
 }
 
 </script>
@@ -126,7 +126,8 @@ function init() {
 
   <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" :actual-use-ref="actualUseRef"
                     :exercises-book="exercisesBook"
-                    :feats="{type: type, serie: serie, warmup: warmup, endSession: endSession, nbExercise: nbExercise, restTime: restTime}"
+                    :type="type" :message="message"
+                    v-model:serie="serie" v-model:nb-exercise="nbExercise" v-model:rest-time="restTime" v-model:warmup="warmup" v-model:endSession="endSession"
                     @close="exercisePage = false" @init="init()" v-else/>
 
 </template>
