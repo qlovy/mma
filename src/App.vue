@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onUnmounted, computed} from 'vue'
+import {reactive, ref} from 'vue'
 
 // Les macros ou objets
 import exerciseList from './components/exerciseList.vue'
@@ -66,8 +66,10 @@ function createExercise(name, series, reps, rest_in_s, advice) {
 
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
+  console.log(warmup.value)
+  console.log(nbExercise.value)
   // Si l'échauffement est activé
-  if (warmup) {
+  if (warmup.value) {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
@@ -114,21 +116,21 @@ function init() {
 
 <template id="app">
   <!--Permet aux bandeaux de fond (haut et bas sur Iphone) d'être la même couleur que le body-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
   <!--Ubuntu Police-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
   <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
 
-  <exercise-list id="body" :array="exercisesBook" @func="messageNew" v-if="!exercisePage"/>
+  <exercise-list v-if="!exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>
 
-  <exercise-details id="exerciseDetails" @manage-actual-use-ref="manageActualUseRef" :actual-use-ref="actualUseRef"
+  <exercise-details v-else id="exerciseDetails" :actual-use-ref="actualUseRef"
                     :exercises-book="exercisesBook"
-                    :type="type" :message="message"
-                    v-model:serie="serie" v-model:nb-exercise="nbExercise" v-model:rest-time="restTime" v-model:warmup="warmup" v-model:endSession="endSession"
-                    @close="exercisePage = false" @init="init()" v-else/>
+                    :message="message" :modify="reactive({serie: serie, nbExercise: nbExercise, warmup: warmup, restTime: restTime, endSession: endSession})"
+                    :type="type"
+                    @close="exercisePage = false" @init="init()" @manage-actual-use-ref="manageActualUseRef"/>
 
 </template>
 

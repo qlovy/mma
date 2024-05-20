@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import {reactive, ref, toRefs} from 'vue'
 
 //Les composants
 import exerciseInformation from './exerciseDetailsComponents/exerciseInformations.vue'
@@ -9,15 +9,13 @@ import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
 const props = defineProps({
   actualUseRef: Object,
   exercisesBook: Array,
+  modify: Object,
   type: Number,
   message: String
 })
 
-const serie = defineModel('serie')
-const nbExercise = defineModel('nbExercise')
-const restTime = defineModel('restTime')
-const warmup = defineModel('warmup')
-const endSession = defineModel('endSession')
+const {serie, nbExercise, warmup, endSession, restTime} = toRefs(props.modify)
+
 const callNext = ref(false)
 
 const emit = defineEmits(['manageActualUseRef', 'close', 'init'])
@@ -31,14 +29,14 @@ function howManyExercises(dictionnary) {
 
 // Gère le déroulement de la session
 function manageSession() {
-  serie.value++   // Compte le nombre de séries
+  serie.value++  // Compte le nombre de séries
   // Si l'échauffement est actif
-  if (warmup) {
+  if (warmup.value) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (serie === props.exercisesBook[props.type].echauffement[nbExercise.value].series) {
+    if (serie.value === props.exercisesBook[props.type].echauffement[nbExercise.value].series) {
       serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (nbExercise.value === howManyExercises(props.exercisesBook[props.type].echauffement)) {
+      if (nbExercise.value === howManyExercises(props.exercisesBook[props.type].echauffement)) { // Idée: faire une variable plutôt qu'appeler à chaque fois la fonction ==> performance ?
         warmup.value = false // Définis la fin de l'échauffement
         nbExercise.value = 1 // Réinitialise l'exercice
       } else {
@@ -67,6 +65,9 @@ function manageSession() {
       }
     }
   }
+  console.log(warmup.value)
+  console.log(nbExercise.value)
+  console.log("---")
   emit('manageActualUseRef')
 }
 
@@ -99,10 +100,14 @@ function manageSession() {
     </button>
 
     <exercise-instructions id="instructions" :actual-use-ref="actualUseRef" :exercises-book="props.exercisesBook"
+                           :modify="reactive({serie: serie, nbExercise: nbExercise, warmup: warmup, restTime: restTime, endSession: endSession, callNext: callNext})"
                            :type="props.type"
-                           v-model:serie="serie" v-model:nb-exercise="nbExercise" v-model:rest-time="restTime" v-model:warmup="warmup" v-model:endSession="endSession" v-model:callNext="callNext"
                            class="collapse" @manage-session="manageSession"/>
 
     <exercise-help @skip-exercise="callNext=true"/>
   </div>
 </template>
+
+<script>
+
+</script>

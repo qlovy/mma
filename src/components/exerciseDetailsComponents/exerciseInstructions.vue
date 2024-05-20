@@ -1,10 +1,11 @@
 <script setup>
-import {computed, onUnmounted, ref, watch } from 'vue'
+import {computed, onUnmounted, ref, toRefs, watch} from 'vue'
 
 const props = defineProps({
   actualUseRef: Object,
   exercisesBook: Array,
-  type: Number
+  type: Number,
+  modify: Object
 })
 
 // Appel une fonction extérieure
@@ -12,12 +13,7 @@ const emit = defineEmits(['manageSession'])
 
 // Les variables syncronisées entre les composants
 
-const serie = defineModel('serie')
-const nbExercise = defineModel('nbExercise')
-const restTime = defineModel('restTime')
-const warmup = defineModel('warmup')
-const endSession = defineModel('endSession')
-const callNext = defineModel('callNext')
+const { serie, nbExercise, warmup, endSession, restTime, callNext } = toRefs(props.modify)
 
 // Variables spécifiques au bloc
 const timeExercise = ref(false)
@@ -54,7 +50,7 @@ function next() {
 
   // Définis le temps de repos
   // Si l'échauffement est actif
-  if (warmup) {
+  if (warmup.value) {
     duration.value = props.exercisesBook[props.type].echauffement[nbExercise.value].recuperation * 1000
   } else if (props.exercisesBook[props.type].alterne && serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
@@ -158,8 +154,9 @@ export default {
   name: "exerciseInstructions",
   props: {
     actualUseRef: Object,
-    feats: Object,
-    exercisesBook: Array
+    exercisesBook: Array,
+    type: Number,
+    modify: Object
   }
 }
 </script>
