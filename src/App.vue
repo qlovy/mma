@@ -62,7 +62,7 @@ const context = {
   exercisePage: false,
   exercisesBook: exercisesBook
 }
-
+// On passe le context et non les variables une à une
 /*
 const serie = ref(0)
 const type = ref(0)
@@ -142,10 +142,8 @@ function init() {
 
   <exercise-list v-if="!exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>
 
-  <exercise-details v-else id="exerciseDetails" :actual-use-ref="actualUseRef"
-                    :exercises-book="exercisesBook"
-                    :message="message" :modify="reactive({serie: serie, nbExercise: nbExercise, warmup: warmup, restTime: restTime, endSession: endSession})"
-                    :type="type"
+  <exercise-details v-else id="exerciseDetails"
+                    :message="message" :ctx="context"
                     @close="exercisePage = false" @init="init()" @manage-actual-use-ref="manageActualUseRef"/>
 
 </template>

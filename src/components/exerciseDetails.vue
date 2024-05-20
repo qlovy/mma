@@ -7,10 +7,7 @@ import exerciseInstructions from './exerciseDetailsComponents/exerciseInstructio
 import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
 
 const props = defineProps({
-  actualUseRef: Object,
-  exercisesBook: Array,
-  modify: Object,
-  type: Number,
+  context: Object
   message: String
 })
 
