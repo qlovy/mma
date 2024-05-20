@@ -6,7 +6,7 @@ import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
 const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
-let exercisesBook = [
+const exercisesBook = [
   {
     nom: 'Force Poussée',
     jour: 'Lundi et Vendredi',
@@ -49,6 +49,21 @@ let exercisesBook = [
   }
 ]
 
+const context = {
+  serie: 0,
+  type: 0,
+  restTime: false,
+  endSession: false,
+  warmup: false,
+  nbExercise: 0,
+  actualUseRef: exercisesBook[0].echauffement["1"],
+  help: false,
+  timeExercise: false,
+  exercisePage: false,
+  exercisesBook: exercisesBook
+}
+
+/*
 const serie = ref(0)
 const type = ref(0)
 const restTime = ref(false)
@@ -59,7 +74,8 @@ const actualUseRef = ref(exercisesBook[0].echauffement["1"])
 const help = ref(false)
 const timeExercise = ref(false)
 const exercisePage = ref(false) // Nécessaire d'utiliser un ref quand on l'utilise dans le html (par exemple dans un v-if)
-
+*/
+  
 function createExercise(name, series, reps, rest_in_s, advice) {
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
