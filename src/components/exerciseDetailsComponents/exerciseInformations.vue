@@ -1,7 +1,6 @@
 <script setup>
 const props = defineProps({
-  actualUseRef: Object,
-  alternating: Boolean,
+  ctx: Object
 })
 
 // Définis les informations à afficher en dessous du nom de l'exercice
@@ -19,19 +18,9 @@ function infoExercise(repetition, series, timeToRest) {
 <template>
   <div>
     <h5 class="card-title ubuntu-regular fs-3">{{
-        props.actualUseRef.nom
-      }}{{ props.alternating? " en alternance" : "" }}</h5>
+        props.ctx.actualUseRef.nom
+      }}{{ props.ctx.actualUseRef.alternate && !props.ctx.warump? " en alternance" : "" }}</h5>
     <p class="card-text ubuntu-light-italic fs-5">
-      {{ infoExercise(props.actualUseRef.repetitions, props.actualUseRef.series, props.actualUseRef.recuperation) }}</p>
+      {{ infoExercise(props.ctx.actualUseRef.repetitions, props.ctx.actualUseRef.series, props.ctx.actualUseRef.recuperation) }}</p>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'exerciseInformations',
-  props: {
-    actualUseRef: Object,
-    alternating: Boolean,
-  }
-}
-</script>

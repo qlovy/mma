@@ -9,7 +9,7 @@ const props = defineProps({
     <!--Le titre-->
     <h1 class="ubuntu-medium title mt-4 mb-5">MMA</h1>
     <!--Les différents entrainements-->
-    <div class="card boxes blue-theme-boxes" v-for="(item, index) in array" @click="$emit('func', index)">
+    <div class="card boxes blue-theme-boxes" v-for="(item, index) in props.array" @click="$emit('func', index)">
       <div class="card-body">
         <h5 class="card-title ubuntu-regular fs-2">{{ item.nom }}</h5>
         <p class="card-text ubuntu-light-italic fs-5">{{ item.jour }}</p>

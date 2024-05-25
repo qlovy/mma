@@ -1,27 +1,15 @@
 <script setup>
-import {computed, onUnmounted, ref, toRefs, watch} from 'vue'
+import {computed, onUnmounted, ref} from 'vue'
 
 const props = defineProps({
-  actualUseRef: Object,
-  exercisesBook: Array,
-  type: Number,
-  modify: Object
+  ctx: Object
 })
 
 // Appel une fonction extérieure
 const emit = defineEmits(['manageSession'])
 
-// Les variables syncronisées entre les composants
-
-const { serie, nbExercise, warmup, endSession, restTime, callNext } = toRefs(props.modify)
-
 // Variables spécifiques au bloc
 const timeExercise = ref(false)
-
-watch(() => callNext, () => {
-  next()
-  callNext.value = false
-})
 
 // Définis les instructions à afficher
 function instructionExercice(repetition) {

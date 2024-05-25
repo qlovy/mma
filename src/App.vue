@@ -49,7 +49,7 @@ const exercisesBook = [
   }
 ]
 
-const context = {
+const ctx = {
   serie: 0,
   type: 0,
   restTime: false,
@@ -82,23 +82,21 @@ function createExercise(name, series, reps, rest_in_s, advice) {
 
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
-  console.log(warmup.value)
-  console.log(nbExercise.value)
   // Si l'échauffement est activé
-  if (warmup.value) {
+  if (ctx.warmup) {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      actualUseRef.value = exercisesBook[type.value].echauffement[nbExercise.value] // La page de l'échauffement
+      ctx.actualUseRef = exercisesBook[ctx.type].echauffement[ctx.nbExercise] // La page de l'échauffement
     } catch (TypeError) {
       // En cas de "TypeError" (due à une valeur undefined)
-      actualUseRef.value = exercisesBook[0].echauffement["1"] // Valeur tampon
+      ctx.actualUseRef = exercisesBook[0].echauffement["1"] // Valeur tampon
     }
   } else {
     try {
-      actualUseRef.value = exercisesBook[type.value][nbExercise.value] // La page de l'exercice
+      ctx.actualUseRef = exercisesBook[ctx.type][ctx.nbExercise] // La page de l'exercice
     } catch (TypeError) {
-      actualUseRef.value = exercisesBook[0].echauffement["1"]
+      ctx.actualUseRef = exercisesBook[0].echauffement["1"]
     }
   }
 }
@@ -107,25 +105,15 @@ function manageActualUseRef() {
 function messageNew(index) {
   for (let i = 0; i < exercisesBook.length; i++) {
     if (index === i) {
-      type.value = index
+      ctx.type = index
       message.value = 'Entrainement ' + exercisesBook[index].nom
       // Initialise l'échauffement
-      exercisePage.value = true
-      warmup.value = true
+      ctx.exercisePage = true
+      ctx.warmup = true
       manageActualUseRef()
       break
     }
   }
-}
-
-// Initialise le début d'une session
-function init() {
-  endSession.value = false
-  nbExercise.value = 1
-  restTime.value = false
-  serie.value = 0
-  warmup.value = true
-  manageActualUseRef()
 }
 
 </script>
@@ -140,11 +128,11 @@ function init() {
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
 
-  <exercise-list v-if="!exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>
+  <exercise-list v-if="!ctx.exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>
 
   <exercise-details v-else id="exerciseDetails"
-                    :message="message" :ctx="context"
-                    @close="exercisePage = false" @init="init()" @manage-actual-use-ref="manageActualUseRef"/>
+                    :message="message" :ctx="ctx"
+                    @manage-actual-use-ref="manageActualUseRef"/>
 
 </template>
 
