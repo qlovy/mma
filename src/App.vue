@@ -10,58 +10,64 @@ const exercisesBook = [
   {
     nom: 'Force Poussée',
     jour: 'Lundi et Vendredi',
-    echauffement: {
-      1: createExercise('Tourner les poignets', 1, '30 s', 1, 'Ne pas aller trop fort. Sentir que sa chauffe.'),
-      2: createExercise('Assouplissement des poignets', 1, '30 s', 1, 'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
-      3: createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
-      4: createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.')
-    },
-    1: createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
-    2: createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.'),
+    echauffements: [
+      createExercise('Tourner les poignets', 1, '30 s', 1, 'Ne pas aller trop fort. Sentir que sa chauffe.'),
+      createExercise('Assouplissement des poignets', 1, '30 s', 1, 'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
+      createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+      createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.')
+    ],
+    exercices: [
+      createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
+      createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.')
+    ],
     alterne: true
   },
   {
     nom: 'Force Tirage',
     jour: 'Mercredi et Samedi',
-    echauffement: {
-      1: createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
-      2: createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.'),
-      3: createExercise('Burpies', 1, 10, 1, 'Bien faire le mouvement.')
-    },
-    1: createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
-    2: createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
-    3: createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
-    4: createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.'),
+    echauffement: [createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+      createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.'),
+      createExercise('Burpies', 1, 10, 1, 'Bien faire le mouvement.')
+    ],
+    exercices: [
+      createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
+      createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
+      createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
+      createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.')
+    ],
     alterne: false
   },
   {
     nom: 'Jambes',
     jour: 'Jeudi',
-    echauffement: {
-      1: createExercise('Jeu du parcours', 1, '60 s', 1, 'Courir sur place avec des sauts à intervalles irréguliers')
-    },
-    1: createExercise('Flexions plantaires', 4, 20, 30, 'Poser son pied sur une surface surélevée, sur une jambe. Le pied ne doit pas toucher le sol. Puis on monte le talon, faire levier'),
-    2: createExercise('Split squat', 4, 10, 60, 'Un pied devant, un pied derrière. L\'espacement entre les deux pieds doit être assez large pour que quand on descend le genoux ne touche pas le sol.'),
-    3: createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
-    4: createExercise('Squat complet', 4, 10, 30, 'Pied à la largeur d\'épaules, reste en position basse environ une 1 seconde avant de remonter.'),
-    5: createExercise('Chaise', 1, "60 s", 30, 'Dos contre un mur, les genoux à angle droit.'),
+    echauffements: [
+      createExercise('Jeu du parcours', 1, '60 s', 1, 'Courir sur place avec des sauts à intervalles irréguliers')
+    ],
+    exercices: [
+      createExercise('Flexions plantaires', 4, 20, 30, 'Poser son pied sur une surface surélevée, sur une jambe. Le pied ne doit pas toucher le sol. Puis on monte le talon, faire levier'),
+      createExercise('Split squat', 4, 10, 60, 'Un pied devant, un pied derrière. L\'espacement entre les deux pieds doit être assez large pour que quand on descend le genoux ne touche pas le sol.'),
+      createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
+      createExercise('Squat complet', 4, 10, 30, 'Pied à la largeur d\'épaules, reste en position basse environ une 1 seconde avant de remonter.'),
+      createExercise('Chaise', 1, "60 s", 30, 'Dos contre un mur, les genoux à angle droit.')
+    ],
     alterne: false
   }
 ]
 
-const ctx = {
+const ctx = ref({
   serie: 0,
   type: 0,
   restTime: false,
   endSession: false,
   warmup: false,
   nbExercise: 0,
-  actualUseRef: exercisesBook[0].echauffement["1"],
+  actualUseRef: exercisesBook[0].echauffements[0],
   help: false,
   timeExercise: false,
   exercisePage: false,
   exercisesBook: exercisesBook
-}
+})
+
 // On passe le context et non les variables une à une
 /*
 const serie = ref(0)
@@ -83,20 +89,20 @@ function createExercise(name, series, reps, rest_in_s, advice) {
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
   // Si l'échauffement est activé
-  if (ctx.warmup) {
+  if (ctx.value.warmup) {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      ctx.actualUseRef = exercisesBook[ctx.type].echauffement[ctx.nbExercise] // La page de l'échauffement
+      ctx.value.actualUseRef = exercisesBook[ctx.value.type].echauffements[ctx.value.nbExercise] // La page de l'échauffement
     } catch (TypeError) {
       // En cas de "TypeError" (due à une valeur undefined)
-      ctx.actualUseRef = exercisesBook[0].echauffement["1"] // Valeur tampon
+      ctx.value.actualUseRef = exercisesBook[0].echauffements[0] // Valeur tampon
     }
   } else {
     try {
-      ctx.actualUseRef = exercisesBook[ctx.type][ctx.nbExercise] // La page de l'exercice
+      ctx.value.actualUseRef = exercisesBook[ctx.value.type].exercices[ctx.value.nbExercise] // La page de l'exercice
     } catch (TypeError) {
-      ctx.actualUseRef = exercisesBook[0].echauffement["1"]
+      ctx.value.actualUseRef = exercisesBook[0].echauffements[0]
     }
   }
 }
@@ -105,11 +111,11 @@ function manageActualUseRef() {
 function messageNew(index) {
   for (let i = 0; i < exercisesBook.length; i++) {
     if (index === i) {
-      ctx.type = index
+      ctx.value.type = index
       message.value = 'Entrainement ' + exercisesBook[index].nom
       // Initialise l'échauffement
-      ctx.exercisePage = true
-      ctx.warmup = true
+      ctx.value.exercisePage = true
+      ctx.value.warmup = true
       manageActualUseRef()
       break
     }

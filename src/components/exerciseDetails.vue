@@ -8,16 +8,17 @@ const props = defineProps({
   ctx: Object,
   message: String
 })
+console.log(props.ctx)
 
 const emit = defineEmits(['manageActualUseRef'])
 
 function init() {
   // Initialise le début d'une session
-  props.ctx.endSession = false
-  props.ctx.nbExercise = 1
-  props.ctx.restTime = false
-  props.ctx.serie = 0
-  props.ctx.warmup = true
+  props.ctx.value.endSession = false
+  props.ctx.value.nbExercise = 1
+  props.ctx.value.restTime = false
+  props.ctx.value.serie = 0
+  props.ctx.value.warmup = true
   emit('manageActualUseRef')
 }
 
@@ -31,38 +32,38 @@ function howManyExercises(dictionary) {
 
 // Gère le déroulement de la session
 function manageSession() {
-  props.ctx.serie.value++  // Compte le nombre de séries
+  props.ctx.value.serie.value++  // Compte le nombre de séries
   // Si l'échauffement est actif
-  if (props.ctx.warmup.value) {
+  if (props.ctx.value.warmup.value) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (props.ctx.serie.value === props.ctx.exercisesBook[props.ctx.type].echauffement[props.ctx.nbExercise.value].series) {
-      props.ctx.serie.value = 0    // Reset le compteur de séries
+    if (props.ctx.value.serie.value === props.ctx.value.exercisesBook[props.ctx.value.type].echauffement[props.ctx.value.nbExercise.value].series) {
+      props.ctx.value.serie.value = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (props.ctx.nbExercise.value === howManyExercises(props.ctx.exercisesBook[props.ctx.type].echauffement)) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
-        props.ctx.warmup.value = false // Définis la fin de l'échauffement
-        props.ctx.nbExercise.value = 1 // Réinitialise l'exercice
+      if (props.ctx.value.nbExercise.value === howManyExercises(props.ctx.value.exercisesBook[props.ctx.value.type].echauffement)) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
+        props.ctx.value.warmup.value = false // Définis la fin de l'échauffement
+        props.ctx.value.nbExercise.value = 1 // Réinitialise l'exercice
       } else {
-        props.ctx.nbExercise.value++ // Compte le nombre d'exercices fait
+        props.ctx.value.nbExercise.value++ // Compte le nombre d'exercices fait
       }
     }
   } else {
     // Si l'exercice à l'option d'alternance
-    if (props.ctx.exercisesBook[props.ctx.type].alterne) {
-      props.ctx.nbExercise.value === 1 ? props.ctx.nbExercise.value++ : props.ctx.nbExercise.value-- // Alternance entre les deux exercices
+    if (props.ctx.value.exercisesBook[props.ctx.value.type].alterne) {
+      props.ctx.value.nbExercise.value === 1 ? props.ctx.value.nbExercise.value++ : props.ctx.value.nbExercise.value-- // Alternance entre les deux exercices
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (props.ctx.serie.value === props.ctx.exercisesBook[props.ctx.type][props.ctx.nbExercise.value].series * 2) {
-        props.ctx.serie.value = 0    // Reset le compteur de séries
-        props.ctx.endSession.value = true  // Définis la fin de la séance
+      if (props.ctx.value.serie.value === props.ctx.value.exercisesBook[props.ctx.value.type][props.ctx.value.nbExercise.value].series * 2) {
+        props.ctx.value.serie.value = 0    // Reset le compteur de séries
+        props.ctx.value.endSession.value = true  // Définis la fin de la séance
       }
     } else {
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (props.ctx.serie === props.ctx.exercisesBook[props.ctx.type][props.ctx.nbExercise.value].series) {
-        props.ctx.serie = 0    // Reset le compteur de séries
+      if (props.ctx.value.serie === props.ctx.value.exercisesBook[props.ctx.value.type][props.ctx.value.nbExercise.value].series) {
+        props.ctx.value.serie = 0    // Reset le compteur de séries
         // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (props.ctx.nbExercise.value === howManyExercises(props.ctx.exercisesBook[props.ctx.type])) {
-          props.ctx.endSession.value = true  // Définis la fin de la séance
+        if (props.ctx.value.nbExercise.value === howManyExercises(props.ctx.value.exercisesBook[props.ctx.value.type])) {
+          props.ctx.value.endSession.value = true  // Définis la fin de la séance
         } else {
-          props.ctx.nbExercise.value++ // Compte le nombre d'exercices fait
+          props.ctx.value.nbExercise.value++ // Compte le nombre d'exercices fait
         }
       }
     }
