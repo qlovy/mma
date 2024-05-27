@@ -1,9 +1,7 @@
 <script setup>
 import {computed, onUnmounted, ref} from 'vue'
 
-const props = defineProps({
-  ctx: Object
-})
+const props = defineProps(['ctx'])
 
 // Appel une fonction extérieure
 const emit = defineEmits(['manageSession'])
@@ -34,23 +32,24 @@ function launchExerciseTimer(repetition) {
 
 // Gère le passage d'une série à une autre ou d'un exercice à un autre
 function next() {
-  restTime.value = true // Définis l'affichage du timer
+  const ctx = props.ctx
+  ctx.restTime = true // Définis l'affichage du timer
 
   // Définis le temps de repos
   // Si l'échauffement est actif
-  if (warmup.value) {
-    duration.value = props.exercisesBook[props.type].echauffement[nbExercise.value].recuperation * 1000
-  } else if (props.exercisesBook[props.type].alterne && serie % 2 === 0) {
+  if (ctx.warmup) {
+    duration.value = ctx.exercisesBook[ctx.type].echauffements[ctx.nbExercise].recuperation * 1000
+  } else if (ctx.exercisesBook[ctx.type].alterne && serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = props.exercisesBook[props.type][nbExercise.value].recuperation * 500  // le temps est réduit de moitié
+    duration.value = ctx.exercisesBook[ctx.type][ctx.nbExercise].recuperation * 500  // le temps est réduit de moitié
   } else {
-    duration.value = props.exercisesBook[props.type][nbExercise.value].recuperation * 1000
+    duration.value = ctx.exercisesBook[ctx.type][ctx.nbExercise].recuperation * 1000
   }
 
   // Appelle les fonctions du composant "parent"
   emit('manageSession')
   //  Si la session n'est pas finie
-  if (!endSession.value) {
+  if (!ctx.endSession) {
     reset() // Lance le décompte
   }
 }
@@ -72,7 +71,7 @@ const update = () => {
   if (countdown.value <= 0) {
     countdown.value = 0
     cancelAnimationFrame(handle)
-    restTime.value = false
+        props.ctx.restTime = false
     if (timeExercise.value === true) {
       next()
       timeExercise.value = false
@@ -97,14 +96,15 @@ const progressRate = computed(() =>
 onUnmounted(() => {
   cancelAnimationFrame(handle)
 })
+console.log(props.ctx.actualUseRef)
 </script>
 
 <template>
   <div>
-    <div v-if="!endSession" class="card card-body blue-theme-boxes mt-2 mx-5">
-      <div v-if="!restTime">
+    <div v-if="!ctx.endSession" class="card card-body blue-theme-boxes mt-2 mx-5">
+      <div v-if="!ctx.restTime">
         <!--L'instruction-->
-        <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(props.actualUseRef.repetitions) }}</p>
+        <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(ctx.actualUseRef.repetitions) }}</p>
         <div v-if="timeExercise">
           <label class="fs-4"
           >Temps d'exercice
@@ -113,15 +113,15 @@ onUnmounted(() => {
           </label>
           <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
           <button class="btn btn-primary mb-2 mt-2" type="button"
-                  @click="launchExerciseTimer(props.actualUseRef.repetitions)">Lancer
+                  @click="launchExerciseTimer(ctx.actualUseRef.repetitions)">Lancer
           </button>
         </div>
         <!--Compteur de série-->
         <p class="card-text ubuntu-light-italic fs-5">Plus que {{
-            props.actualUseRef.series - serie
-          }}{{ props.actualUseRef.series - serie === 1 ? " série" : " séries" }}</p>
+            ctx.actualUseRef.series - ctx.serie
+          }}{{ ctx.actualUseRef.series - ctx.serie === 1 ? " série" : " séries" }}</p>
         <!--Le conseil-->
-        <p class="card-text ubuntu-light-italic fs-5">{{ props.actualUseRef.conseil }}</p>
+        <p class="card-text ubuntu-light-italic fs-5">{{ ctx.actualUseRef.conseil }}</p>
         <!--Changement étape-->
         <button v-if="!timeExercise" class="btn btn-primary mt-2 fs-5 w-100" type="button" @click="next()">Suivant
         </button>
@@ -136,15 +136,3 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "exerciseInstructions",
-  props: {
-    actualUseRef: Object,
-    exercisesBook: Array,
-    type: Number,
-    modify: Object
-  }
-}
-</script>

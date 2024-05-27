@@ -4,21 +4,18 @@ import exerciseInformation from './exerciseDetailsComponents/exerciseInformation
 import exerciseInstructions from './exerciseDetailsComponents/exerciseInstructions.vue'
 import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
 
-const props = defineProps({
-  ctx: Object,
-  message: String
-})
-console.log(props.ctx)
+const props = defineProps(['ctx', 'message']);
 
 const emit = defineEmits(['manageActualUseRef'])
 
 function init() {
+  const ctx = props.ctx
   // Initialise le début d'une session
-  props.ctx.value.endSession = false
-  props.ctx.value.nbExercise = 1
-  props.ctx.value.restTime = false
-  props.ctx.value.serie = 0
-  props.ctx.value.warmup = true
+  ctx.endSession = false
+  ctx.nbExercise = 1
+  ctx.restTime = false
+  ctx.serie = 0
+  ctx.warmup = true
   emit('manageActualUseRef')
 }
 
@@ -32,38 +29,39 @@ function howManyExercises(dictionary) {
 
 // Gère le déroulement de la session
 function manageSession() {
-  props.ctx.value.serie.value++  // Compte le nombre de séries
+  const ctx = props.ctx
+  ctx.serie++  // Compte le nombre de séries
   // Si l'échauffement est actif
-  if (props.ctx.value.warmup.value) {
+  if (ctx.warmup) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (props.ctx.value.serie.value === props.ctx.value.exercisesBook[props.ctx.value.type].echauffement[props.ctx.value.nbExercise.value].series) {
-      props.ctx.value.serie.value = 0    // Reset le compteur de séries
+    if (ctx.serie === ctx.exercisesBook[ctx.type].echauffement[ctx.nbExercise].series) {
+      ctx.serie = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (props.ctx.value.nbExercise.value === howManyExercises(props.ctx.value.exercisesBook[props.ctx.value.type].echauffement)) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
-        props.ctx.value.warmup.value = false // Définis la fin de l'échauffement
-        props.ctx.value.nbExercise.value = 1 // Réinitialise l'exercice
+      if (ctx.nbExercise === howManyExercises(ctx.exercisesBook[ctx.type].echauffement)) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
+        ctx.warmup = false // Définis la fin de l'échauffement
+        ctx.nbExercise = 1 // Réinitialise l'exercice
       } else {
-        props.ctx.value.nbExercise.value++ // Compte le nombre d'exercices fait
+        ctx.nbExercise++ // Compte le nombre d'exercices fait
       }
     }
   } else {
     // Si l'exercice à l'option d'alternance
-    if (props.ctx.value.exercisesBook[props.ctx.value.type].alterne) {
-      props.ctx.value.nbExercise.value === 1 ? props.ctx.value.nbExercise.value++ : props.ctx.value.nbExercise.value-- // Alternance entre les deux exercices
+    if (ctx.exercisesBook[ctx.type].alterne) {
+      ctx.nbExercise === 1 ? ctx.nbExercise++ : ctx.nbExercise-- // Alternance entre les deux exercices
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (props.ctx.value.serie.value === props.ctx.value.exercisesBook[props.ctx.value.type][props.ctx.value.nbExercise.value].series * 2) {
-        props.ctx.value.serie.value = 0    // Reset le compteur de séries
-        props.ctx.value.endSession.value = true  // Définis la fin de la séance
+      if (ctx.serie === ctx.exercisesBook[ctx.type][ctx.nbExercise].series * 2) {
+        ctx.serie = 0    // Reset le compteur de séries
+        ctx.endSession = true  // Définis la fin de la séance
       }
     } else {
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (props.ctx.value.serie === props.ctx.value.exercisesBook[props.ctx.value.type][props.ctx.value.nbExercise.value].series) {
-        props.ctx.value.serie = 0    // Reset le compteur de séries
+      if (ctx.serie === ctx.exercisesBook[ctx.type][ctx.nbExercise].series) {
+        ctx.serie = 0    // Reset le compteur de séries
         // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (props.ctx.value.nbExercise.value === howManyExercises(props.ctx.value.exercisesBook[props.ctx.value.type])) {
-          props.ctx.value.endSession.value = true  // Définis la fin de la séance
+        if (ctx.nbExercise === howManyExercises(ctx.exercisesBook[ctx.type])) {
+          ctx.endSession = true  // Définis la fin de la séance
         } else {
-          props.ctx.value.nbExercise.value++ // Compte le nombre d'exercices fait
+          ctx.nbExercise++ // Compte le nombre d'exercices fait
         }
       }
     }
@@ -84,10 +82,10 @@ function manageSession() {
     <!--Annonce du nom de l'exercice à faire-->
     <div class="card mx-5 mt-5 blue-theme-boxes">
       <!--Le message de fin de série-->
-      <div v-if="props.ctx.endSession" class="card-body">
+      <div v-if="ctx.endSession" class="card-body">
         <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
-      <exercise-information v-else :ctx="props.ctx"
+      <exercise-information v-else :ctx="ctx"
                             class="card-body"/>
     </div>
 
@@ -98,9 +96,9 @@ function manageSession() {
       Arrêt
     </button>
 
-    <exercise-instructions id="instructions" :ctx="props.ctx"
+    <exercise-instructions id="instructions" :ctx="ctx"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help @skip-exercise="props.ctx.nbExercise++"/>
+    <exercise-help @skip-exercise="ctx.nbExercise++"/>
   </div>
 </template>

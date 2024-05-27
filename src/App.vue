@@ -54,7 +54,7 @@ const exercisesBook = [
   }
 ]
 
-const ctx = ref({
+const ctx = reactive({
   serie: 0,
   type: 0,
   restTime: false,
@@ -67,6 +67,8 @@ const ctx = ref({
   exercisePage: false,
   exercisesBook: exercisesBook
 })
+
+console.log(ctx)
 
 // On passe le context et non les variables une à une
 /*
@@ -89,20 +91,20 @@ function createExercise(name, series, reps, rest_in_s, advice) {
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
   // Si l'échauffement est activé
-  if (ctx.value.warmup) {
+  if (ctx.warmup) {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      ctx.value.actualUseRef = exercisesBook[ctx.value.type].echauffements[ctx.value.nbExercise] // La page de l'échauffement
+      ctx.actualUseRef = exercisesBook[ctx.type].echauffements[ctx.nbExercise] // La page de l'échauffement
     } catch (TypeError) {
       // En cas de "TypeError" (due à une valeur undefined)
-      ctx.value.actualUseRef = exercisesBook[0].echauffements[0] // Valeur tampon
+      ctx.actualUseRef = exercisesBook[0].echauffements[0] // Valeur tampon
     }
   } else {
     try {
-      ctx.value.actualUseRef = exercisesBook[ctx.value.type].exercices[ctx.value.nbExercise] // La page de l'exercice
+      ctx.actualUseRef = exercisesBook[ctx.type].exercices[ctx.nbExercise] // La page de l'exercice
     } catch (TypeError) {
-      ctx.value.actualUseRef = exercisesBook[0].echauffements[0]
+      ctx.actualUseRef = exercisesBook[0].echauffements[0]
     }
   }
 }
@@ -111,11 +113,11 @@ function manageActualUseRef() {
 function messageNew(index) {
   for (let i = 0; i < exercisesBook.length; i++) {
     if (index === i) {
-      ctx.value.type = index
+      ctx.type = index
       message.value = 'Entrainement ' + exercisesBook[index].nom
       // Initialise l'échauffement
-      ctx.value.exercisePage = true
-      ctx.value.warmup = true
+      ctx.exercisePage = true
+      ctx.warmup = true
       manageActualUseRef()
       break
     }
