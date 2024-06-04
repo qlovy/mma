@@ -68,8 +68,6 @@ const ctx = reactive({
   exercisesBook: exercisesBook
 })
 
-console.log(ctx)
-
 // On passe le context et non les variables une à une
 /*
 const serie = ref(0)
@@ -124,6 +122,7 @@ function messageNew(index) {
   }
 }
 
+console.log(exercisesBook[ctx.type].echauffements.length)
 </script>
 
 <template id="app">

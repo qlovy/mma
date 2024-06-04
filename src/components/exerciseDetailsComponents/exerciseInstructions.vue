@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onUnmounted, ref, toRefs, watch} from 'vue'
+import {computed, onUnmounted, ref} from 'vue'
 
 const props = defineProps({
   ctx: Object
@@ -40,7 +40,7 @@ function next() {
   // Si l'échauffement est actif
   if (props.ctx.restTime) {
     duration.value = props.ctx.exercisesBook[props.ctx.type].echauffements[props.ctx.nbExercise].recuperation * 1000
-  } else if (props.ctx.exercisesBook[props.ctx.type].alterne && serie % 2 === 0) {
+  } else if (props.ctx.exercisesBook[props.ctx.type].alterne && props.ctx.serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
     duration.value = props.ctx.exercisesBook[props.ctx.type][props.ctx.nbExercise].recuperation * 500  // le temps est réduit de moitié
   } else {
