@@ -60,7 +60,7 @@ const ctx = reactive({
   restTime: false,
   endSession: false,
   warmup: false,
-  nbExercise: 0,
+  indexExercise: 0,
   actualUseRef: exercisesBook[0].echauffements[0],
   help: false,
   timeExercise: false,
@@ -93,14 +93,14 @@ function manageActualUseRef() {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      ctx.actualUseRef = exercisesBook[ctx.type].echauffements[ctx.nbExercise] // La page de l'échauffement
+      ctx.actualUseRef = exercisesBook[ctx.type].echauffements[ctx.indexExercise] // La page de l'échauffement
     } catch (TypeError) {
       // En cas de "TypeError" (due à une valeur undefined)
       ctx.actualUseRef = exercisesBook[0].echauffements[0] // Valeur tampon
     }
   } else {
     try {
-      ctx.actualUseRef = exercisesBook[ctx.type].exercices[ctx.nbExercise] // La page de l'exercice
+      ctx.actualUseRef = exercisesBook[ctx.type].exercices[ctx.indexExercise] // La page de l'exercice
     } catch (TypeError) {
       ctx.actualUseRef = exercisesBook[0].echauffements[0]
     }
@@ -121,8 +121,6 @@ function messageNew(index) {
     }
   }
 }
-
-console.log(exercisesBook[ctx.type].echauffements.length)
 </script>
 
 <template id="app">

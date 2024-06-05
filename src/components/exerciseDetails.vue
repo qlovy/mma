@@ -15,7 +15,7 @@ function init() {
   const ctx = props.ctx
   // Initialise le début d'une session
   ctx.endSession = false
-  ctx.nbExercise = 1
+  ctx.indexExercise = 1
   ctx.restTime = false
   ctx.serie = 0
   ctx.warmup = true
@@ -29,34 +29,34 @@ function manageSession() {
   // Si l'échauffement est actif
   if (ctx.warmup) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (ctx.serie === ctx.exercisesBook[ctx.type].echauffements[ctx.nbExercise].series) {
+    if (ctx.serie === ctx.exercisesBook[ctx.type].echauffements[ctx.indexExercise].series) {
       ctx.serie = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (ctx.nbExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
+      if (ctx.indexExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
         ctx.warmup = false // Définis la fin de l'échauffement
-        ctx.nbExercise = 0 // Réinitialise l'exercice
+        ctx.indexExercise = 0 // Réinitialise l'exercice
       } else {
-        ctx.nbExercise++ // Compte le nombre d'exercices fait
+        ctx.indexExercise++ // Compte le nombre d'exercices fait
       }
     }
   } else {
     // Si l'exercice à l'option d'alternance
     if (ctx.exercisesBook[ctx.type].alterne) {
-      ctx.nbExercise === 0 ? ctx.nbExercise++ : ctx.nbExercise-- // Alternance entre les deux exercices
+      ctx.indexExercise === 0 ? ctx.indexExercise++ : ctx.indexExercise-- // Alternance entre les deux exercices
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.nbExercise].series * 2) {
+      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].series * 2) {
         ctx.serie = 0    // Reset le compteur de séries
         ctx.endSession = true  // Définis la fin de la séance
       }
     } else {
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.nbExercise].series) {
+      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].series) {
         ctx.serie = 0    // Reset le compteur de séries
         // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (ctx.nbExercise === ctx.exercisesBook[ctx.type].exercices.length - 1) {
+        if (ctx.indexExercise === ctx.exercisesBook[ctx.type].exercices.length - 1) {
           ctx.endSession = true  // Définis la fin de la séance
         } else {
-          ctx.nbExercise++ // Compte le nombre d'exercices fait
+          ctx.indexExercise++ // Compte le nombre d'exercices fait
         }
       }
     }
@@ -93,6 +93,6 @@ function manageSession() {
     <exercise-instructions id="instructions" :ctx="props.ctx"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help @skip-exercise="ctx.nbExercise++"/>
+    <exercise-help @skip-exercise="ctx.indexExercise++"/>
   </div>
 </template>
