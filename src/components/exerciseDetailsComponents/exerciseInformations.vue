@@ -2,7 +2,6 @@
 const props = defineProps({
   ctx: Object
 })
-
 // Définis les informations à afficher en dessous du nom de l'exercice
 function infoExercise(repetition, series, timeToRest) {
   let s = (series === 1 ? " serie" : " series") // Change l'orthorgraphe en fonction du nombre affiché
@@ -19,7 +18,7 @@ function infoExercise(repetition, series, timeToRest) {
   <div>
     <h5 class="card-title ubuntu-regular fs-3">{{
         props.ctx.actualUseRef.nom
-      }}{{ props.ctx.exercisesBook[props.ctx.type].alterne && !props.ctx.warmup? " en alternance" : "" }}</h5>
+      }}{{ props.ctx.exercisesBook[ctx.type].alterne && !props.ctx.warmup? " en alternance" : "" }}</h5>
     <p class="card-text ubuntu-light-italic fs-5">
       {{ infoExercise(props.ctx.actualUseRef.repetitions, props.ctx.actualUseRef.series, props.ctx.actualUseRef.recuperation) }}</p>
   </div>
