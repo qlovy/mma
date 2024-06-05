@@ -25,8 +25,7 @@ const exercisesBook = [
   {
     nom: 'Force Tirage',
     jour: 'Mercredi et Samedi',
-    echauffements: [
-      createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+    echauffement: [createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
       createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.'),
       createExercise('Burpies', 1, 10, 1, 'Bien faire le mouvement.')
     ],
@@ -61,7 +60,7 @@ const ctx = reactive({
   restTime: false,
   endSession: false,
   warmup: false,
-  indexExercise: 0,
+  nbExercise: 0,
   actualUseRef: exercisesBook[0].echauffements[0],
   help: false,
   timeExercise: false,
@@ -94,14 +93,14 @@ function manageActualUseRef() {
     // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
     try {
       // S'il n'y a pas d'erreur
-      ctx.actualUseRef = exercisesBook[ctx.type].echauffements[ctx.indexExercise] // La page de l'échauffement
+      ctx.actualUseRef = exercisesBook[ctx.type].echauffements[ctx.nbExercise] // La page de l'échauffement
     } catch (TypeError) {
       // En cas de "TypeError" (due à une valeur undefined)
       ctx.actualUseRef = exercisesBook[0].echauffements[0] // Valeur tampon
     }
   } else {
     try {
-      ctx.actualUseRef = exercisesBook[ctx.type].exercices[ctx.indexExercise] // La page de l'exercice
+      ctx.actualUseRef = exercisesBook[ctx.type].exercices[ctx.nbExercise] // La page de l'exercice
     } catch (TypeError) {
       ctx.actualUseRef = exercisesBook[0].echauffements[0]
     }
@@ -123,6 +122,7 @@ function messageNew(index) {
   }
 }
 
+console.log(exercisesBook[ctx.type].echauffements.length)
 </script>
 
 <template id="app">

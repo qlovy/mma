@@ -4,7 +4,10 @@ import exerciseInformation from './exerciseDetailsComponents/exerciseInformation
 import exerciseInstructions from './exerciseDetailsComponents/exerciseInstructions.vue'
 import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
 
-const props = defineProps(['ctx', 'message']);
+const props = defineProps({
+  ctx: Object,
+  message: String
+});
 
 const emit = defineEmits(['manageActualUseRef'])
 
@@ -12,19 +15,11 @@ function init() {
   const ctx = props.ctx
   // Initialise le début d'une session
   ctx.endSession = false
-  ctx.indexExercise = 0
+  ctx.nbExercise = 1
   ctx.restTime = false
   ctx.serie = 0
   ctx.warmup = true
   emit('manageActualUseRef')
-}
-
-
-// Détermine le nombre d'exercices dans un thème donné
-function howManyExercises(dictionary) {
-  let array = Object.keys(dictionary)  // Récupère toutes les clés de l'objet
-  let final_array = array.filter((i) => !isNaN(parseInt(i)))  // Filtre pour ne ressortir qu'avec ceux qui se convertissent en nombre (donc les 1, 2, 3, ...)
-  return final_array.length   // Renvoie la longueur du tableau soit le nombre d'exercices
 }
 
 // Gère le déroulement de la session
@@ -34,41 +29,40 @@ function manageSession() {
   // Si l'échauffement est actif
   if (ctx.warmup) {
     // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (ctx.serie === ctx.exercisesBook[ctx.type].echauffements[ctx.indexExercise].series) {
+    if (ctx.serie === ctx.exercisesBook[ctx.type].echauffements[ctx.nbExercise].series) {
       ctx.serie = 0    // Reset le compteur de séries
       // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (ctx.indexExercise === howManyExercises(ctx.exercisesBook[ctx.type].echauffements)) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
+      if (ctx.nbExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
         ctx.warmup = false // Définis la fin de l'échauffement
-        ctx.indexExercise = 1 // Réinitialise l'exercice
+        ctx.nbExercise = 0 // Réinitialise l'exercice
       } else {
-        ctx.indexExercise++ // Compte le nombre d'exercices fait
+        ctx.nbExercise++ // Compte le nombre d'exercices fait
       }
     }
   } else {
     // Si l'exercice à l'option d'alternance
     if (ctx.exercisesBook[ctx.type].alterne) {
-      ctx.indexExercise === 1 ? ctx.indexExercise++ : ctx.indexExercise-- // Alternance entre les deux exercices
+      ctx.nbExercise === 0 ? ctx.nbExercise++ : ctx.nbExercise-- // Alternance entre les deux exercices
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (ctx.serie === ctx.exercisesBook[ctx.type][ctx.indexExercise].series * 2) {
+      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.nbExercise].series * 2) {
         ctx.serie = 0    // Reset le compteur de séries
         ctx.endSession = true  // Définis la fin de la séance
       }
     } else {
       // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (ctx.serie === ctx.exercisesBook[ctx.type][ctx.indexExercise].series) {
+      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.nbExercise].series) {
         ctx.serie = 0    // Reset le compteur de séries
         // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (ctx.indexExercise === howManyExercises(ctx.exercisesBook[ctx.type])) {
+        if (ctx.nbExercise === ctx.exercisesBook[ctx.type].exercices.length - 1) {
           ctx.endSession = true  // Définis la fin de la séance
         } else {
-          ctx.indexExercise++ // Compte le nombre d'exercices fait
+          ctx.nbExercise++ // Compte le nombre d'exercices fait
         }
       }
     }
   }
   emit('manageActualUseRef')
 }
-
 </script>
 
 <template>
@@ -85,7 +79,7 @@ function manageSession() {
       <div v-if="ctx.endSession" class="card-body">
         <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
-      <exercise-information v-else :ctx="ctx"
+      <exercise-information v-else :ctx="props.ctx"
                             class="card-body"/>
     </div>
 
@@ -96,9 +90,9 @@ function manageSession() {
       Arrêt
     </button>
 
-    <exercise-instructions id="instructions" :ctx="ctx"
+    <exercise-instructions id="instructions" :ctx="props.ctx"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help @skip-exercise="ctx.indexExercise++"/>
+    <exercise-help @skip-exercise="ctx.nbExercise++"/>
   </div>
 </template>
