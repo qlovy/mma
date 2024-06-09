@@ -44,9 +44,9 @@ function next() {
     duration.value = props.ctx.exercisesBook[props.ctx.type].echauffements[props.ctx.indexExercise].recuperation * 1000
   } else if (props.ctx.exercisesBook[props.ctx.type].alterne && props.ctx.serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = props.ctx.exercisesBook[props.ctx.type][props.ctx.indexExercise].recuperation * 500  // le temps est réduit de moitié
+    duration.value = props.ctx.exercisesBook[props.ctx.type].exercices[props.ctx.indexExercise].recuperation * 500  // le temps est réduit de moitié
   } else {
-    duration.value = props.ctx.exercisesBook[props.ctx.type][props.ctx.indexExercise].recuperation * 1000
+    duration.value = props.ctx.exercisesBook[props.ctx.type].exercices[props.ctx.indexExercise].recuperation * 1000
   }
 
   // Appelle les fonctions du composant "parent"

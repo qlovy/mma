@@ -15,7 +15,7 @@ function init() {
   const ctx = props.ctx
   // Initialise le début d'une session
   ctx.endSession = false
-  ctx.indexExercise = 1
+  ctx.indexExercise = 0
   ctx.restTime = false
   ctx.serie = 0
   ctx.warmup = true
