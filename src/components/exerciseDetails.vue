@@ -22,53 +22,38 @@ function init() {
   emit('manageActualUseRef')
 }
 
-// Gère le déroulement de la session
-function manageSession() {
+// Fonction qui gère le déroulement de la session
+function manageSession(){
   const ctx = props.ctx
-  ctx.serie++  // Compte le nombre de séries
-  // Si l'échauffement est actif
-  if (ctx.warmup) {
-    // Si le nombre de séries faites correspondent à celles qui doivent être faites
-    if (ctx.serie === ctx.exercisesBook[ctx.type].echauffements[ctx.indexExercise].series) {
-      ctx.serie = 0    // Reset le compteur de séries
-      // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-      if (ctx.indexExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1) { // Idée : faire une variable plutôt qu'appeler à chaque fois la fonction → performance ?
-        ctx.warmup = false // Définis la fin de l'échauffement
-        ctx.indexExercise = 0 // Réinitialise l'exercice
-      } else {
-        ctx.indexExercise++ // Compte le nombre d'exercices fait
+  ctx.serie++
+  console.log(ctx.actualUseRef.series)
+  if (ctx.serie === ctx.actualUseRef.series){
+    ctx.serie = 0
+    if(ctx.warmup){
+      if(ctx.indexExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1){
+        ctx.warmup = false
+        ctx.indexExercise = 0
+      }else{
+        ctx.indexExercise++
       }
-    }
-  } else {
-    // Si l'exercice à l'option d'alternance
-    if (ctx.exercisesBook[ctx.type].alterne) {
-      ctx.indexExercise === 0 ? ctx.indexExercise++ : ctx.indexExercise-- // Alternance entre les deux exercices
-      // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].series * 2) {
-        ctx.serie = 0    // Reset le compteur de séries
-        ctx.endSession = true  // Définis la fin de la séance
-      }
-    } else {
-      // Si le nombre de séries faites correspondent à celles qui doivent être faites
-      if (ctx.serie === ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].series) {
-        ctx.serie = 0    // Reset le compteur de séries
-        // Si le nombre d'exercices faits correspondent au nombre d'exercices à faire
-        if (ctx.indexExercise === ctx.exercisesBook[ctx.type].exercices.length - 1) {
-          ctx.endSession = true  // Définis la fin de la séance
-        } else {
-          ctx.indexExercise++ // Compte le nombre d'exercices fait
-        }
+    }else{
+      if(ctx.indexExercise === ctx.exercisesBook[ctx.type].exercices.length - 1){
+        ctx.indexExercise = 0
+        ctx.endSession = true
+      }else{
+        ctx.indexExercise++
       }
     }
   }
   emit('manageActualUseRef')
 }
+
 </script>
 
 <template>
   <div class="blue-theme">
     <!--Bouton pour fermer la page-->
-    <button aria-label="Close" class="btn-close mt-3 ms-3" type="button" @click="ctx.exercisePage = false"></button>
+    <button aria-label="Close" class="btn-close mt-3 ms-3" type="button" @click="props.ctx.exercisePage = false"></button>
 
     <!--Titre de l'entrainement-->
     <h1 class="ubuntu-medium fs-1">{{ message }}</h1>
@@ -76,7 +61,7 @@ function manageSession() {
     <!--Annonce du nom de l'exercice à faire-->
     <div class="card mx-5 mt-5 blue-theme-boxes">
       <!--Le message de fin de série-->
-      <div v-if="ctx.endSession" class="card-body">
+      <div v-if="props.ctx.endSession" class="card-body">
         <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
       <exercise-information v-else :ctx="props.ctx"
@@ -93,6 +78,6 @@ function manageSession() {
     <exercise-instructions id="instructions" :ctx="props.ctx"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help @skip-exercise="ctx.indexExercise++"/>
+    <exercise-help @skip-exercise=""/>
   </div>
 </template>
