@@ -23,24 +23,23 @@ function init() {
 }
 
 // Fonction qui gère le déroulement de la session
-function manageSession(){
+function manageSession() {
   const ctx = props.ctx
   ctx.serie++
-  console.log(ctx.actualUseRef.series)
-  if (ctx.serie === ctx.actualUseRef.series){
+  if (ctx.serie === ctx.actualUseRef.series) {
     ctx.serie = 0
-    if(ctx.warmup){
-      if(ctx.indexExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1){
+    if (ctx.warmup) {
+      if (ctx.indexExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1) {
         ctx.warmup = false
         ctx.indexExercise = 0
-      }else{
+      } else {
         ctx.indexExercise++
       }
-    }else{
-      if(ctx.indexExercise === ctx.exercisesBook[ctx.type].exercices.length - 1){
+    } else {
+      if (ctx.indexExercise === ctx.exercisesBook[ctx.type].exercices.length - 1) {
         ctx.indexExercise = 0
         ctx.endSession = true
-      }else{
+      } else {
         ctx.indexExercise++
       }
     }
@@ -48,12 +47,19 @@ function manageSession(){
   emit('manageActualUseRef')
 }
 
+function skipExercise() {
+  const ctx = props.ctx
+  ctx.serie = ctx.actualUseRef.series - 1
+  manageSession()
+}
+
 </script>
 
 <template>
   <div class="blue-theme">
     <!--Bouton pour fermer la page-->
-    <button aria-label="Close" class="btn-close mt-3 ms-3" type="button" @click="props.ctx.exercisePage = false"></button>
+    <button aria-label="Close" class="btn-close mt-3 ms-3" type="button"
+            @click="props.ctx.exercisePage = false"></button>
 
     <!--Titre de l'entrainement-->
     <h1 class="ubuntu-medium fs-1">{{ message }}</h1>
@@ -78,6 +84,6 @@ function manageSession(){
     <exercise-instructions id="instructions" :ctx="props.ctx"
                            class="collapse" @manage-session="manageSession"/>
 
-    <exercise-help @skip-exercise=""/>
+    <exercise-help @skip-exercise="skipExercise"/>
   </div>
 </template>

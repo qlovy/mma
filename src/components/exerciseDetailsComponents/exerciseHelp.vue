@@ -15,7 +15,7 @@ const emit = defineEmits(['skipExercise'])
         <button aria-label="Close" class="btn-close" type="button" @click="help = false"></button>
         <p class="card-text ubuntu-regular fs-3 mx-auto">Que voulez-vous faire ?</p>
         <!--Action: passer l'exercice-->
-        <button class="btn ubuntu-light fs-5" type="button" @click="$emit('skipExercise')">Passer un exercice</button>
+        <button class="btn ubuntu-light fs-5" type="button" @click="$emit('skipExercise'); help = false;">Passer un exercice</button>
       </div>
     </div>
   </Transition>

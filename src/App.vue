@@ -81,7 +81,7 @@ const help = ref(false)
 const timeExercise = ref(false)
 const exercisePage = ref(false) // Nécessaire d'utiliser un ref quand on l'utilise dans le html (par exemple dans un v-if)
 */
-  
+
 function createExercise(name, series, reps, rest_in_s, advice) {
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
