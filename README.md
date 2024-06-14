@@ -28,7 +28,6 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [x] Add program "Tirage" and "Jambes"
 - [x] Remove the time after last exercise
 - [x] Add warm-up
-- [ ] remove single-file component (SFC)
 - [ ] A sound at the end of the timer or a notification
 - [x] Change the exercice while the rest time ?
 - [x] Show the state of series ?
@@ -37,7 +36,8 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [x] add advice for each exercices
 - [x] add a timer for exercise with time (more than 10 seconds)
 - [ ] change the background color on the top and bottom on iphone
-- [ ] create components to simpify the App.vue (home page, exercise page, ...)
+- [x] create components to simpify the App.vue (home page, exercise page, ...)
+- [ ] fix alternating exercise
 
 ### Ideas
 
