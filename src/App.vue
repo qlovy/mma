@@ -1,7 +1,7 @@
 <script setup>
 import {reactive, ref} from 'vue'
 
-// Les macros ou objets
+// Les composants
 import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
@@ -54,6 +54,7 @@ const exercisesBook = [
   }
 ]
 
+// L'object qui contient le contexte de fonctionnement interne
 const ctx = reactive({
   serie: 0,
   type: 0,
@@ -68,20 +69,7 @@ const ctx = reactive({
   exercisesBook: exercisesBook
 })
 
-// On passe le context et non les variables une à une
-/*
-const serie = ref(0)
-const type = ref(0)
-const restTime = ref(false)
-const endSession = ref(false)
-const warmup = ref(false)
-const nbExercise = ref(1)
-const actualUseRef = ref(exercisesBook[0].echauffement["1"])
-const help = ref(false)
-const timeExercise = ref(false)
-const exercisePage = ref(false) // Nécessaire d'utiliser un ref quand on l'utilise dans le html (par exemple dans un v-if)
-*/
-
+// Renvoie les informations relatives à un exercice sous forme d'objet
 function createExercise(name, series, reps, rest_in_s, advice) {
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
 }
@@ -109,17 +97,12 @@ function manageActualUseRef() {
 
 // Gère le choix de l'exercice
 function messageNew(index) {
-  for (let i = 0; i < exercisesBook.length; i++) {
-    if (index === i) {
-      ctx.type = index
-      message.value = 'Entrainement ' + exercisesBook[index].nom
-      // Initialise l'échauffement
-      ctx.exercisePage = true
-      ctx.warmup = true
-      manageActualUseRef()
-      break
-    }
-  }
+  ctx.type = index  // Défini le type en fonction de l'exercice choisi
+  message.value = 'Entrainement ' + exercisesBook[index].nom  // Message de bienvenue
+  // Initialise l'échauffement
+  ctx.exercisePage = true
+  ctx.warmup = true
+  manageActualUseRef()
 }
 </script>
 
@@ -132,13 +115,12 @@ function messageNew(index) {
   <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
-
+  <!--La liste des exercices possibles-->
   <exercise-list v-if="!ctx.exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>
-
+  <!--La page d'utlistation des exercices-->
   <exercise-details v-else id="exerciseDetails"
                     :message="message" :ctx="ctx"
                     @manage-actual-use-ref="manageActualUseRef"/>
-
 </template>
 
 <script>
@@ -246,5 +228,4 @@ div {
 
 /*Bootstrap import*/
 @import '~bootstrap/dist/css/bootstrap.css';
-
 </style>

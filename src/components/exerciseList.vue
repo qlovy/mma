@@ -17,7 +17,7 @@ const props = defineProps({
     </div>
   </div>
 </template>
-
+<
 <style>
 .title {
   padding-top: 30px;
