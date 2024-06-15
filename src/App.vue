@@ -25,7 +25,7 @@ const exercisesBook = [
   {
     nom: 'Force Tirage',
     jour: 'Mercredi et Samedi',
-    echauffement: [createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
+    echauffements: [createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
       createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.'),
       createExercise('Burpies', 1, 10, 1, 'Bien faire le mouvement.')
     ],

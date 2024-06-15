@@ -34,24 +34,25 @@ function launchExerciseTimer(repetition) {
 
 // Gère le passage d'une série à une autre ou d'un exercice à un autre
 function next() {
-  props.ctx.restTime = true // Définis l'affichage du timer
+  const ctx = props.ctx
+  ctx.restTime = true // Définis l'affichage du timer
 
   // Définis le temps de repos
   // Si l'échauffement est actif
-  if (props.ctx.warmup) {
-    duration.value = props.ctx.exercisesBook[props.ctx.type].echauffements[props.ctx.indexExercise].recuperation * 1000
+  if (ctx.warmup) {
+    duration.value = ctx.exercisesBook[ctx.type].echauffements[ctx.indexExercise].recuperation * 1000
     // Si on a une option d'alternance et que le nombre de séries est paire
-  } else if (props.ctx.exercisesBook[props.ctx.type].alterne && props.ctx.serie % 2 === 0) {
+  } else if (ctx.exercisesBook[ctx.type].alterne && ctx.serie % 2 === 0) {
     // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = props.ctx.exercisesBook[props.ctx.type].exercices[props.ctx.indexExercise].recuperation * 500  // le temps est réduit de moitié
+    duration.value = ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].recuperation * 500  // le temps est réduit de moitié
   } else {
-    duration.value = props.ctx.exercisesBook[props.ctx.type].exercices[props.ctx.indexExercise].recuperation * 1000
+    duration.value = ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].recuperation * 1000
   }
 
   // Appelle les fonctions du composant "parent"
   emit('manageSession')
   //  Si la session n'est pas finie
-  if (!props.ctx.endSession) {
+  if (!ctx.endSession) {
     reset() // Lance le décompte
   }
 }

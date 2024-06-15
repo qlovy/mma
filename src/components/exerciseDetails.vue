@@ -10,6 +10,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['manageActualUseRef'])
+let n = 0
 
 function init() {
   const ctx = props.ctx
@@ -26,8 +27,19 @@ function init() {
 function manageSession() {
   const ctx = props.ctx
   ctx.serie++
-  if (ctx.serie === ctx.actualUseRef.series) {
+  n++
+  // Si l'option d'alternance est activée
+  if (ctx.exercisesBook[ctx.type].alterne && !ctx.warmup) {
+    ctx.indexExercise === 0 ? ctx.indexExercise++ : ctx.indexExercise-- // Alternance entre les deux exercices
+    n % 2 === 0 ? ctx.serie = n / 2 : ctx.serie--;
+    // Si le nombre de séries faites correspondent à celles qui doivent être faites
+    if (ctx.serie === ctx.actualUseRef.series) {
+      ctx.serie = 0    // Reset le compteur de séries
+      ctx.endSession = true  // Définis la fin de la séance
+    }
+  }else if (ctx.serie === ctx.actualUseRef.series) {
     ctx.serie = 0
+    n = 0
     if (ctx.warmup) {
       if (ctx.indexExercise === ctx.exercisesBook[ctx.type].echauffements.length - 1) {
         ctx.warmup = false
@@ -50,6 +62,7 @@ function manageSession() {
 function skipExercise() {
   const ctx = props.ctx
   ctx.serie = ctx.actualUseRef.series - 1
+  n = ctx.actualUseRef.series * 2 - 1
   manageSession()
 }
 
@@ -59,7 +72,7 @@ function skipExercise() {
   <div class="blue-theme">
     <!--Bouton pour fermer la page-->
     <button aria-label="Close" class="btn-close mt-3 ms-3" type="button"
-            @click="props.ctx.exercisePage = false"></button>
+            @click="props.ctx.exercisePage = false; init()"></button>
 
     <!--Titre de l'entrainement-->
     <h1 class="ubuntu-medium fs-1">{{ message }}</h1>
