@@ -43,3 +43,4 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 ### Ideas
 
 - Create a tool for create sport program
+- JSON file or text file for add new exercise of configure multiple exercise
