@@ -104,6 +104,9 @@ function messageNew(index) {
   ctx.warmup = true
   manageActualUseRef()
 }
+
+// Demande la permission d'envoyé des notifications
+Notification.requestPermission().then();
 </script>
 
 <template id="app">

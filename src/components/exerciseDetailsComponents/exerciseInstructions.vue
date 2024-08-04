@@ -11,6 +11,10 @@ const emit = defineEmits(['manageSession'])
 // Variables spécifiques au bloc
 const timeExercise = ref(false)
 
+const bellAudio = document.getElementById("bell-audio")
+
+console.log(bellAudio)
+
 // Définis les instructions à afficher
 function instructionExercice(repetition) {
   // Si le paramètre repetition contient une chaîne de caractère
@@ -76,9 +80,13 @@ const update = () => {
     cancelAnimationFrame(handle)
     props.ctx.restTime = false
     if (timeExercise.value === true) {
+      sendNotif("Your exercise time is over")
       next()
       timeExercise.value = false
+    }else{
+      sendNotif("Your rest time is over")
     }
+    bellAudio.play()
   } else {
     handle = requestAnimationFrame(update)
   }
@@ -99,6 +107,16 @@ const progressRate = computed(() =>
 onUnmounted(() => {
   cancelAnimationFrame(handle)
 })
+
+function sendNotif(message){
+  const title = "MMA notification service"
+  const body = message
+  const options = {
+    body: body,
+    icon: ""
+  }
+  new Notification(title, options)
+}
 </script>
 
 <template>
