@@ -40,6 +40,7 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [ ] fix alternating exercise
 - [ ] use local storage for storing exercises
 - [ ] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
+- [ ] add a menu with two categories (one for exercising and the other for settings)
 
 ### Ideas
 
