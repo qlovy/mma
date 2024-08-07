@@ -107,6 +107,28 @@ function messageNew(index) {
 
 // Demande la permission d'envoyé des notifications
 Notification.requestPermission().then();
+
+// Gestion du fichier JSON
+function handleJSON(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const jsonData = e.target.result;
+        try {
+          const data = JSON.parse(jsonData);
+          console.log(data)
+          document.getElementById("JSON-output").textContent = JSON.stringify(data)
+        } catch (error) {
+          console.error('Erreur de parsing du JSON:', error);
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      console.log('Aucun fichier sélectionné');
+    }
+}
+
 </script>
 
 <template id="app">
@@ -118,12 +140,17 @@ Notification.requestPermission().then();
   <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
+
   <!--La liste des exercices possibles-->
-  <exercise-list v-if="!ctx.exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>
+  <!--<exercise-list v-if="!ctx.exercisePage" id="body" :array="exercisesBook" @func="messageNew"/>-->
   <!--La page d'utlistation des exercices-->
-  <exercise-details v-else id="exerciseDetails"
+  <!--<exercise-details v-else id="exerciseDetails"
                     :message="message" :ctx="ctx"
-                    @manage-actual-use-ref="manageActualUseRef"/>
+                    @manage-actual-use-ref="manageActualUseRef"/>-->
+
+  <!--Import du fichier JSON-->
+  <input id="file-input" type="file" accept=".json" placeholder="hello" @change="handleJSON">
+  <p id="JSON-output">This will be your JSON output</p>
 </template>
 
 <script>
