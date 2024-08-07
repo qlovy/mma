@@ -39,8 +39,9 @@ I choose Vue.js and Bootstrap because this simply me the creation of the PWA and
 - [x] create components to simpify the App.vue (home page, exercise page, ...)
 - [ ] fix alternating exercise
 - [ ] use local storage for storing exercises
+- [ ] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
 
 ### Ideas
 
 - Create a tool for create sport program
-- JSON file or text file for add new exercise of configure multiple exercise
+
