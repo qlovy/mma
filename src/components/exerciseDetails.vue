@@ -79,7 +79,7 @@ function skipExercise() {
 </script>
 
 <template>
-  <div class="blue-theme">
+  <div style="background-color: #15baba;">
     <!--Bouton pour fermer la page-->
     <button aria-label="Close" class="btn-close mt-3 ms-3" type="button"
             @click="props.ctx.exercisePage = false; init()"></button>
@@ -94,22 +94,22 @@ function skipExercise() {
         <h5 class="card-title ubuntu-regular">Bravo !</h5>
       </div>
       <!--Les informations générales de l'exercice-->
-      <exercise-information v-else :ctx="props.ctx"
+      <exerciseInformation v-else :ctx="props.ctx"
                             class="card-body"/>
     </div>
 
     <!--Bouton qui débute la session, affiche la section collapse-->
-    <button aria-controls="instructions" aria-expanded="false" class="btn btn-primary mt-4 ms-5 fs-5 w-75 mb-5"
+    <button aria-controls="instructions" aria-expanded="false" class="btn btn-primary mt-4 ms-5 fs-5 w-75 mb-4"
             data-bs-target="#instructions" data-bs-toggle="collapse" type="button" @click="init">
       Début /
       Arrêt
     </button>
 
     <!--Les instructions ou informations détaillées de l'exercice-->
-    <exercise-instructions id="instructions" :ctx="props.ctx"
+    <exerciseInstructions id="instructions" :ctx="props.ctx"
                            class="collapse" @manage-session="manageSession"/>
 
     <!--La page d'aide-->
-    <exercise-help @skip-exercise="skipExercise"/>
+    <exerciseHelp @skip-exercise="skipExercise"/>
   </div>
 </template>
