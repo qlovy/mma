@@ -69,7 +69,7 @@ const ctx = reactive({
   exercisesBook: exercisesBook
 })
 
-let exerciseArea = ref(false)
+let exerciseArea = ref(true)
 
 // Renvoie les informations relatives à un exercice sous forme d'objet
 function createExercise(name, series, reps, rest_in_s, advice) {
@@ -155,7 +155,7 @@ Notification.requestPermission().then();
 
     <!--Le menu pour basculer entre la liste d'exercice ou alors les paramètres-->
     <!--Utilisation table cells -->
-    <table id="menu">
+    <table id="menu" v-if="!ctx.exercisePage">
       <tbody>
         <tr>
           <td class="align-middle" @click="exerciseArea = true">
