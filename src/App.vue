@@ -69,7 +69,7 @@ const ctx = reactive({
   exercisesBook: exercisesBook
 })
 
-let exerciseArea = ref(true)
+let exerciseArea = ref(false)
 
 // Renvoie les informations relatives à un exercice sous forme d'objet
 function createExercise(name, series, reps, rest_in_s, advice) {
@@ -109,15 +109,6 @@ function messageNew(index) {
 
 // Demande la permission d'envoyé des notifications
 Notification.requestPermission().then();
-
-// Gère le menu
-function exercisePage(){
-
-}
-
-function settingsPage(){
-
-}
 </script>
 
 <template id="app">
@@ -143,7 +134,21 @@ function settingsPage(){
 
     <!--La partie Réglages-->
     <div v-else>
-      <p>Your a in my world now !!</p>
+      <h1 class="ubuntu-medium mt-3 d-flex justify-content-center display-2">Réglages</h1>
+      <!--Tous les réglages-->
+      <div class="ms-2">
+        <h3 class="ubuntu-regular mt-3">Apparence</h3>
+        <p class="ubuntu-light-italic">Faire choisir l'utilisateur entre du blanc , couleur (bleu), noir</p>
+
+        <h3 class="ubuntu-regular mt-3">Télécharge le modèle JSON</h3>
+        <p class="ubuntu-light">Pour pouvoir configurer des exercices, il te faut remplir ce fichier JSON.</p>
+        <p class="ubuntu-light-italic">Mettre à disposition un modèle de fichier JSON pour config + créer qqlch pour quelqu'un qui veux plusieurs séances à config en meme temps</p>
+
+        <h3 class="ubuntu-regular mt-3">Importe ton fichier JSON</h3>
+        <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger !</p>
+        <p class="ubuntu-light-italic">l'utilisateur a une interface qui lui permet de charger son json</p>
+      </div>
+
     </div>
 
 
@@ -212,7 +217,6 @@ div {
 }
 
 /*La page des paramètres*/
-
 
 /* La page de chaque exercice*/
 #exerciseDetails {
