@@ -11,10 +11,6 @@ const emit = defineEmits(['manageSession'])
 // Variables spécifiques au bloc
 const timeExercise = ref(false)
 
-const bellAudio = document.getElementById("bell-audio")
-
-console.log(bellAudio)
-
 // Définis les instructions à afficher
 function instructionExercice(repetition) {
   // Si le paramètre repetition contient une chaîne de caractère
@@ -80,13 +76,12 @@ const update = () => {
     cancelAnimationFrame(handle)
     props.ctx.restTime = false
     if (timeExercise.value === true) {
-      sendNotif("Your exercise time is over")
+      sendNotif("Your time exercise is over")
       next()
       timeExercise.value = false
     }else{
       sendNotif("Your rest time is over")
     }
-    bellAudio.play()
   } else {
     handle = requestAnimationFrame(update)
   }
@@ -110,9 +105,8 @@ onUnmounted(() => {
 
 function sendNotif(message){
   const title = "MMA notification service"
-  const body = message
   const options = {
-    body: body,
+    body: message,
     icon: ""
   }
   new Notification(title, options)
@@ -121,7 +115,7 @@ function sendNotif(message){
 
 <template>
   <div>
-    <div v-if="!props.ctx.endSession" class="card card-body blue-theme-boxes mt-2 mx-5">
+    <div v-if="!props.ctx.endSession" class="card card-body blue-theme-boxes mx-5">
       <div v-if="!props.ctx.restTime">
         <!--L'instruction-->
         <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(props.ctx.actualUseRef.repetitions) }}</p>
