@@ -5,12 +5,14 @@ const props = defineProps({
 
 // Définis les informations à afficher en dessous du nom de l'exercice
 function infoExercise(repetition, series, timeToRest) {
-  let s = (series === 1 ? " serie" : " series") // Change l'orthorgraphe en fonction du nombre affiché
+  // Change l'orthorgraphe en fonction du nombre a affiché
+  let typo_serie = (series === 1 ? " serie" : " series")
+  let typo_seconde = (timeToRest === 1 ? " seconde" : " secondes")
   // Si repetition est une chaîne de caractère
   if (typeof repetition === "string") {
-    return repetition + " x " + series + s + ", " + timeToRest + " secondes"
+    return repetition + " x " + series + typo_serie + ", " + timeToRest + typo_seconde
   } else {
-    return repetition + " reps x " + series + s + ", " + timeToRest + " secondes"
+    return repetition + " reps x " + series + typo_serie + ", " + timeToRest + typo_seconde
   }
 }
 </script>
