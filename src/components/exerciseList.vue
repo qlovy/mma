@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="blue-theme">
+  <div>
     <!--Le titre-->
     <h1 class="ubuntu-medium title mt-4 mb-5">MMA</h1>
     <!--Les différents entrainements-->
@@ -27,10 +27,6 @@ const props = defineProps({
 
 .boxes {
   margin: 0 30px 70px 30px;
-}
-
-.blue-theme {
-  background-color: #15baba;
 }
 
 .blue-theme-boxes {
