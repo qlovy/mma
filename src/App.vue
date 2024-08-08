@@ -69,6 +69,8 @@ const ctx = reactive({
   exercisesBook: exercisesBook
 })
 
+let exerciseArea = ref(true)
+
 // Renvoie les informations relatives à un exercice sous forme d'objet
 function createExercise(name, series, reps, rest_in_s, advice) {
   return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
@@ -107,6 +109,15 @@ function messageNew(index) {
 
 // Demande la permission d'envoyé des notifications
 Notification.requestPermission().then();
+
+// Gère le menu
+function exercisePage(){
+
+}
+
+function settingsPage(){
+
+}
 </script>
 
 <template id="app">
@@ -119,26 +130,37 @@ Notification.requestPermission().then();
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
   <div id="body">
-    <!--La liste des exercices possibles-->
-    <exerciseList v-if="!ctx.exercisePage" :array="exercisesBook" @func="messageNew"/>
+    <!--La partie Exercices-->
+    <div v-if="exerciseArea">
+      <!--La liste des exercices possibles-->
+      <exerciseList v-if="!ctx.exercisePage" :array="exercisesBook" @func="messageNew"/>
 
-    <!--La page d'utlistation des exercices-->
-    <exerciseDetails v-else id="exerciseDetails"
-                     :message="message" :ctx="ctx"
-                     @manage-actual-use-ref="manageActualUseRef"/>
+      <!--La page d'utlistation des exercices-->
+      <exerciseDetails v-else id="exerciseDetails"
+                       :message="message" :ctx="ctx"
+                       @manage-actual-use-ref="manageActualUseRef"/>
+    </div>
+
+    <!--La partie Réglages-->
+    <div v-else>
+      <p>Your a in my world now !!</p>
+    </div>
+
+
+
     <!--Le menu pour basculer entre la liste d'exercice ou alors les paramètres-->
     <!--Utilisation table cells -->
     <table id="menu">
       <tbody>
         <tr>
-          <td class="align-middle">
+          <td class="align-middle" @click="exerciseArea = true">
             <!--Icon des exercices-->
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-activity icon-menu" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
             </svg>
           </td>
 
-          <td class="align-middle">
+          <td class="align-middle" @click="exerciseArea = false">
             <!-- Icon des paramètres-->
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-gear icon-menu" viewBox="0 0 16 16">
               <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
@@ -204,11 +226,6 @@ div {
 #exerciseDetails h1 {
   text-align: center;
   padding-top: 30px;
-}
-
-/*La page d'aide*/
-#help-page {
-
 }
 
 /*Font style from Google Font Ubuntu*/
