@@ -10,11 +10,11 @@ const defaultProgramme = require("/src/data/programme.json")
 let exercisesBook = defaultProgramme
 
 // Actualise le livre d'exercices
-function updateDB(){
+function updateDB() {
   // Si le local storage contient un programme alors on l'utilise.
   if (localStorage.getItem("data") != null) {
     exercisesBook = JSON.parse(localStorage.getItem("data"))
-  }else{
+  } else {
     exercisesBook = defaultProgramme
   }
 }
@@ -35,11 +35,6 @@ const ctx = reactive({
 })
 
 let exerciseArea = ref(true)
-
-// Renvoie les informations relatives à un exercice sous forme d'objet
-function createExercise(name, series, reps, rest_in_s, advice) {
-  return {nom: name, series: series, repetitions: reps, recuperation: rest_in_s, conseil: advice}
-}
 
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
@@ -136,13 +131,13 @@ function resetDefaultProgramme() {
         <p class="ubuntu-light">Pour pouvoir configurer des exercices, il te faut remplir ce fichier JSON.</p>
         <a href="/src/data/model.json" class="me-4">Le modèle</a>
         <a href="/src/data/tutorial.md">Le tutoriel</a>
-        <p class="ubuntu-light-italic">Mettre à disposition un modèle de fichier JSON pour config + créer qqlch pour quelqu'un qui veux plusieurs séances à config en meme temps</p>
 
         <h3 class="ubuntu-regular mt-3">Importe ton fichier JSON</h3>
-        <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger !</p>
+        <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant
+          sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger
+          (ci-dessus)!</p>
         <!--Import du fichier JSON-->
         <input type="file" accept=".json" placeholder="hello" @change="handleJSON">
-        <p class="ubuntu-light-italic">l'utilisateur a une interface qui lui permet de charger son json</p>
 
         <h3 class="ubuntu-regular mt-3">Retour au programme par défaut</h3>
         <p class="ubuntu-light">En cliquant sur le bouton ci-dessous, tu retourneras au programme par défaut.</p>
@@ -152,27 +147,31 @@ function resetDefaultProgramme() {
     </div>
 
 
-
     <!--Le menu pour basculer entre la liste d'exercice ou alors les paramètres-->
     <!--Utilisation table cells pour placer les icones de manière simple-->
     <table id="menu" v-if="!ctx.exercisePage">
       <tbody>
-        <tr>
-          <td class="align-middle" @click="exerciseArea = true">
-            <!--Icon des exercices-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-activity icon-menu" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
-            </svg>
-          </td>
+      <tr>
+        <td class="align-middle" @click="exerciseArea = true">
+          <!--Icon des exercices-->
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+               class="bi bi-activity icon-menu" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+          </svg>
+        </td>
 
-          <td class="align-middle" @click="exerciseArea = false">
-            <!-- Icon des paramètres-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-gear icon-menu" viewBox="0 0 16 16">
-              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
-            </svg>
-          </td>
-        </tr>
+        <td class="align-middle" @click="exerciseArea = false">
+          <!-- Icon des paramètres-->
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+               class="bi bi-gear icon-menu" viewBox="0 0 16 16">
+            <path
+                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+            <path
+                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+          </svg>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
