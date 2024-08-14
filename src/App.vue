@@ -6,7 +6,10 @@ import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
 const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
-const exercisesBook = [
+const baseProgramme = require("/src/data/programme.json")
+const exercisesBook = baseProgramme
+
+/*[
   {
     nom: 'Force Poussée',
     jour: 'Lundi et Vendredi',
@@ -53,6 +56,7 @@ const exercisesBook = [
     alterne: false
   }
 ]
+*/
 
 // L'object qui contient le contexte de fonctionnement interne
 const ctx = reactive({
@@ -109,6 +113,26 @@ function messageNew(index) {
 
 // Demande la permission d'envoyé des notifications
 Notification.requestPermission().then();
+
+// Gestion du fichier JSON
+function handleJSON(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const jsonData = e.target.result;
+      try {
+        const data = JSON.parse(jsonData);
+        console.log(data)
+      } catch (error) {
+        console.error('Erreur de parsing du JSON:', error);
+      }
+    };
+    reader.readAsText(file);
+  } else {
+    console.log('Aucun fichier sélectionné');
+  }
+}
 </script>
 
 <template id="app">
@@ -121,10 +145,11 @@ Notification.requestPermission().then();
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
   <div id="body">
+
     <!--La partie Exercices-->
     <div v-if="exerciseArea">
       <!--La liste des exercices possibles-->
-      <exerciseList v-if="!ctx.exercisePage" :array="exercisesBook" @func="messageNew"/>
+      <exerciseList v-if="!ctx.exercisePage" :array="exercisesBook" @func="messageNew" class="overflow-auto"/>
 
       <!--La page d'utlistation des exercices-->
       <exerciseDetails v-else id="exerciseDetails"
@@ -146,6 +171,9 @@ Notification.requestPermission().then();
 
         <h3 class="ubuntu-regular mt-3">Importe ton fichier JSON</h3>
         <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger !</p>
+        <!--Import du fichier JSON-->
+        <input id="file-input" type="file" accept=".json" placeholder="hello" @change="handleJSON">
+        <p id="JSON-output">This will be your JSON output</p>
         <p class="ubuntu-light-italic">l'utilisateur a une interface qui lui permet de charger son json</p>
       </div>
 
@@ -205,7 +233,7 @@ div {
 /*Le menu*/
 #menu {
   background-color: #007777;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 100px;

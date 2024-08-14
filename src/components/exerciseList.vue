@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div>
+  <div style="background-color: #15baba;">
     <!--Le titre-->
     <h1 class="ubuntu-medium title mt-4 mb-5">MMA</h1>
     <!--Les différents entrainements-->
