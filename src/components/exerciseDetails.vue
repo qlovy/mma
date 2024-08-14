@@ -7,7 +7,7 @@ import exerciseHelp from './exerciseDetailsComponents/exerciseHelp.vue'
 // Transmission du contexte
 const props = defineProps({
   ctx: Object,
-  message: String
+  title: String
 });
 
 // Pour appeler une fonction externe
@@ -85,7 +85,7 @@ function skipExercise() {
             @click="props.ctx.exercisePage = false; init()"></button>
 
     <!--Titre de l'entrainement-->
-    <h1 class="ubuntu-medium fs-1">{{ message }}</h1>
+    <h1 class="ubuntu-medium fs-1">{{ title }}</h1>
 
     <!--Annonce du nom de l'exercice à faire-->
     <div class="card mx-5 mt-5 blue-theme-boxes">
