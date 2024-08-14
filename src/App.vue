@@ -9,55 +9,7 @@ import exerciseDetails from './components/exerciseDetails.vue'
 const defaultProgramme = require("/src/data/programme.json")
 let exercisesBook = defaultProgramme
 
-
-/*[
-  {
-    nom: 'Force Poussée',
-    jour: 'Lundi et Vendredi',
-    echauffements: [
-      createExercise('Tourner les poignets', 1, '30 s', 1, 'Ne pas aller trop fort. Sentir que sa chauffe.'),
-      createExercise('Assouplissement des poignets', 1, '30 s', 1, 'Les mains au sol faire des cercles avec les bras, changer la position des mains.'),
-      createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
-      createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.')
-    ],
-    exercices: [
-      createExercise('Pompes Pikes', 6, 6, 60, 'Tu dois sentir tes épaules tout le long. Pense à avoir les avant-bras à 90 degrés du sol.'),
-      createExercise('Pseudo pompes', 6, 6, 60, 'Main à 45 degrés. Sentir une pression sur les biceps et engager les abdos ainsi que les déltoïdes.')
-    ],
-    alterne: true
-  },
-  {
-    nom: 'Force Tirage',
-    jour: 'Mercredi et Samedi',
-    echauffements: [createExercise('Tourner les coudes', 1, '30 s', 1, 'Tourner les coudes dans le sens-horaire et anti-horaire. Aller doucement.'),
-      createExercise('Tourner les épaules', 1, '30 s', 1, 'Faire des grands cercles en avant et en arrière. Aller doucement.'),
-      createExercise('Burpies', 1, 10, 1, 'Bien faire le mouvement.')
-    ],
-    exercices: [
-      createExercise('Traction', 5, 6, 60, 'Rester bien droit, ne pas monter autour de la barre, sentir l\'engagement du dos. Utiliser les scapula pour débuter le mouvement.'),
-      createExercise('Front lever row en négative', 5, 4, 60, 'Bras tendu, se mettre en postion haute (les pieds vers le ciel) puis ralentir le plus possible le mouvement.'),
-      createExercise('Hanging', 1, "60 s", 60, 'Se laisser pendre au maximum sans douleur. Sentir un étirement au niveau des épaules principalement.'),
-      createExercise('Dips', 4, 6, 60, 'Descendre un peu plus bas que l\'angle droit. Tendre les bras en position haute.')
-    ],
-    alterne: false
-  },
-  {
-    nom: 'Jambes',
-    jour: 'Jeudi',
-    echauffements: [
-      createExercise('Jeu du parcours', 1, '60 s', 1, 'Courir sur place avec des sauts à intervalles irréguliers')
-    ],
-    exercices: [
-      createExercise('Flexions plantaires', 4, 20, 30, 'Poser son pied sur une surface surélevée, sur une jambe. Le pied ne doit pas toucher le sol. Puis on monte le talon, faire levier'),
-      createExercise('Split squat', 4, 10, 60, 'Un pied devant, un pied derrière. L\'espacement entre les deux pieds doit être assez large pour que quand on descend le genoux ne touche pas le sol.'),
-      createExercise('Curl nordique', 4, 5, 60, 'Bloquer les pieds sous une surface. Descendre doucement vers l\'avant. Quand on peut plus on s\'aide des  mains. Puis on remonte.'),
-      createExercise('Squat complet', 4, 10, 30, 'Pied à la largeur d\'épaules, reste en position basse environ une 1 seconde avant de remonter.'),
-      createExercise('Chaise', 1, "60 s", 30, 'Dos contre un mur, les genoux à angle droit.')
-    ],
-    alterne: false
-  }
-]
-*/
+// Actualise le livre d'exercices
 function updateDB(){
   // Si le local storage contient un programme alors on l'utilise.
   if (localStorage.getItem("data") != null) {
@@ -182,12 +134,14 @@ function resetDefaultProgramme() {
 
         <h3 class="ubuntu-regular mt-3">Télécharge le modèle JSON</h3>
         <p class="ubuntu-light">Pour pouvoir configurer des exercices, il te faut remplir ce fichier JSON.</p>
+        <a href="/src/data/model.json" class="me-4">Le modèle</a>
+        <a href="/src/data/tutorial.md">Le tutoriel</a>
         <p class="ubuntu-light-italic">Mettre à disposition un modèle de fichier JSON pour config + créer qqlch pour quelqu'un qui veux plusieurs séances à config en meme temps</p>
 
         <h3 class="ubuntu-regular mt-3">Importe ton fichier JSON</h3>
         <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger !</p>
         <!--Import du fichier JSON-->
-        <input id="file-input" type="file" accept=".json" placeholder="hello" @change="handleJSON">
+        <input type="file" accept=".json" placeholder="hello" @change="handleJSON">
         <p class="ubuntu-light-italic">l'utilisateur a une interface qui lui permet de charger son json</p>
 
         <h3 class="ubuntu-regular mt-3">Retour au programme par défaut</h3>

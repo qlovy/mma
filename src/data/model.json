@@ -1,0 +1,48 @@
+[
+  {
+    "nom": "nom de l'exercice",
+    "jour": "le ou les jours où il est executé",
+    "echauffements": [
+      {
+        "nom": " nom de l'exercice",
+        "series": 1,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Petit conseil pour l'exercice"
+      }
+    ],
+    "exercices": [
+      {
+        "nom": " nom de l'exercice",
+        "series": 1,
+        "repetitions": 5,
+        "recuperation": "60s",
+        "conseil": "Petit conseil pour l'exercice"
+      }
+    ],
+    "alterne": false
+  },
+  {
+    "nom": "nom de l'exercice",
+    "jour": "le ou les jours où il est executé",
+    "echauffements": [
+      {
+        "nom": " nom de l'exercice",
+        "series": 1,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Petit conseil pour l'exercice"
+      }
+    ],
+    "exercices": [
+      {
+        "nom": " nom de l'exercice",
+        "series": 1,
+        "repetitions": 5,
+        "recuperation": "60s",
+        "conseil": "Petit conseil pour l'exercice"
+      }
+    ],
+    "alterne": false
+  }
+]
