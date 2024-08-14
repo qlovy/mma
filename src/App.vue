@@ -5,9 +5,10 @@ import {reactive, ref} from 'vue'
 import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
-const message = ref('') // ref est seulement pour enregistrer ou indiquer une référence à des éléments HTML ou à des éléments enfants dans le modèle de votre application.
-const baseProgramme = require("/src/data/programme.json")
-const exercisesBook = baseProgramme
+// Le programme par défaut
+const defaultProgramme = require("/src/data/programme.json")
+let exercisesBook = defaultProgramme
+
 
 /*[
   {
@@ -57,6 +58,14 @@ const exercisesBook = baseProgramme
   }
 ]
 */
+function updateDB(){
+  // Si le local storage contient un programme alors on l'utilise.
+  if (localStorage.getItem("data") != null) {
+    exercisesBook = JSON.parse(localStorage.getItem("data"))
+  }else{
+    exercisesBook = defaultProgramme
+  }
+}
 
 // L'object qui contient le contexte de fonctionnement interne
 const ctx = reactive({
@@ -104,7 +113,6 @@ function manageActualUseRef() {
 // Gère le choix de l'exercice
 function messageNew(index) {
   ctx.type = index  // Défini le type en fonction de l'exercice choisi
-  message.value = 'Entrainement ' + exercisesBook[index].nom  // Message de bienvenue
   // Initialise l'échauffement
   ctx.exercisePage = true
   ctx.warmup = true
@@ -122,8 +130,8 @@ function handleJSON(event) {
     reader.onload = function (e) {
       const jsonData = e.target.result;
       try {
-        const data = JSON.parse(jsonData);
-        console.log(data)
+        localStorage.setItem("data", jsonData)
+        updateDB()
       } catch (error) {
         console.error('Erreur de parsing du JSON:', error);
       }
@@ -133,6 +141,13 @@ function handleJSON(event) {
     console.log('Aucun fichier sélectionné');
   }
 }
+
+// Retour au programme d'origine
+function resetDefaultProgramme() {
+  localStorage.clear()
+  updateDB()
+}
+
 </script>
 
 <template id="app">
@@ -153,12 +168,12 @@ function handleJSON(event) {
 
       <!--La page d'utlistation des exercices-->
       <exerciseDetails v-else id="exerciseDetails"
-                       :message="message" :ctx="ctx"
+                       :ctx="ctx"
                        @manage-actual-use-ref="manageActualUseRef"/>
     </div>
 
     <!--La partie Réglages-->
-    <div v-else>
+    <div v-else class="overflow-auto">
       <h1 class="ubuntu-medium mt-3 d-flex justify-content-center display-2">Réglages</h1>
       <!--Tous les réglages-->
       <div class="ms-2">
@@ -173,8 +188,11 @@ function handleJSON(event) {
         <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger !</p>
         <!--Import du fichier JSON-->
         <input id="file-input" type="file" accept=".json" placeholder="hello" @change="handleJSON">
-        <p id="JSON-output">This will be your JSON output</p>
         <p class="ubuntu-light-italic">l'utilisateur a une interface qui lui permet de charger son json</p>
+
+        <h3 class="ubuntu-regular mt-3">Retour au programme par défaut</h3>
+        <p class="ubuntu-light">En cliquant sur le bouton ci-dessous, tu retourneras au programme par défaut.</p>
+        <button class="btn btn-primary" @click="resetDefaultProgramme">Retour au programme par défaut</button>
       </div>
 
     </div>
@@ -182,7 +200,7 @@ function handleJSON(event) {
 
 
     <!--Le menu pour basculer entre la liste d'exercice ou alors les paramètres-->
-    <!--Utilisation table cells -->
+    <!--Utilisation table cells pour placer les icones de manière simple-->
     <table id="menu" v-if="!ctx.exercisePage">
       <tbody>
         <tr>
@@ -202,9 +220,7 @@ function handleJSON(event) {
           </td>
         </tr>
       </tbody>
-
     </table>
-
   </div>
 </template>
 
