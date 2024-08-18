@@ -6,7 +6,7 @@ import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
 // Le programme par défaut
-const defaultProgramme = require("/src/data/programme.json")
+const defaultProgramme = require("/public/data/programme.json")
 let exercisesBook = defaultProgramme
 
 // Actualise le livre d'exercices
@@ -129,8 +129,8 @@ function resetDefaultProgramme() {
 
         <h3 class="ubuntu-regular mt-3">Télécharge le modèle JSON</h3>
         <p class="ubuntu-light">Pour pouvoir configurer des exercices, il te faut remplir ce fichier JSON.</p>
-        <a href="/src/data/model.json" class="me-4">Le modèle</a>
-        <a href="/src/data/tutorial.md">Le tutoriel</a>
+        <a href="/data/model.json" class="me-4" download="model">Le modèle</a>
+        <a href="/data/tutorial.md" download="tuto">Le tutoriel</a>
 
         <h3 class="ubuntu-regular mt-3">Importe ton fichier JSON</h3>
         <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant
