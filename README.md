@@ -20,7 +20,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 #### Introduction:
 The goal of this project is to build a sport app for my training. I choose to use a PWAs App because i don't have to pass by the Apple Store or Google Play.
-I choose Vue.js and Bootstrap because this simply me the creation of the PWA and all the animation, ... For Bootstrap, he simplifies the creation of the design.
+I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple and it's great to learn new things. For Bootstrap, he simplifies the creation of the design.
 
 ### Todos
 
