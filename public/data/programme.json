@@ -204,7 +204,7 @@
         "nom": "Dips et tirage horizontal",
         "series": 4,
         "repetitions": 6,
-        "recuperation": "60s",
+        "recuperation": 60,
         "conseil": "Faire des dips avec les coudes just en dessous de l'équerre puis enchaîner avec du tirage horizontral."
       }
     ],
