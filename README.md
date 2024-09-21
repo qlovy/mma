@@ -28,7 +28,7 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [x] Add program "Tirage" and "Jambes"
 - [x] Remove the time after last exercise
 - [x] Add warm-up
-- [ ] A sound at the end of the timer or a notification => [doc MDN](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Tutorials/js13kGames/Re-engageable_Notifications_Push)
+- [ ] A sound at the end of the timer or a notification => [doc MDN](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Tutorials/js13kGames/Re-engageable_Notifications_Push) => make that the sound is like the sound of a timer on iphone , so the music can restart.
 - [x] Change the exercice while the rest time ?
 - [x] Show the state of series ?
 - [x] upgrade the information (repetitions in seconds, ...) ==> do a function
@@ -38,9 +38,9 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [ ] change the background color on the top and bottom on iphone
 - [x] create components to simpify the App.vue (home page, exercise page, ...)
 - [ ] fix alternating exercise
-- [ ] use local storage for storing exercises
-- [ ] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
-- [ ] add a menu with two categories (one for exercising and the other for settings)
+- [x] use local storage for storing exercises
+- [x] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
+- [x] add a menu with two categories (one for exercising and the other for settings)
 
 ### Ideas
 
