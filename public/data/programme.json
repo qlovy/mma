@@ -189,7 +189,7 @@
       {
         "nom": "Front lever tuck",
         "series": 4,
-        "repetitions": 2,
+        "repetitions": 1,
         "recuperation": 60,
         "conseil": "Bien engager le dos et les abdos, se filmer pour corriger l'exécution."
       },
@@ -204,7 +204,7 @@
         "nom": "Dips et tirage horizontal",
         "series": 4,
         "repetitions": 6,
-        "recuperation": "60s",
+        "recuperation": 60,
         "conseil": "Faire des dips avec les coudes just en dessous de l'équerre puis enchaîner avec du tirage horizontral."
       }
     ],

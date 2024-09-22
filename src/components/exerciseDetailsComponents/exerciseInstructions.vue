@@ -10,6 +10,7 @@ const emit = defineEmits(['manageSession'])
 
 // Variables spécifiques au bloc
 const timeExercise = ref(false)
+const audio = new Audio(require("/public/boxingBell.mp3"))
 
 // Définis les instructions à afficher
 function instructionExercice(repetition) {
@@ -82,6 +83,7 @@ const update = () => {
     }else{
       sendNotif("Your rest time is over")
     }
+    audio.play()
   } else {
     handle = requestAnimationFrame(update)
   }
