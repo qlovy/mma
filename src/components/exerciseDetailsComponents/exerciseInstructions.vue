@@ -15,11 +15,11 @@ const timeExercise = ref(false)
 function instructionExercice(repetition) {
   // Si le paramètre repetition contient une chaîne de caractère
   if (typeof repetition === "string") {
-    // Le chiffre contenu dans la chaine de caractère est plus petit que 10
+    // Le chiffre contenu dans la chaine de caractère est plus grand que 10
     if (parseInt(repetition.slice(0, 2)) > 10) {
       timeExercise.value = true // Définis l'affichage du temps d'exercice
     }
-    return "Tiens pendant " + repetition + "econdes"
+    return "Tiens pendant " + repetition.slice(0, -1) + " " + repetition[repetition.length-1] + "econdes"
   } else {
     timeExercise.value = false  // Fait disparaître l'affichage du temps d'exercice
     return "Fait " + repetition + " répétions"
