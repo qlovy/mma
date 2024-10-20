@@ -209,5 +209,63 @@
       }
     ],
     "alterne": false
+  },
+  {
+    "nom": "Bras",
+    "jour": "Dimanche",
+    "echauffements": [
+      {
+        "nom": "Tourner les coudes",
+        "series": 1,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Les mains au sol faire des cercles avec les bras, changer la position des mains."
+      },
+      {
+        "nom": "Tourner les épaules",
+        "series": 1,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Faire des grands cercles en avant et en arrière. Aller doucement."
+      }
+    ],
+    "exercices": [
+      {
+        "nom": "Pièce droite",
+        "series": 4,
+        "repetitions": 2,
+        "recuperation": 30,
+        "conseil": "Se lancer en l'air et joué avec l'appui des doigts pour rester droit. Se filmer pour corriger."
+      },
+      {
+        "nom": "Planche biceps lean",
+        "series": 4,
+        "repetitions": 10,
+        "recuperation": 30,
+        "conseil": "Sentir la tension dans les biceps et non dans les coudes."
+      },
+      {
+        "nom": "Pompes classiques",
+        "series": 4,
+        "repetitions": 15,
+        "recuperation": 60,
+        "conseil": "Avoir les mains à largeur d'épaule."
+      },
+      {
+        "nom": "Planche inversée",
+        "series": 4,
+        "repetitions": "30s",
+        "recuperation": 30,
+        "conseil": "Faire une table, sentir l'étirement dans les épaules et pecs."
+      },
+      {
+        "nom": "Figure 90 degrés",
+        "series": 4,
+        "repetitions": 2,
+        "recuperation": 60,
+        "conseil": "Tenir la position puis alterner les pieds."
+      }
+    ],
+    "alterne": false
   }
 ]
