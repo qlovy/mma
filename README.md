@@ -38,7 +38,7 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [ ] change the background color on the top and bottom on iphone
 - [x] create components to simpify the App.vue (home page, exercise page, ...)
 - [ ] fix alternating exercise
-- [ ] make that we can pass a time recuperation / a serie
+- [ ] make that we can skip a time recuperation / a serie
 - [x] use local storage for storing exercises
 - [x] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
 - [x] add a menu with two categories (one for exercising and the other for settings)
