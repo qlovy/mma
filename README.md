@@ -43,7 +43,8 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [x] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
 - [x] add a menu with two categories (one for exercising and the other for settings)
 - [ ] add an option to make a circuit
-- [ ] display theorical time for on session
+- [ ] simplify the creation of JSON file by using an interpreter like Traction, 5x6, 30s convert into the normal one.
+- [ ] add the stretching
 
 ### Ideas
 
