@@ -19,8 +19,7 @@
         "recuperation": "60s",
         "conseil": "Petit conseil pour l'exercice"
       }
-    ],
-    "alterne": false
+    ]
   },
   {
     "nom": "nom de l'exercice",
@@ -42,7 +41,6 @@
         "recuperation": "60s",
         "conseil": "Petit conseil pour l'exercice"
       }
-    ],
-    "alterne": false
+    ]
   }
 ]

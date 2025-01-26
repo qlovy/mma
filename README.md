@@ -19,8 +19,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## MMA
 
 #### Introduction:
-The goal of this project is to build a sport app for my training. I choose to use a PWAs App because i don't have to pass by the Apple Store or Google Play.
-I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple and it's great to learn new things. For Bootstrap, he simplifies the creation of the design.
+The goal of this project is to build a sport app for my training. I choose to use a PWAs App because I don't have to pass by the Apple Store or Google Play.
+I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple. It's great to learn new things. For Bootstrap, he simplifies the creation of the design.
 
 ### Todos
 
@@ -37,8 +37,8 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [x] add a timer for exercise with time (more than 10 seconds)
 - [ ] change the background color on the top and bottom on iphone
 - [x] create components to simpify the App.vue (home page, exercise page, ...)
-- [ ] fix alternating exercise
 - [ ] make that we can skip a time recuperation / a serie
+- [ ] make the icon menu in color when we are on it
 - [x] use local storage for storing exercises
 - [x] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
 - [x] add a menu with two categories (one for exercising and the other for settings)
