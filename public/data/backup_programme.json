@@ -1,19 +1,19 @@
 [
   {
-    "nom": "Poussée",
-    "jour": "Mardi",
+    "nom": "Handstand et L-sit",
+    "jour": "Lundi",
     "echauffements": [
       {
         "nom": "Tourner les poignets",
         "series": 1,
-        "repetitions": "15s",
+        "repetitions": "30s",
         "recuperation": 1,
         "conseil": "Ne pas aller trop fort. Sentir que ça chauffe."
       },
       {
         "nom": "Assouplissements des poignets",
         "series": 1,
-        "repetitions": "15s",
+        "repetitions": "30s",
         "recuperation": 1,
         "conseil": "Les mains au sol faire des cercles avec les bras, changer la position des mains."
       },
@@ -34,52 +34,31 @@
     ],
     "exercices": [
       {
-        "nom": "Handstand",
-        "series": 4,
-        "repetitions": 2,
+        "nom": "Pompes en équilibre",
+        "series": 5,
+        "repetitions": 3,
+        "recuperation": 90,
+        "conseil": "Appuyer contre un mur, les mains à un pied par rapport au mur. Faire une pompe, se filmer et corriger."
+      },
+      {
+        "nom": "Pièce droite",
+        "series": 5,
+        "repetitions": 1,
         "recuperation": 60,
-        "conseil": "Appuyer contre un mur, les mains à un pied par rapport au mur. Tenir l'équilibre."
+        "conseil": "Faire la pièce droite contre un mur puis en gainant et en poussant sur les doigts, décoller les pieds du mur."
       },
       {
-        "nom": "The Planche",
-        "series": 4,
-        "repetitions": 25,
-        "recuperation": 30,
-        "conseil": "Position pseudo pompes. Pas de douleur sur les coudes."
-      },
-      {
-        "nom": "Pompe à un bras",
-        "series": 4,
-        "repetitions": 5,
+        "nom": "L-sit",
+        "series": 5,
+        "repetitions": 1,
         "recuperation": 60,
-        "conseil": "Sous la table. Coude presque déplié puis monter la tête au dessus de la table."
-      },
-      {
-        "nom": "Biceps curl",
-        "series": 4,
-        "repetitions": 10,
-        "recuperation": 30,
-        "conseil": "Sous la table. Coude presque déplié puis monter la tête au dessus de la table."
-      },
-      {
-        "nom": "Pompe triceps",
-        "series": 4,
-        "repetitions": 10,
-        "recuperation": 30,
-        "conseil": "Bras tendu mains sur la table puis on descend la tête sous la table."
-      },
-      {
-        "nom": "Pompe avant-bras",
-        "series": 4,
-        "repetitions": 10,
-        "recuperation": 30,
-        "conseil": "Contre un mur, soulevé les poignets en faisant levier avec les doigts."
+        "conseil": "Tenir la position en L, si trop dur plié les genoux."
       }
     ]
   },
   {
-    "nom": "Pompes triceps",
-    "jour": "Jeudi",
+    "nom": "Figure 90 degrès",
+    "jour": "Mardi",
     "echauffements": [
       {
         "nom": "Tourner les poignets",
