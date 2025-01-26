@@ -78,70 +78,13 @@
     ]
   },
   {
-    "nom": "Pompes triceps",
-    "jour": "Jeudi",
-    "echauffements": [
-      {
-        "nom": "Tourner les poignets",
-        "series": 1,
-        "repetitions": "30s",
-        "recuperation": 1,
-        "conseil": "Ne pas aller trop fort. Sentir que ça chauffe."
-      },
-      {
-        "nom": "Assouplissements des poignets",
-        "series": 1,
-        "repetitions": "30s",
-        "recuperation": 1,
-        "conseil": "Les mains au sol faire des cercles avec les bras, changer la position des mains."
-      },
-      {
-        "nom": "Tourner les coudes",
-        "series": 1,
-        "repetitions": "30s",
-        "recuperation": 1,
-        "conseil": "Les mains au sol faire des cercles avec les bras, changer la position des mains."
-      },
-      {
-        "nom": "Tourner les épaules",
-        "series": 1,
-        "repetitions": "30s",
-        "recuperation": 1,
-        "conseil": "Faire des grands cercles en avant et en arrière. Aller doucement."
-      }
-    ],
-    "exercices": [
-      {
-        "nom": "Pseudo pompes",
-        "series": 5,
-        "repetitions": 3,
-        "recuperation": 90,
-        "conseil": "Mettre les mains à 45 degrés, bien sentir la tension dans les biceps, mettre de l'intensité."
-      },
-      {
-        "nom": "Figure 90",
-        "series": 5,
-        "repetitions": 1,
-        "recuperation": 60,
-        "conseil": "Position de pseudo pompes, engagé les épaules vers le bas et vers l'avant puis alterné les pieds, les mains vers le bassin."
-      },
-      {
-        "nom": "Planche biceps",
-        "series": 5,
-        "repetitions": 5,
-        "recuperation": 60,
-        "conseil": "Les mains à 180 degrés aller le plus vers l'avant possible, la tension est sur le biceps pas sur les coudes."
-      }
-    ]
-  },
-  {
     "nom": "Jambes",
     "jour": "Jeudi",
     "echauffements": [
       {
         "nom": "Jeu du parcours",
         "series": 1,
-        "repetitions": "60s",
+        "repetitions": "120s",
         "recuperation": 1,
         "conseil": "Courir sur place avec des sauts à intervalles irréguliers."
       }
