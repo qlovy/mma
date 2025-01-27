@@ -82,20 +82,20 @@
     "jour": "Jeudi",
     "echauffements": [
       {
-        "nom": "Jeu du parcours",
+        "nom": "Corde à sauter",
         "series": 1,
-        "repetitions": "120s",
+        "repetitions": "300s",
         "recuperation": 1,
-        "conseil": "Courir sur place avec des sauts à intervalles irréguliers."
+        "conseil": "Faire ou simuler de la corde à sauter"
       }
     ],
     "exercices": [
       {
-        "nom": "Flexions plantaires",
-        "series": 4,
-        "repetitions": 20,
-        "recuperation": 30,
-        "conseil": "Poser le bout de son pied sur un objet pour que les orteils soient au-dessus du talon. Descendre sans toucher le sol puis remonter."
+        "nom": "Gainage pont",
+        "series": 2,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Sur le dos, les genoux fléchis, lever le tout le corps sauf la tête, tendre une jambe."
       },
       {
         "nom": "Split squat",
