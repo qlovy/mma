@@ -95,33 +95,75 @@
         "series": 2,
         "repetitions": "30s",
         "recuperation": 1,
-        "conseil": "Sur le dos, les genoux fléchis, lever le tout le corps sauf la tête, tendre une jambe."
+        "conseil": "Sur le dos, les genoux fléchis, lever le tout le corps sauf la tête, tendre une jambe, les cuisses sont à la même hauteur."
       },
       {
-        "nom": "Split squat",
-        "series": 3,
+        "nom": "Chaise sur une jambe",
+        "series": 2,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "En position de chaise, on tend une jambe devant soit, les cuisses sont à la même hauteur."
+      },
+      {
+        "nom": "Soulever de terre",
+        "series": 2,
         "repetitions": 10,
-        "recuperation": 60,
-        "conseil": "En position de fente, descendre sur la jambe avant puis remonter. Sentir un étirement du quadriceps de la jambe arrière."
+        "recuperation": 1,
+        "conseil": "Debout, on met le poids sur une jambe, on se penche en avant en levant la jambe arrière et le bras opposé."
       },
       {
-        "nom": "Pistol squat",
-        "series": 3,
-        "repetitions": 5,
-        "recuperation": 60,
-        "conseil": "Une jambe tendue en l'air, on descend puis on remonte avec la plus grande amplitude sans toucher le sol."
+        "nom": "Montée de chaise step up",
+        "series": 2,
+        "repetitions": 10,
+        "recuperation": 1,
+        "conseil": "Un pied sur un support surélevé, poussée qu'avec le pied qui est sur le support jusqu'à être debout."
       },
       {
-        "nom": "Chaise",
+        "nom": "Ischio curl",
         "series": 1,
-        "repetitions": "60s",
-        "recuperation": "30s",
-        "conseil": "Faire la chaise contre un mur, dos droit et jambes à l'équerre."
+        "repetitions": 10,
+        "recuperation": 1,
+        "conseil": "Sur le dos, les pieds sur un coussin, tirer le coussin et pousser le coussin."
+      },
+	  {
+        "nom": "Pistol squat",
+        "series": 2,
+        "repetitions": 10,
+        "recuperation": 1,
+        "conseil": "Sur une jambe, monter et descendre."
+      },
+	  {
+        "nom": "Extension mollet",
+        "series": 2,
+        "repetitions": 15,
+        "recuperation": 1,
+        "conseil": "Mettre le bout du pied sur un support surélevé, descendre et monter, contraction maximal du mollet."
+      },
+	  {
+        "nom": "Fentes bulgar",
+        "series": 2,
+        "repetitions": 15,
+        "recuperation": 1,
+        "conseil": "Un pied en arrière sur un support surélevé, descendre et monter, le genoux ne doit pas toucher le sol."
+      },
+	  {
+        "nom": "Saut sur une jambe",
+        "series": 2,
+        "repetitions": 10,
+        "recuperation": 1,
+        "conseil": "Saut sur une jambe, soit avant-arrière soit gauche-droite."
+      },
+	  {
+        "nom": "Corde à sauter",
+        "series": 2,
+        "repetitions": "180s",
+        "recuperation": 1,
+        "conseil": "Faire ou simuler de la corde à sauter."
       }
-    ]
+	]
   },
   {
-    "nom": "Tirage",
+    "nom": "Tirage, avec anneaux",
     "jour": "Samedi",
     "echauffements": [
       {
@@ -129,7 +171,7 @@
         "series": 1,
         "repetitions": "30s",
         "recuperation": 1,
-        "conseil": "Les mains au sol faire des cercles avec les bras, changer la position des mains."
+        "conseil": "Faire des cercles en avant et en arrière. Aller doucement."
       },
       {
         "nom": "Tourner les épaules",
@@ -137,6 +179,20 @@
         "repetitions": "30s",
         "recuperation": 1,
         "conseil": "Faire des grands cercles en avant et en arrière. Aller doucement."
+      },
+      {
+        "nom": "Tourner les poignets",
+        "series": 1,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Rotation sur eux-mêmes. Sentir que ça chauffe."
+      },
+      {
+        "nom": "Hanging",
+        "series": 1,
+        "repetitions": "60s",
+        "recuperation": 1,
+        "conseil": "Se suspendre en position classique."
       }
     ],
     "exercices": [
@@ -151,35 +207,28 @@
         "nom": "Front lever tuck",
         "series": 4,
         "repetitions": 1,
-        "recuperation": 60,
+        "recuperation": 30,
         "conseil": "Bien engager le dos et les abdos, se filmer pour corriger l'exécution."
-      },
-      {
-        "nom": "Hanging",
-        "series": 1,
-        "repetitions": "60s",
-        "recuperation": 60,
-        "conseil": "S'accrocher aux anneaux et se laisser pendre. Une fois la prise classique métrisée, essayer en false grip."
       },
       {
         "nom": "Dips et tirage horizontal",
         "series": 4,
         "repetitions": 6,
         "recuperation": 60,
-        "conseil": "Faire des dips avec les coudes just en dessous de l'équerre puis enchaîner avec du tirage horizontral."
+        "conseil": "Faire des dips avec les coudes juste en dessous de l'équerre puis enchaîner avec du tirage horizontal."
       }
     ]
   },
   {
-    "nom": "Bras",
-    "jour": "Dimanche",
+    "nom": "Tirage, sans anneaux",
+    "jour": "Samedi",
     "echauffements": [
       {
         "nom": "Tourner les coudes",
         "series": 1,
         "repetitions": "30s",
         "recuperation": 1,
-        "conseil": "Les mains au sol faire des cercles avec les bras, changer la position des mains."
+        "conseil": "Faire des cercles en avant et en arrière. Aller doucement."
       },
       {
         "nom": "Tourner les épaules",
@@ -187,43 +236,50 @@
         "repetitions": "30s",
         "recuperation": 1,
         "conseil": "Faire des grands cercles en avant et en arrière. Aller doucement."
+      },
+      {
+        "nom": "Tourner les poignets",
+        "series": 1,
+        "repetitions": "30s",
+        "recuperation": 1,
+        "conseil": "Rotation sur eux-mêmes. Sentir que ça chauffe."
+      },
+      {
+        "nom": "Hanging",
+        "series": 1,
+        "repetitions": "60s",
+        "recuperation": 1,
+        "conseil": "Se suspendre en position classique."
       }
     ],
     "exercices": [
       {
-        "nom": "Pièce droite",
+        "nom": "Traction",
         "series": 4,
-        "repetitions": 2,
+        "repetitions": 6,
         "recuperation": 30,
-        "conseil": "Se lancer en l'air et joué avec l'appui des doigts pour rester droit. Se filmer pour corriger."
+        "conseil": "Engager le dos, monter le plus droit possible, le menton par dessus les anneaux. Si à l'aise en prise classique, essayer en false grip."
       },
       {
-        "nom": "Planche biceps lean",
+        "nom": "Handstand",
+        "series": 4,
+        "repetitions": 1,
+        "recuperation": 30,
+        "conseil": "Pièce droite contre un mur. Tenir l'équilibre."
+      },
+      {
+        "nom": "The Planche",
+        "series": 4,
+        "repetitions": "25s",
+        "recuperation": 30,
+        "conseil": "Position pseudo, gainage sur les biceps."
+      },
+      {
+        "nom": "Pompes triceps",
         "series": 4,
         "repetitions": 10,
         "recuperation": 30,
-        "conseil": "Sentir la tension dans les biceps et non dans les coudes."
-      },
-      {
-        "nom": "Pompes classiques",
-        "series": 4,
-        "repetitions": 15,
-        "recuperation": 60,
-        "conseil": "Avoir les mains à largeur d'épaule."
-      },
-      {
-        "nom": "Planche inversée",
-        "series": 4,
-        "repetitions": "30s",
-        "recuperation": 30,
-        "conseil": "Faire une table, sentir l'étirement dans les épaules et pecs."
-      },
-      {
-        "nom": "Figure 90 degrés",
-        "series": 4,
-        "repetitions": 2,
-        "recuperation": 60,
-        "conseil": "Tenir la position puis alterner les pieds."
+        "conseil": "Bras tendu mains sur la table puis on descend la tête sous la table."
       }
     ]
   }
