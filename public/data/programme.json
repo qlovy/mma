@@ -43,7 +43,7 @@
       {
         "nom": "The Planche",
         "series": 4,
-        "repetitions": 25,
+        "repetitions": "25s",
         "recuperation": 30,
         "conseil": "Position pseudo pompes. Pas de douleur sur les coudes."
       },
@@ -52,7 +52,7 @@
         "series": 4,
         "repetitions": 5,
         "recuperation": 60,
-        "conseil": "Sous la table. Coude presque déplié puis monter la tête au dessus de la table."
+        "conseil": "Variations avec moins de poids, ex: contre un mur, à genoux, ... Pour chaque bras."
       },
       {
         "nom": "Biceps curl",
