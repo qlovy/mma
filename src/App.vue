@@ -35,8 +35,6 @@ const ctx = reactive({
 })
 
 let exerciseArea = ref(true)
-let activityFillColor = "currentColor"
-let gearFillColor = "currentColor"
 
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
@@ -266,32 +264,23 @@ div {
   font-style: italic;
 }
 
+/* Just in case of...
 .ubuntu-regular-italic {
   font-family: "Ubuntu", sans-serif;
   font-weight: 400;
   font-style: italic;
 }
 
+
 .ubuntu-medium-italic {
   font-family: "Ubuntu", sans-serif;
   font-weight: 500;
   font-style: italic;
 }
+*/
 
 #app {
   background-color: #fff;
-}
-
-
-/* Pour la transition */
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 
 /*Bootstrap import*/
