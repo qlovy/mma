@@ -1,0 +1,74 @@
+[
+  # Nom et Jour
+  nom: Poussée,
+  jour: Mardi,
+
+  # Echauffement, liste ci-dessous les exercices pour t'échauffer.
+  - [Tourner les poignets, 1, 15s, 1, Ne pas aller trop fort. Sentir que ça chauffe.]
+  - [Assouplissements des poignets, 1, 15s, 1, Les mains au sol faire des cercles avec les bras. Changer la position des mains.]
+  - [Tourner les coudes, 1, 30s, 1, Les mains au sol faire des cercles avec les bras, changer la position des mains.]
+  - [Tourner les épaules,1 , 30s, 1, Faire des grands cercles en avant et en arrière. Aller doucement.]
+
+  # Exercice, list ci-dessous les exercices pour t'entrainer
+  - [Handstand, 4, 2, 60, Appuyer contre un mur, les mains à un pied par rapport au mur. Tenir l'équilibre.]
+  - [The Planche, 4, 25s, 30, Position pseudo pompes. Pas de douleur sur les coudes.]
+  - [Pompe à un bras, 4, 5, 60, Variations avec moins de poids (contre un mur, à genoux, ...). Pour chaque bras.]
+  - [Biceps curl, 4, 10, 30, Sous la table. Coude presque déplié puis monter la tête au dessus de la table.]
+  - [Pompe triceps, 4, 10, 30, Bras tendu mains sur la table puis on descend la tête sous la table.]
+  - [Pompe avant-bras, 4, 10, 30, Contre un mur, soulevé les poignets en faisant levier avec les doigts.]
+
+  # Etirement
+  #- [Planche inversée, 1, 30s, 1, Faire le pont pas de douleur]
+  #- [Épaules, 1, 30s, 1, ]
+
+],
+
+[
+  # Nom et Jour
+  nom: Jambes,
+  jour: Mardi,
+
+  # Echauffement, liste ci-dessous les exercices pour t'échauffer.
+  - [Tourner les poignets, 1, 15s, 1, Ne pas aller trop fort. Sentir que ça chauffe.]
+  - [Assouplissements des poignets, 1, 15s, 1, Les mains au sol faire des cercles avec les bras. Changer la position des mains.]
+  - [Tourner les coudes, 1, 30s, 1, Les mains au sol faire des cercles avec les bras, changer la position des mains.]
+  - [Tourner les épaules,1 , 30s, 1, Faire des grands cercles en avant et en arrière. Aller doucement.]
+
+  # Exercice, list ci-dessous les exercices pour t'entrainer
+  - [Handstand, 4, 2, 60, Appuyer contre un mur, les mains à un pied par rapport au mur. Tenir l'équilibre.]
+  - [The Planche, 4, 25s, 30, Position pseudo pompes. Pas de douleur sur les coudes.]
+  - [Pompe à un bras, 4, 5, 60, Variations avec moins de poids (contre un mur, à genoux, ...). Pour chaque bras.]
+  - [Biceps curl, 4, 10, 30, Sous la table. Coude presque déplié puis monter la tête au dessus de la table.]
+  - [Pompe triceps, 4, 10, 30, Bras tendu mains sur la table puis on descend la tête sous la table.]
+  - [Pompe avant-bras, 4, 10, 30, Contre un mur, soulevé les poignets en faisant levier avec les doigts.]
+
+  # Etirement
+  #- [Planche inversée, 1, 30s, 1, Faire le pont pas de douleur]
+  #- [Épaules, 1, 30s, 1, ]
+
+],
+
+[
+  # Nom et Jour
+  nom: Poussée,
+  jour: Mardi,
+
+  # Echauffement, liste ci-dessous les exercices pour t'échauffer.
+  - [ Tourner les poignets, 1, 15s, 1, Ne pas aller trop fort. Sentir que ça chauffe. ]
+  - [ Assouplissements des poignets, 1, 15s, 1, Les mains au sol faire des cercles avec les bras. Changer la position des mains. ]
+  - [ Tourner les coudes, 1, 30s, 1, Les mains au sol faire des cercles avec les bras, changer la position des mains. ]
+  - [ Tourner les épaules,1 , 30s, 1, Faire des grands cercles en avant et en arrière. Aller doucement. ]
+
+  # Exercice, list ci-dessous les exercices pour t'entrainer
+  - [ Handstand, 4, 2, 60, Appuyer contre un mur, les mains à un pied par rapport au mur. Tenir l'équilibre. ]
+  - [ The Planche, 4, 25s, 30, Position pseudo pompes. Pas de douleur sur les coudes. ]
+  - [ Pompe à un bras, 4, 5, 60, Variations avec moins de poids (contre un mur, à genoux, ...). Pour chaque bras. ]
+  - [ Biceps curl, 4, 10, 30, Sous la table. Coude presque déplié puis monter la tête au dessus de la table. ]
+  - [ Pompe triceps, 4, 10, 30, Bras tendu mains sur la table puis on descend la tête sous la table. ]
+  - [ Pompe avant-bras, 4, 10, 30, Contre un mur, soulevé les poignets en faisant levier avec les doigts. ]
+
+  # Etirement
+  #- [Planche inversée, 1, 30s, 1, Faire le pont pas de douleur]
+  #- [Épaules, 1, 30s, 1, ]
+
+]
