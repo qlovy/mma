@@ -2,11 +2,15 @@
 import {computed, onUnmounted, ref} from 'vue'
 
 const props = defineProps({
-  ctx: Object
+  currentExercise: Array,
+  endSession: Boolean,
+  noSerie: Number
 })
 
+const restTime = ref(false);
+
 // Appel une fonction extérieure
-const emit = defineEmits(['manageSession'])
+const emit = defineEmits(['updateSession'])
 
 // Variables spécifiques au bloc
 const timeExercise = ref(false)
@@ -17,7 +21,8 @@ function instructionExercice(repetition) {
   // Si le paramètre repetition contient une chaîne de caractère
   if (typeof repetition === "string") {
     // Le chiffre contenu dans la chaine de caractère est plus grand que 10
-    if (parseInt(repetition.slice(0, 2)) > 10) {
+    // Pourquoi ? plus que 10
+    if (parseInt(repetition.slice(0, repetition.length - 1)) > 10) {
       timeExercise.value = true // Définis l'affichage du temps d'exercice
     }
     return "Tiens pendant " + repetition.slice(0, -1) + " " + repetition[repetition.length-1] + "econdes"
@@ -29,10 +34,21 @@ function instructionExercice(repetition) {
 
 // Lance un timer pour un exercice
 function launchExerciseTimer(repetition) {
-  duration.value = parseInt(repetition.slice(0, 2)) * 1000
+  // Attrape seulement la partie avec le nombre
+  duration.value = parseInt(repetition.slice(0, repetition.length - 1)) * 1000
   reset()
 }
 
+function next(){
+  restTime.value = true
+  duration.value = props.currentExercise[2] * 1000;
+  emit('updateSession')
+  if (!props.endSession){
+    reset()
+  }
+}
+
+/*
 // Gère le passage d'une série à une autre ou d'un exercice à un autre
 function next() {
   const ctx = props.ctx
@@ -51,12 +67,13 @@ function next() {
   }
 
   // Appelle les fonctions du composant "parent"
-  emit('manageSession')
+  emit('updateSession')
   //  Si la session n'est pas finie
   if (!ctx.endSession) {
     reset() // Lance le décompte
   }
 }
+*/
 
 /*
  TIMER
@@ -75,7 +92,7 @@ const update = () => {
   if (countdown.value <= 0) {
     countdown.value = 0
     cancelAnimationFrame(handle)
-    props.ctx.restTime = false
+    restTime.value = false
     if (timeExercise.value === true) {
       sendNotif("Your time exercise is over")
       next()
@@ -117,10 +134,10 @@ function sendNotif(message){
 
 <template>
   <div>
-    <div v-if="!props.ctx.endSession" class="card card-body blue-theme-boxes mx-5">
-      <div v-if="!props.ctx.restTime">
+    <div v-if="!props.endSession" class="card card-body blue-theme-boxes mx-5">
+      <div v-if="!restTime">
         <!--L'instruction-->
-        <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(props.ctx.actualUseRef.repetitions) }}</p>
+        <p class="card-title ubuntu-regular fs-3">{{ instructionExercice(props.currentExercise[2]) }}</p>
         <div v-if="timeExercise">
           <label class="fs-4"
           >Temps d'exercice
@@ -129,15 +146,15 @@ function sendNotif(message){
           </label>
           <div class="fs-5">{{ (countdown / 1000).toFixed(1) }}s</div>
           <button class="btn btn-primary mb-2 mt-2" type="button"
-                  @click="launchExerciseTimer(props.ctx.actualUseRef.repetitions)">Lancer
+                  @click="launchExerciseTimer(props.currentExercise[2])">Lancer
           </button>
         </div>
         <!--Compteur de série-->
         <p class="card-text ubuntu-light-italic fs-5">Plus que {{
-            props.ctx.actualUseRef.series - props.ctx.serie
-          }}{{ props.ctx.actualUseRef.series - props.ctx.serie === 1 ? " série" : " séries" }}</p>
+            props.currentExercise[1] - props.noSerie
+          }}{{ props.currentExercise[1] - props.noSerie === 1 ? " série" : " séries" }}</p>
         <!--Le conseil-->
-        <p class="card-text ubuntu-light-italic fs-5">{{ props.ctx.actualUseRef.conseil }}</p>
+        <p class="card-text ubuntu-light-italic fs-5">{{ props.currentExercise[4] }}</p>
         <!--Changement étape-->
         <button v-if="!timeExercise" class="btn btn-primary mt-2 fs-5 w-100" type="button" @click="next()">Suivant
         </button>

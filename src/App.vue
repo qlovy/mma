@@ -27,23 +27,28 @@ function updateDB() {
   }
 }
 
+let currentTraining = 0;
+const exercisePage = ref(false);
+
+/*
 // L'objet qui contient le contexte de fonctionnement interne
 const ctx = reactive({
-  serie: 0,
-  type: 0,
-  restTime: false,
-  endSession: false,
-  warmup: false,
-  indexExercise: 0,
-  actualUseRef: exercisesBook[0].echauffements[0],
-  help: false,
-  timeExercise: false,
+  //serie: 0,
+  //type: 0,
+  //restTime: false,
+  //endSession: false,
+  //warmup: false,
+  //indexExercise: 0,
+  //actualUseRef: exercisesBook[0].echauffements[0],
+  //help: false,
+  //timeExercise: false,
   exercisePage: false,
-  exercisesBook: exercisesBook
+  currentTraining: 0
 })
+*/
 
 let exerciseArea = ref(true)
-
+/*
 // Gère l'assignation de la valeur actuelle de référence
 function manageActualUseRef() {
   // Si l'échauffement est activé
@@ -64,14 +69,14 @@ function manageActualUseRef() {
     }
   }
 }
-
+*/
 // Gère le choix de l'exercice
 function messageNew(index) {
-  ctx.type = index  // Défini le type en fonction de l'exercice choisi
-  // Initialise l'échauffement
-  ctx.exercisePage = true
-  ctx.warmup = true
-  manageActualUseRef()
+  //ctx.type = index  // Défini le type en fonction de l'exercice choisi
+  exercisePage.value = true
+  currentTraining = exercisesBook[index]
+  //ctx.warmup = true
+  //manageActualUseRef();
 }
 
 // Demande la permission d'envoyé des notifications
@@ -117,12 +122,11 @@ function resetDefaultProgramme() {
     <!--La partie Exercices-->
     <div v-if="exerciseArea">
       <!--La liste des exercices possibles-->
-      <exerciseList v-if="!ctx.exercisePage" :array="exercisesBook" @func="messageNew" class="overflow-auto"/>
+      <exerciseList v-if="!exercisePage" :array="exercisesBook" @func="messageNew" class="overflow-auto"/>
 
       <!--La page d'utlistation des exercices-->
       <exerciseDetails v-else id="exerciseDetails"
-                       :ctx="ctx"
-                       @manage-actual-use-ref="manageActualUseRef"/>
+                       :exercisePage="exercisePage" :currentTraining="currentTraining"/>
     </div>
 
     <!--La partie Réglages-->
@@ -155,7 +159,7 @@ function resetDefaultProgramme() {
 
     <!--Le menu pour basculer entre la liste d'exercice ou alors les paramètres-->
     <!--Utilisation table cells pour placer les icones de manière simple-->
-    <table id="menu" v-if="!ctx.exercisePage">
+    <table id="menu" v-if="!exercisePage">
       <tbody>
       <tr>
         <td class="align-middle" @click="exerciseArea = true">

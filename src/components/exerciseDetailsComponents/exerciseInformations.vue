@@ -1,30 +1,28 @@
 <script setup>
 const props = defineProps({
-  ctx: Object
+  data: Array
 })
 
 // Définis les informations à afficher en dessous du nom de l'exercice
 function infoExercise(repetition, series, timeToRest) {
-  // Change l'orthorgraphe en fonction du nombre a affiché
-  let typo_serie = (series === 1 ? " serie" : " series")
-  let typo_seconde = (timeToRest === 1 ? " seconde" : " secondes")
+  // Change l'orthographe en fonction du nombre a affiché
+  let typoSerie = (series === 1 ? " serie" : " series")
+  let typoSeconde = (timeToRest === 1 ? " seconde" : " secondes")
   // Si repetition est une chaîne de caractère
   if (typeof repetition === "string") {
-    return repetition + " x " + series + typo_serie + ", " + timeToRest + typo_seconde
+    return repetition + " x " + series + typoSerie + ", " + timeToRest + typoSeconde
   } else {
-    return repetition + " reps x " + series + typo_serie + ", " + timeToRest + typo_seconde
+    return repetition + " reps x " + series + typoSerie + ", " + timeToRest + typoSeconde
   }
 }
 </script>
 
 <template>
   <div>
-    <h5 class="card-title ubuntu-regular fs-3">{{
-        props.ctx.actualUseRef.nom
-      }}{{ props.ctx.exercisesBook[props.ctx.type].alterne && !props.ctx.warmup ? " en alternance" : "" }}</h5>
+    <h5 class="card-title ubuntu-regular fs-3">{{ props.data[0] }}</h5>
     <p class="card-text ubuntu-light-italic fs-5">
       {{
-        infoExercise(props.ctx.actualUseRef.repetitions, props.ctx.actualUseRef.series, props.ctx.actualUseRef.recuperation)
+        infoExercise(props.data[2], props.data[1], props.data[3])
       }}</p>
   </div>
 </template>
