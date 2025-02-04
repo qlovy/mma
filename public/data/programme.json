@@ -1,0 +1,72 @@
+[
+  {
+    "nom": "Poussée",
+    "jour": "Mardi",
+    "exercices": [
+      ["Tourner les poignets", 1, "15s", 1, "Ne pas aller trop fort. Sentir que ça chauffe."],
+      ["Assouplissements des poignets", 1, "15s", 1, "Les mains au sol faire des cercles avec les bras, changer la position des mains."],
+      ["Tourner les coudes", 1, "30s", 1, "Faire des cercles avec les bras."],
+      ["Tourner les épaules", 1, "30s", 1, "Faire des grands cercles en avant et en arrière. Aller doucement."],
+      ["Handstand", 4, 2, 60, "Appuyer contre un mur, les mains à un pied par rapport au mur. Tenir l'équilibre."],
+      ["The Planche", 4, "25s", 30, "Position pseudo pompes. Pas de douleur sur les coudes."],
+      ["Pompe à un bras", 4, 5, 60, "Variations avec moins de poids, ex: pompes archers"],
+      ["Biceps curl", 4, 7, 30, "Sous la table. Coude presque déplié puis monter la tête au dessus de la table."],
+      ["Pompe triceps", 4, 10, 30, "Bras tendu mains sur la table puis on descend la tête sous la table."],
+      ["Pompe avant-bras", 4, 10, 60, "Contre un mur, soulevé les poignets en faisant levier avec les doigts."],
+      ["Planche inversée", 1, "30s", 1, "Faire un sorte de pont."],
+      ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
+    ]
+  },
+  {
+    "nom": "Jambes",
+    "jour": "Jeudi",
+    "exercices": [
+      ["Corde à sauter", 1, "300s", 1, "Faire ou simuler de la corde à sauter."],
+      ["Gainage pont", 2, "30s", 1, "Sur le dos, les genoux fléchis, lever le tout le corps sauf la tête, tendre une jambe, les cuisses sont à la même hauteur."],
+      ["Chaise sur une jambe", 2, "30s", 1, "En position de chaise, on tend une jambe devant soit, les cuisses sont à la même hauteur."],
+      ["Soulever de terre", 2, 10, 1, "Debout, on met les poids sur une jambe, on se penche en avant en levant la jambe arrière et le bras opposé."],
+      ["Montée de chaise en step up", 2, 10, 1, "Un pied sur un support surélevé, poussée qu'avec le pied qui est sur le support jusqu'à être debout."],
+      ["Ischio curl", 1, 10, 1, "Sur le dos, les pieds sur un coussin, tirer le coussin et pousser le coussin."],
+      ["Pompe à un bras", 4, 5, 60, "Variations avec moins de poids, ex: contre un mur, à genoux, ... Pour chaque bras."],
+      ["Pistol squat", 2, 10, 1, "Sur une jambe, monter et descendre."],
+      ["Extension mollet", 2, 15, 1, "Mettre le bout du pied sur un support surélevé, descendre et monter, contraction maximal du mollet."],
+      ["Fentes bulgar", 2, 15, 1, "Un pied en arrière sur un support surélevé, descendre et monter, le genoux ne doit pas toucher le sol."],
+      ["Saut sur une jambe", 2, 10, 1, "Saut sur une jambe, soit avant-arrière soit gauche-droite."],
+      ["Corde à sauter", 2, "180s", 1, "Faire ou simuler de la corde à sauter."],
+      ["Quadriceps", 2, "30s", 1, "Debout, tirer une jambe vers l'arrière, sentir l'étirement."],
+      ["Toucher d'orteils", 1, "30s", 1, "Toucher ses orteils sans plier les genoux."],
+      ["Mollets", 2, "30s", 1, "Contre un mur, une jambe en avant et l'autre en arrière, talon au sol."]
+    ]
+  },
+  {
+    "nom": "Tirage, avec anneaux",
+    "jour": "Samedi",
+    "exercices": [
+      ["Tourner les poignets", 1, "15s", 1, "Ne pas aller trop fort. Sentir que ça chauffe."],
+      ["Tourner les coudes", 1, "30s", 1, "Faire des cercles avec les bras."],
+      ["Tourner les épaules", 1, "30s", 1, "Faire des grands cercles en avant et en arrière. Aller doucement."],
+      ["Hanging", 1, "60s", 1, "Se suspendre en position classique."],
+      ["Traction", 5, 6, 60, "Engager le dos, monter le plus droit possible, le menton par dessus les anneaux. Si à l'aise en prise classique, essayer en false grip."],
+      ["Handstand", 4, 1, 30, "Appuyer contre un mur, les mains à un pied par rapport au mur. Tenir l'équilibre."],
+      ["The Planche", 4, "25s", 30, "Position pseudo pompes. Pas de douleur sur les coudes."],
+      ["Planche inversée", 1, "30s", 1, "Faire un sorte de pont."],
+      ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
+    ]
+  },
+  {
+    "nom": "Tirage, sans anneaux",
+    "jour": "Samedi",
+    "exercices": [
+      ["Tourner les poignets", 1, "15s", 1, "Ne pas aller trop fort. Sentir que ça chauffe."],
+      ["Tourner les coudes", 1, "30s", 1, "Faire des cercles avec les bras."],
+      ["Tourner les épaules", 1, "30s", 1, "Faire des grands cercles en avant et en arrière. Aller doucement."],
+      ["Hanging", 1, "60s", 1, "Se suspendre en position classique."],
+      ["Traction", 4, 6, 30, "Engager le dos, monter le plus droit possible, le menton par dessus les anneaux. Si à l'aise en prise classique, essayer en false grip."],
+      ["Front lever tuck", 4, 1, 30, "Bien engager le dos et les abdos, se filmer pour corriger l'exécution."],
+      ["Dips et tirage horizontal", 4, 6, 60, "Faire des dips avec les coudes juste en dessous de l'équerre puis enchaîner avec du tirage horizontal."],
+      ["Pompe triceps", 4, 10, 30, "Bras tendu mains sur la table puis on descend la tête sous la table."],
+      ["Planche inversée", 1, "30s", 1, "Faire un sorte de pont."],
+      ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
+    ]
+  }
+]
