@@ -6,20 +6,28 @@ import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
 // Le programme par défaut
+//const defaultProgramme = require("/public/data/programme_03_02_2025.json")
 const defaultProgramme = require("/public/data/programme.json")
 let exercisesBook = defaultProgramme
 
+// TODO: Fix time repetitions more 60s (like 300s)
+
+/*
+* TODO: Refaire tout le système avec la nouvelle structure de donnée (manageActualUseRef et manageSession vont disparaître)
+* */
+
 // Actualise le livre d'exercices
 function updateDB() {
-  // Si le local storage contient un programme alors on l'utilise.
+  // Si l'utilisateur a chargé son programme
   if (localStorage.getItem("data") != null) {
     exercisesBook = JSON.parse(localStorage.getItem("data"))
+  // Sinon, utilisation de celui par défaut.
   } else {
     exercisesBook = defaultProgramme
   }
 }
 
-// L'object qui contient le contexte de fonctionnement interne
+// L'objet qui contient le contexte de fonctionnement interne
 const ctx = reactive({
   serie: 0,
   type: 0,
