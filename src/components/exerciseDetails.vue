@@ -19,8 +19,8 @@ const props = defineProps({
 
 let noExercise = 0;
 let noSerie = 0;
-const endSession = ref(false);
-let currentExercise = props.currentTraining.exercices[noExercise];
+const endSession = ref(false)
+const currentExercise = ref(props.currentTraining.exercices[noExercise])
 
 function init() {
   noExercise = 0;
@@ -37,15 +37,17 @@ function init() {
 }
 
 // Gestion du déroulement de la session d'un jour
-function updateSession(){
+function updateSession() {
   noSerie++
-  if (noSerie === props.currentTraining.exercices[noExercise]){
+  if (noSerie === props.currentTraining.exercices[noExercise][1]) {
     noSerie = 0
-    if (noExercise === props.currentTraining.exercices.length - 1){
+    if (noExercise === props.currentTraining.exercices.length - 1) {
       endSession.value = true
-    }else{
+    } else {
       noExercise++
     }
+    // Change the current exercise
+    currentExercise.value = props.currentTraining.exercices[noExercise]
   }
 }
 
@@ -124,7 +126,7 @@ function skipExercise() {
       </div>
       <!--Les informations générales de l'exercice-->
       <exerciseInformation v-else :data="currentExercise"
-                            class="card-body"/>
+                           class="card-body"/>
     </div>
 
     <!--Bouton qui débute la session, affiche la section collapse-->
@@ -135,8 +137,9 @@ function skipExercise() {
     </button>
 
     <!--Les instructions ou informations détaillées de l'exercice-->
-    <exerciseInstructions id="instructions" :currentExercise="currentExercise" :endSession="endSession" :noSerie="noSerie"
-                           class="collapse" @update-session="updateSession"/>
+    <exerciseInstructions id="instructions" :currentExercise="currentExercise" :endSession="endSession"
+                          :noSerie="noSerie"
+                          class="collapse" @update-session="updateSession"/>
 
     <!--La page d'aide-->
     <!--<exerciseHelp @skip-exercise="skipExercise"/>-->

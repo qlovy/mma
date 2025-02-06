@@ -41,7 +41,7 @@ function launchExerciseTimer(repetition) {
 
 function next(){
   restTime.value = true
-  duration.value = props.currentExercise[2] * 1000;
+  duration.value = props.currentExercise[3] * 1000
   emit('updateSession')
   if (!props.endSession){
     reset()
