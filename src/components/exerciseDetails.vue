@@ -22,6 +22,9 @@ let noSerie = 0;
 const endSession = ref(false)
 const currentExercise = ref(props.currentTraining.exercices[noExercise])
 
+// Evénements externes
+const emit = defineEmits(['close'])
+
 function init() {
   noExercise = 0;
   noSerie = 0;
@@ -113,7 +116,7 @@ function skipExercise() {
   <div style="background-color: #15baba;">
     <!--Bouton pour fermer la page-->
     <button aria-label="Close" class="btn-close mt-3 ms-3" type="button"
-            @click="props.exercisePage = false"></button>
+            @click="emit('close')"></button>
 
     <!--Titre de l'entrainement-->
     <h1 class="ubuntu-medium fs-1">{{ props.currentTraining.nom }}</h1>

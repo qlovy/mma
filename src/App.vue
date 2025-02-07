@@ -79,6 +79,10 @@ function messageNew(index) {
   //manageActualUseRef();
 }
 
+function closeExercisePage(){
+  exercisePage.value = false;
+}
+
 // Demande la permission d'envoyé des notifications
 Notification.requestPermission().then();
 
@@ -126,7 +130,7 @@ function resetDefaultProgramme() {
 
       <!--La page d'utlistation des exercices-->
       <exerciseDetails v-else id="exerciseDetails"
-                       :exercisePage="exercisePage" :currentTraining="currentTraining"/>
+                       :currentTraining="currentTraining" @close="closeExercisePage"/>
     </div>
 
     <!--La partie Réglages-->
