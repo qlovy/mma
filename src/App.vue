@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref} from 'vue'
+import {ref} from 'vue'
 
 // Les composants
 import exerciseList from './components/exerciseList.vue'
