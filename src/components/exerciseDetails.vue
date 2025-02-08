@@ -17,8 +17,8 @@ const props = defineProps({
 //const emit = defineEmits(['manageActualUseRef'])
 //let n = 0   // Relatif à l'alternance d'exercice
 
-let noExercise = 0;
-let noSerie = 0;
+let noExercise = 0
+const noSerie = ref(0)
 const endSession = ref(false)
 const currentExercise = ref(props.currentTraining.exercices[noExercise])
 
@@ -26,9 +26,9 @@ const currentExercise = ref(props.currentTraining.exercices[noExercise])
 const emit = defineEmits(['close'])
 
 function init() {
-  noExercise = 0;
-  noSerie = 0;
-  endSession.value = false;
+  noExercise = 0
+  noSerie.value = 0
+  endSession.value = false
   //const ctx = props.ctx
   // Initialise le début d'une session
   //ctx.endSession = false
@@ -41,17 +41,21 @@ function init() {
 
 // Gestion du déroulement de la session d'un jour
 function updateSession() {
-  noSerie++
-  if (noSerie === props.currentTraining.exercices[noExercise][1]) {
-    noSerie = 0
+  noSerie.value++
+  if (noSerie.value === props.currentTraining.exercices[noExercise][1]) {
+    noSerie.value = 0
     if (noExercise === props.currentTraining.exercices.length - 1) {
       endSession.value = true
     } else {
       noExercise++
     }
-    // Change the current exercise
     currentExercise.value = props.currentTraining.exercices[noExercise]
   }
+}
+
+function skipExercise(){
+  noSerie.value = props.currentTraining.exercices[noExercise][1] - 1
+  updateSession()
 }
 
 /*
@@ -145,6 +149,6 @@ function skipExercise() {
                           class="collapse" @update-session="updateSession"/>
 
     <!--La page d'aide-->
-    <!--<exerciseHelp @skip-exercise="skipExercise"/>-->
+    <exerciseHelp @skip-exercise="skipExercise"/>
   </div>
 </template>
