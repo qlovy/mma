@@ -17,6 +17,8 @@ let noExercise = 0
 const noSerie = ref(0)
 const endSession = ref(false)
 const currentExercise = ref(props.currentTraining.exercices[noExercise])
+const noMaxExercise = props.currentTraining.exercices.length - 1
+const noMaxSerie = props.currentTraining.exercices[0][0]
 
 // Evénements externes
 const emit = defineEmits(['close'])
@@ -30,18 +32,31 @@ function init() {
 
 // Gestion du déroulement de la séance
 function updateSession() {
-  noSerie.value++ // Compatge du nombre de série effectuée
-  // Si le nombre de série effectuée est égal au nombre de série à effectuer
-  if (noSerie.value === props.currentTraining.exercices[noExercise][1]) {
-    noSerie.value = 0  // Réinitialisation du compteur
-    // Si le nombre d'exercice effectués est égal au nombre d'exercices à effectuer
-    if (noExercise === props.currentTraining.exercices.length - 1) {
-      endSession.value = true // La séance est terminée
-    } else {
-      noExercise++ // Comptage du nombre d'exercice effectué
+  // Si la séance est de type "circuit"
+  if (props.currentTraining.type === "circuit"){
+    noExercise++
+    if (noExercise === noMaxExercise){
+      noExercise = 0
+      if (noSerie === noMaxSerie){
+        endSession.value = true
+      }else{
+        noSerie.value++
+      }
     }
-    currentExercise.value = props.currentTraining.exercices[noExercise]  // Actualisation de l'exercice actuel
+  }else{
+    noSerie.value++ // Compatge du nombre de série effectuée
+    // Si le nombre de série effectuée est égal au nombre de série à effectuer
+    if (noSerie.value === currentExercise.value[1]) {
+      noSerie.value = 0  // Réinitialisation du compteur
+      // Si le nombre d'exercice effectués est égal au nombre d'exercices à effectuer
+      if (noExercise === noMaxExercise) {
+        endSession.value = true // La séance est terminée
+      } else {
+        noExercise++ // Comptage du nombre d'exercice effectué
+      }
+    }
   }
+  currentExercise.value = props.currentTraining.exercices[noExercise]  // Actualisation de l'exercice actuel
 }
 
 // Gestion du saut d'exercice

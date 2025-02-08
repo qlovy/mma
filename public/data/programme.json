@@ -15,7 +15,8 @@
       ["Pompe avant-bras", 4, 10, 60, "Contre un mur, soulevé les poignets en faisant levier avec les doigts."],
       ["Planche inversée", 1, "30s", 1, "Faire un sorte de pont."],
       ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
-    ]
+    ],
+    "type": ""
   },
   {
     "nom": "Jambes",
@@ -36,7 +37,8 @@
       ["Quadriceps", 2, "30s", 1, "Debout, tirer une jambe vers l'arrière, sentir l'étirement."],
       ["Toucher d'orteils", 1, "30s", 1, "Toucher ses orteils sans plier les genoux."],
       ["Mollets", 2, "30s", 1, "Contre un mur, une jambe en avant et l'autre en arrière, talon au sol."]
-    ]
+    ],
+    "type": ""
   },
   {
     "nom": "Tirage, avec anneaux",
@@ -51,7 +53,8 @@
       ["The Planche", 4, "25s", 30, "Position pseudo pompes. Pas de douleur sur les coudes."],
       ["Planche inversée", 1, "30s", 1, "Faire un sorte de pont."],
       ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
-    ]
+    ],
+    "type": ""
   },
   {
     "nom": "Tirage, sans anneaux",
@@ -67,6 +70,7 @@
       ["Pompe triceps", 4, 10, 30, "Bras tendu mains sur la table puis on descend la tête sous la table."],
       ["Planche inversée", 1, "30s", 1, "Faire un sorte de pont."],
       ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
-    ]
+    ],
+    "type": "circuit"
   }
 ]
