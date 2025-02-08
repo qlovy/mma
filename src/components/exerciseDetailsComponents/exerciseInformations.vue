@@ -10,9 +10,9 @@ function infoExercise(repetition, series, timeToRest) {
   let typoSeconde = (timeToRest === 1 ? " seconde" : " secondes")
   // Si repetition est une chaîne de caractère
   if (typeof repetition === "string") {
-    return repetition + " x " + series + typoSerie + ", " + timeToRest + typoSeconde
+    return series + typoSerie + " x " + repetition + ", " + timeToRest + typoSeconde
   } else {
-    return repetition + " reps x " + series + typoSerie + ", " + timeToRest + typoSeconde
+    return series + typoSerie + " x " + repetition + " reps, " + timeToRest + typoSeconde
   }
 }
 </script>
@@ -20,9 +20,6 @@ function infoExercise(repetition, series, timeToRest) {
 <template>
   <div>
     <h5 class="card-title ubuntu-regular fs-3">{{ props.data[0] }}</h5>
-    <p class="card-text ubuntu-light-italic fs-5">
-      {{
-        infoExercise(props.data[2], props.data[1], props.data[3])
-      }}</p>
+    <p class="card-text ubuntu-light-italic fs-5">{{ infoExercise(props.data[2], props.data[1], props.data[3]) }}</p>
   </div>
 </template>
