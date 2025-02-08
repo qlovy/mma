@@ -1,31 +1,27 @@
 <script setup>
 import {computed, onUnmounted, ref} from 'vue'
 
+// Les variables communes
 const props = defineProps({
   currentExercise: Array,
   endSession: Boolean,
   noSerie: Number
 })
 
-const restTime = ref(false);
-
-// Appel une fonction extérieure
+// Permet l'appel d'une fonction extérieure
 const emit = defineEmits(['updateSession'])
 
-// Variables spécifiques au bloc
+// Variables locales
 const timeExercise = ref(false)
 const audio = new Audio(require("/public/boxingBell.mp3"))
+const restTime = ref(false)
 
 // Définis les instructions à afficher
 function instructionExercice(repetition) {
-  // Si le paramètre repetition contient une chaîne de caractère
+  // Si le paramètre "repetition" contient une chaîne de caractère
   if (typeof repetition === "string") {
-    // Le chiffre contenu dans la chaine de caractère est plus grand que 10
-    // Pourquoi ? plus que 10
-    if (parseInt(repetition.slice(0, repetition.length - 1)) > 10) {
-      timeExercise.value = true // Définis l'affichage du temps d'exercice
-    }
-    return "Tiens pendant " + repetition.slice(0, -1) + " " + repetition[repetition.length-1] + "econdes"
+    timeExercise.value = true // Définis l'affichage du temps d'exercice
+    return "Tiens pendant " + repetition.slice(0, -1) + " " + repetition[repetition.length - 1] + "econdes"
   } else {
     timeExercise.value = false  // Fait disparaître l'affichage du temps d'exercice
     return "Fait " + repetition + " répétions"
@@ -34,46 +30,22 @@ function instructionExercice(repetition) {
 
 // Lance un timer pour un exercice
 function launchExerciseTimer(repetition) {
-  // Attrape seulement la partie avec le nombre
+  // Attrape seulement la partie avec le nombre, ex: "30s" => 30
   duration.value = parseInt(repetition.slice(0, repetition.length - 1)) * 1000
   reset()
 }
 
-function next(){
-  restTime.value = true
-  duration.value = props.currentExercise[3] * 1000
-  emit('updateSession')
-  if (!props.endSession){
+// A chaque fin de série
+function next() {
+  restTime.value = true // Activation du temps de repos
+  duration.value = props.currentExercise[3] * 1000 // Définition du temps de repos
+  emit('updateSession') // Appel de la fonction externe
+  // Si on est pas à la fin de la session
+  if (!props.endSession) {
+    // Début du temps de repos
     reset()
   }
 }
-
-/*
-// Gère le passage d'une série à une autre ou d'un exercice à un autre
-function next() {
-  const ctx = props.ctx
-  ctx.restTime = true // Définis l'affichage du timer
-
-  // Définis le temps de repos
-  // Si l'échauffement est actif
-  if (ctx.warmup) {
-    duration.value = ctx.exercisesBook[ctx.type].echauffements[ctx.indexExercise].recuperation * 1000
-    // Si on a une option d'alternance et que le nombre de séries est paire
-  } else if (ctx.exercisesBook[ctx.type].alterne && ctx.serie % 2 === 0) {
-    // Si l'option d'alternance est activée et qu'on a complété une série
-    duration.value = ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].recuperation * 500  // le temps est réduit de moitié
-  } else {
-    duration.value = ctx.exercisesBook[ctx.type].exercices[ctx.indexExercise].recuperation * 1000
-  }
-
-  // Appelle les fonctions du composant "parent"
-  emit('updateSession')
-  //  Si la session n'est pas finie
-  if (!ctx.endSession) {
-    reset() // Lance le décompte
-  }
-}
-*/
 
 /*
  TIMER
@@ -97,7 +69,7 @@ const update = () => {
       sendNotif("Your time exercise is over")
       next()
       timeExercise.value = false
-    }else{
+    } else {
       sendNotif("Your rest time is over")
     }
     audio.play()
@@ -122,7 +94,7 @@ onUnmounted(() => {
   cancelAnimationFrame(handle)
 })
 
-function sendNotif(message){
+function sendNotif(message) {
   const title = "MMA notification service"
   const options = {
     body: message,
