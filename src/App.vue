@@ -6,103 +6,59 @@ import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
 // Le programme par défaut
-//const defaultProgramme = require("/public/data/programme_03_02_2025.json")
 const defaultProgramme = require("/public/data/programme.json")
 let exercisesBook = defaultProgramme
-
-// TODO: Fix time repetitions more 60s (like 300s)
-
-/*
-* TODO: Refaire tout le système avec la nouvelle structure de donnée (manageActualUseRef et manageSession vont disparaître)
-* */
 
 // Actualise le livre d'exercices
 function updateDB() {
   // Si l'utilisateur a chargé son programme
   if (localStorage.getItem("data") != null) {
     exercisesBook = JSON.parse(localStorage.getItem("data"))
-  // Sinon, utilisation de celui par défaut.
+    // Sinon, utilisation de celui par défaut.
   } else {
     exercisesBook = defaultProgramme
   }
 }
 
 let currentTraining = 0;
+// Utilisation de ref() pour permettre une synchronisation de la variable entre les différents composants
 const exercisePage = ref(false);
 
-/*
-// L'objet qui contient le contexte de fonctionnement interne
-const ctx = reactive({
-  //serie: 0,
-  //type: 0,
-  //restTime: false,
-  //endSession: false,
-  //warmup: false,
-  //indexExercise: 0,
-  //actualUseRef: exercisesBook[0].echauffements[0],
-  //help: false,
-  //timeExercise: false,
-  exercisePage: false,
-  currentTraining: 0
-})
-*/
-
 let exerciseArea = ref(true)
-/*
-// Gère l'assignation de la valeur actuelle de référence
-function manageActualUseRef() {
-  // Si l'échauffement est activé
-  if (ctx.warmup) {
-    // Permet d'éviter une "TypeError" si une option de l'objet n'existe pas.
-    try {
-      // S'il n'y a pas d'erreur
-      ctx.actualUseRef = exercisesBook[ctx.type].echauffements[ctx.indexExercise] // La page de l'échauffement
-    } catch (TypeError) {
-      // En cas de "TypeError" (due à une valeur undefined)
-      ctx.actualUseRef = exercisesBook[0].echauffements[0] // Valeur tampon
-    }
-  } else {
-    try {
-      ctx.actualUseRef = exercisesBook[ctx.type].exercices[ctx.indexExercise] // La page de l'exercice
-    } catch (TypeError) {
-      ctx.actualUseRef = exercisesBook[0].echauffements[0]
-    }
-  }
-}
-*/
+
 // Gère le choix de l'exercice
 function messageNew(index) {
-  //ctx.type = index  // Défini le type en fonction de l'exercice choisi
-  exercisePage.value = true
-  currentTraining = exercisesBook[index]
-  //ctx.warmup = true
-  //manageActualUseRef();
+  exercisePage.value = true   // Active la page d'exercice
+  currentTraining = exercisesBook[index]  // Stockage de l'entrainement choisi
 }
 
-function closeExercisePage(){
-  exercisePage.value = false;
+// Pour fermer la page de l'exercice
+function closeExercisePage() {
+  exercisePage.value = false
 }
 
-// Demande la permission d'envoyé des notifications
-Notification.requestPermission().then();
+// Demande la permission d'envoyer des notifications
+Notification.requestPermission().then()
 
-// Gestion du fichier JSON
+// Gestion du fichier JSON, pour l'ajout d'un fichier personnel à l'utilisateur
 function handleJSON(event) {
-  const file = event.target.files[0];
+  const file = event.target.files[0]  // Chargement du fichier .json sélectionné par l'utilisateur
+  // S'il contient quelque chose
   if (file) {
-    const reader = new FileReader();
+    const reader = new FileReader()  // Création d'un lecteur
     reader.onload = function (e) {
-      const jsonData = e.target.result;
+      const jsonData = e.target.result  // Stockage du contenu du fichier
       try {
-        localStorage.setItem("data", jsonData)
+        localStorage.setItem("data", jsonData)  // Stockage dans le stockage du navigateur (spécifique à l'utilisateur et à l'appareil)
         updateDB()
+        // En cas de problème
       } catch (error) {
-        console.error('Erreur de parsing du JSON:', error);
+        console.error('Erreur de parsing du JSON:', error)
       }
-    };
-    reader.readAsText(file);
+    }
+    reader.readAsText(file)
   } else {
-    console.log('Aucun fichier sélectionné');
+    console.log('Aucun fichier sélectionné')
   }
 }
 
@@ -128,7 +84,7 @@ function resetDefaultProgramme() {
       <!--La liste des exercices possibles-->
       <exerciseList v-if="!exercisePage" :array="exercisesBook" @func="messageNew" class="overflow-auto"/>
 
-      <!--La page d'utlistation des exercices-->
+      <!--La page de l'exercice choisi-->
       <exerciseDetails v-else id="exerciseDetails"
                        :currentTraining="currentTraining" @close="closeExercisePage"/>
     </div>
@@ -138,21 +94,23 @@ function resetDefaultProgramme() {
       <h1 class="ubuntu-medium mt-3 d-flex justify-content-center display-2">Réglages</h1>
       <!--Tous les réglages-->
       <div class="ms-2">
+        <!--Gestion de l'apparence-->
         <h3 class="ubuntu-regular mt-3">Apparence</h3>
         <p class="ubuntu-light-italic">Faire choisir l'utilisateur entre du blanc , couleur (bleu), noir</p>
-
+        <!--Les téléchargements pour créer le fichier JSON de l'utilisateur-->
         <h3 class="ubuntu-regular mt-3">Télécharge le modèle JSON</h3>
         <p class="ubuntu-light">Pour pouvoir configurer des exercices, il te faut remplir ce fichier JSON.</p>
         <a href="./data/model.json" class="me-4" download="model">Le modèle</a>
         <a href="./data/tutorial.md" download="tuto">Le tutoriel</a>
-
+        <!--L'importation du fichier JSON-->
         <h3 class="ubuntu-regular mt-3">Importe ton fichier JSON</h3>
         <p class="ubuntu-light">Pour configurer tes exercices, tu peux importer ton fichier .json en le séléctionnant
           sur ton appareil.<br>Attention, ton fichier .json doit être du même format que celui que tu peux télécharger
           (ci-dessus)!</p>
-        <!--Import du fichier JSON-->
+        <!--La fenêtre de dialogue pour importer le fichier JSON-->
         <input type="file" accept=".json" placeholder="hello" @change="handleJSON">
 
+        <!--Pour retourner au programme par défaut-->
         <h3 class="ubuntu-regular mt-3">Retour au programme par défaut</h3>
         <p class="ubuntu-light">En cliquant sur le bouton ci-dessous, tu retourneras au programme par défaut.</p>
         <button class="btn btn-primary" @click="resetDefaultProgramme">Retour au programme par défaut</button>
