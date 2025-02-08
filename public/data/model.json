@@ -1,46 +1,18 @@
 [
   {
     "nom": "nom de l'exercice",
-    "jour": "le ou les jours où il est executé",
-    "echauffements": [
-      {
-        "nom": " nom de l'exercice",
-        "series": 1,
-        "repetitions": "30s",
-        "recuperation": 1,
-        "conseil": "Petit conseil pour l'exercice"
-      }
-    ],
+    "jour": "jour de l'exercice",
     "exercices": [
-      {
-        "nom": " nom de l'exercice",
-        "series": 1,
-        "repetitions": 5,
-        "recuperation": "60s",
-        "conseil": "Petit conseil pour l'exercice"
-      }
+      ["nom exercice 1", 1, "15s", 1, "Conseil pour l'exercice"],
+      ["nom exercice 2", 1, 5, 1, "Conseil pour l'exercice"]
     ]
   },
   {
     "nom": "nom de l'exercice",
-    "jour": "le ou les jours où il est executé",
-    "echauffements": [
-      {
-        "nom": " nom de l'exercice",
-        "series": 1,
-        "repetitions": "30s",
-        "recuperation": 1,
-        "conseil": "Petit conseil pour l'exercice"
-      }
-    ],
+    "jour": "jour de l'exercice",
     "exercices": [
-      {
-        "nom": " nom de l'exercice",
-        "series": 1,
-        "repetitions": 5,
-        "recuperation": "60s",
-        "conseil": "Petit conseil pour l'exercice"
-      }
+      ["nom exercice 1", 1, "15s", 1, "Conseil pour l'exercice"],
+      ["nom exercice 2", 1, 5, 1, "Conseil pour l'exercice"]
     ]
   }
 ]
