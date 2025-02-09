@@ -18,7 +18,28 @@ const noSerie = ref(0)
 const endSession = ref(false)
 const currentExercise = ref(props.currentTraining.exercices[noExercise])
 const noMaxExercise = props.currentTraining.exercices.length - 1
-const noMaxSerie = props.currentTraining.exercices[0][0]
+let noMaxSerie = 0
+let arr =  [0, 0]
+
+if (props.currentTraining.type === "circuit"){
+  // Trouver le no max de série
+  for (let i=0; i<props.currentTraining.exercices.length - 1;i++){
+    if (props.currentTraining.exercices[i][1] > noMaxSerie){
+      noMaxSerie = props.currentTraining.exercices[i][1]
+    }
+  }
+
+  // Trouver la plage d'index pour le circuit
+  for (let i=0; i<props.currentTraining.exercices.length-1; i++){
+    if (props.currentTraining.exercices[i][1] === noMaxSerie){
+      if (arr[0] === 0){
+        arr[0] = i
+      }else{
+        arr[1] = i
+      }
+    }
+  }
+}
 
 // Evénements externes
 const emit = defineEmits(['close'])
@@ -32,15 +53,18 @@ function init() {
 
 // Gestion du déroulement de la séance
 function updateSession() {
-  // Si la séance est de type "circuit"
-  if (props.currentTraining.type === "circuit"){
+  // Si la séance est de type "circuit" et que l'index correspond à la plage d'exercice concerné
+  if (props.currentTraining.type === "circuit" && noExercise >= arr[0] && noExercise <= arr[1]){
     noExercise++
-    if (noExercise === noMaxExercise){
-      noExercise = 0
-      if (noSerie === noMaxSerie){
-        endSession.value = true
+    // Si on est au dernier exercice
+    if (noExercise === arr[1]){
+      // Si le nombre de série effectuée correspond au nombre de série max à faire.
+      if (noSerie.value === noMaxSerie-1){
+        noExercise++       // Passage aux étirements
+        noSerie.value = 0  // Réinitalisation des séries
       }else{
-        noSerie.value++
+        noSerie.value++      // Comptage d'une série
+        noExercise = arr[0]  // Retour au premier exercice
       }
     }
   }else{
@@ -61,7 +85,9 @@ function updateSession() {
 
 // Gestion du saut d'exercice
 function skipExercise() {
-  noSerie.value = props.currentTraining.exercices[noExercise][1] - 1  // Simule l'exécution complète de toutes les séries
+  if (props.currentTraining.type !== "circuit" && noExercise >= arr[0] && noExercise <= arr[1]){
+    noSerie.value = props.currentTraining.exercices[noExercise][1] - 1  // Simule l'exécution complète de toutes les séries
+  }
   updateSession()
 }
 </script>
