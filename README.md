@@ -37,16 +37,16 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [x] add a timer for exercise with time (more than 10 seconds)
 - [ ] change the background color on the top and bottom on iphone => looks complex
 - [x] create components to simplify the App.vue (home page, exercise page, ...)
-- [ ] make that we can skip a time recuperation / a series
+- [ ] make that we can skip a time recuperation / a series => really useful ?
 - [x] make the icon menu in color when we are on it => change the fill color, [example](https://icons.getbootstrap.com/icons/gear/)
 - [x] use local storage for storing exercises
 - [x] JSON file or text file for add new exercise of configure multiple exercise --> one the local storage is ok
 - [x] add a menu with two categories (one for exercising and the other for settings)
-- [ ] add an option to make a circuit => Modify JSON structure, manage the detection of it
-- [ ] simplify the creation of JSON file by using an interpreter like Traction, 5x6, 30s convert into the normal one. => looks for another type of config file
+- [x] add an option to make a circuit => Modify JSON structure, manage the detection of it
+- [x] simplify the creation of JSON file by using an interpreter like Traction, 5x6, 30s convert into the normal one. => looks for another type of config file
 - [x] add the stretching => Modify JSON structure, manage the detection
 
 ### Ideas
 
-- Create a tool for create sport program => this is possible by modifying the JSON file and then import it. => maybe simple with one config file ?
+- Create a tool for create sport program in the application without touching the JSON file
 
