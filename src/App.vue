@@ -9,6 +9,9 @@ import exerciseDetails from './components/exerciseDetails.vue'
 const defaultProgramme = require("/public/data/programme.json")
 let exercisesBook = defaultProgramme
 
+// Permet d'afficher le programme de l'utilisateur (stocké dans le local storage) à la place du programme par défaut
+updateDB()
+
 // Actualise le livre d'exercices
 function updateDB() {
   // Si l'utilisateur a chargé son programme
