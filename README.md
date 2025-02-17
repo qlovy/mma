@@ -48,8 +48,7 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 
 ### Fix
 
-- the user programme is not concerved when the app is close and open.
-- 
+- [x] the user programme is not concerved when the app is close and open.
 
 ### Ideas
 
