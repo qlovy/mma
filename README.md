@@ -46,6 +46,11 @@ I choose Vue.js and Bootstrap because Vue make the creation of a PWA more simple
 - [x] simplify the creation of JSON file by using an interpreter like Traction, 5x6, 30s convert into the normal one. => looks for another type of config file
 - [x] add the stretching => Modify JSON structure, manage the detection
 
+### Fix
+
+- the user programme is not concerved when the app is close and open.
+- 
+
 ### Ideas
 
 - Create a tool for create sport program in the application without touching the JSON file
