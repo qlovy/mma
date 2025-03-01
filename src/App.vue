@@ -183,7 +183,8 @@ export default {
 }
 
 div {
-  user-select: none; /* Enlève la selection du texte dû au double clique */
+  user-select: none; /* Enlève la selection du texte dû au double clique*/
+  touch-action: manipulation; /* Enlève le zoom lors d'un double touché*/
 }
 
 /*Le menu*/
