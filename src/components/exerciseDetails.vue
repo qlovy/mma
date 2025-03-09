@@ -57,10 +57,9 @@ function updateSession() {
   if (props.currentTraining.type === "circuit" && noExercise >= arr[0] && noExercise <= arr[1]){
     noExercise++
     // Si on est au dernier exercice
-    if (noExercise === arr[1]){
+    if (noExercise === arr[1] + 1){
       // Si le nombre de série effectuée correspond au nombre de série max à faire.
       if (noSerie.value === noMaxSerie-1){
-        noExercise++       // Passage aux étirements
         noSerie.value = 0  // Réinitalisation des séries
       }else{
         noSerie.value++      // Comptage d'une série
