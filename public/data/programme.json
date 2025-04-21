@@ -72,5 +72,32 @@
       ["Épaules", 2, "30s", 1, "Tendre les mains vers le plafond, tirer d'un côté, tirer de l'autre."]
     ],
     "type": "circuit"
+  },
+  {
+    "nom": "Prog1 OlFay",
+    "jour": "3x",
+    "exercices": [
+      ["A", 1, 5, 1, "p.138 Pompes mains écartées, rapide"],
+      ["Corde à sauter", 1, "60s", 1, "Sans pause"],
+      ["A", 1, 5, 1, "p.138 Pompes mains écartées, rapide"],
+      ["Corde à sauter", 1, "180s", 1, "Sans pause"],
+      ["A", 1, 5, 1, "p.138 Pompes mains écartées, rapide"],
+      ["B1", 6, 5, 25, "p.150, Dips entre deux chaises, rapide"],
+      ["A3", 6, 5, 25, "p.141, Pompes avec mains sur chaises, rapide"],
+      ["A2", 6, 5, 25, "p.140, Pompes avec pieds surélevés, rapide"],
+      ["Pause", 1, 1, 180, "Pause 3 min"],
+      ["C1", 6, 5, 25, "p.153, Traction prise suppination, rapide"],
+      ["Pause", 1, 1, 180, "Pause 3 min"],
+      ["E", 6, 5, 25, "p.163, Squat une jambe avec mur"],
+      ["Pause", 1, 1, 180, "Pause 3 min"],
+      ["F", 4, 5, 25, "p.171, Saut puis position squat"],
+      ["Pause", 1, 1, 180, "Pause 3 min"],
+      ["G", 6, 10, 25, "p.175, Sit up"],
+      ["Pause", 1, 1, 90, "Pause 3 min"],
+      ["H", 6, 5, 25, "p.176, Levé de jambe"],
+      ["Pause", 1, 1, 180, "Pause 1 min"],
+      ["K2", 3, 12, 25, "p.192, Pompes triceps contre un mur"]
+    ],
+    "type": ""
   }
 ]
