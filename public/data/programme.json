@@ -83,15 +83,15 @@
       ["Corde à sauter", 1, "180s", 1, "Sans pause"],
       ["A", 1, 5, 1, "p.138 Pompes mains écartées, rapide"],
       ["B1", 6, 5, 25, "p.150, Dips entre deux chaises, rapide"],
-      ["A3", 6, 6, 25, "p.141, Pompes avec mains sur chaises, rapide"],
-      ["A2", 6, 5, 25, "p.140, Pompes avec pieds surélevés, rapide"],
-      ["Pause", 1, 1, 180, "Pause 3 min"],
-      ["C1", 6, 5, 25, "p.153, Traction prise suppination, rapide"],
-      ["H", 6, 1, 25, "p.176, Levé de jambe"],
-      ["E", 6, 5, 25, "p.163, Squat une jambe avec mur"],
-      ["F", 4, 5, 25, "p.171, Saut puis position squat"],
+      ["A3", 6, 8, 25, "p.141, Pompes avec mains sur chaises, rapide"],
+      ["A2", 6, 6, 25, "p.140, Pompes avec pieds surélevés, rapide"],
+      ["Pause", 1, 1, 155, "Pause 3 min"],
+      ["C1", 6, 7, 25, "p.153, Traction prise suppination, rapide"],
+      ["H", 6, 4, 25, "p.176, Levé de jambe"],
+      ["E", 6, 10, 25, "p.163, Squat une jambe avec mur"],
+      ["F", 4, 10, 25, "p.171, Saut puis position squat"],
       ["G", 6, 10, 25, "p.175, Sit up"],
-      ["K2", 3, 12, 25, "p.192, Pompes triceps contre un mur"]
+      ["K2", 3, 15, 25, "p.192, Pompes triceps contre un mur"]
     ],
     "type": ""
   }
