@@ -1,14 +1,27 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 
 // Les composants
 import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
-// Le programme par défaut
-const defaultProgramme = require("/public/data/programme.json")
-let exercisesBook = defaultProgramme
+const defaultProgramme = ref(null)
 
+// Utilise le Wiki pour exporter le fichier .json en ligne pour le télécharger. Evite de mettre à jour tout le projet pour chaque modification de programme.
+onMounted(async () => {
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/wiki/qlovy/mma/programme.json') // Téléchargement du .json
+    if (!response.ok) throw new Error('Network response was not ok')
+    const data = await response.json()
+    defaultProgramme.value = data
+  } catch (error) {
+    console.error('Error loading JSON:', error)
+  }
+})
+
+// Le programme par défaut
+//const defaultProgramme = require("/public/data/programme.json")
+let exercisesBook = defaultProgramme.value
 // Permet d'afficher le programme de l'utilisateur (stocké dans le local storage) à la place du programme par défaut
 updateDB()
 
