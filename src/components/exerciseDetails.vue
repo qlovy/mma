@@ -20,6 +20,7 @@ const currentExercise = ref(props.currentTraining.exercices[noExercise])
 const noMaxExercise = props.currentTraining.exercices.length - 1
 let noMaxSerie = 0
 let arr =  [0, 0]
+const collapsed = ref(true)
 
 if (props.currentTraining.type === "circuit"){
   // Trouver le no max de série
@@ -113,7 +114,7 @@ function skipExercise() {
 
     <!--Bouton qui débute la session, affiche la section collapse-->
     <button aria-controls="instructions" aria-expanded="false" class="btn btn-primary mt-4 ms-5 fs-5 w-75 mb-4"
-            data-bs-target="#instructions" data-bs-toggle="collapse" type="button" @click="init">
+            data-bs-target="#instructions" type="button" @click="collapsed = !collapsed; init">
       Début /
       Arrêt
     </button>
@@ -121,7 +122,8 @@ function skipExercise() {
     <!--Les instructions ou informations détaillées de l'exercice, section collapse-->
     <exerciseInstructions id="instructions" :currentExercise="currentExercise" :endSession="endSession"
                           :noSerie="noSerie"
-                          class="collapse" @update-session="updateSession"/>
+                          @update-session="updateSession"
+                          v-if="!collapsed"/>
 
     <!--La page d'aide-->
     <exerciseHelp @skip-exercise="skipExercise"/>
