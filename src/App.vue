@@ -1,27 +1,38 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {onMounted, ref} from 'vue'
 
 // Les composants
 import exerciseList from './components/exerciseList.vue'
 import exerciseDetails from './components/exerciseDetails.vue'
 
-const defaultProgramme = ref(null)
+let exercisesBook = ""
 
-// Utilise le Wiki pour exporter le fichier .json en ligne pour le télécharger. Evite de mettre à jour tout le projet pour chaque modification de programme.
-onMounted(async () => {
-  try {
-    const response = await fetch('https://raw.githubusercontent.com/wiki/qlovy/mma/programme.json') // Téléchargement du .json
-    if (!response.ok) throw new Error('Network response was not ok')
-    const data = await response.json()
-    defaultProgramme.value = data
-  } catch (error) {
-    console.error('Error loading JSON:', error)
-  }
+// Variables réactives
+const data = ref(null)
+const loading = ref(true)
+
+// À la création
+onMounted( () => {
+  // Récupère le fichier JSON à l'url donnée, fonction callback, on attend sur elle
+  fetch("https://raw.githubusercontent.com/wiki/qlovy/mma/programme.json")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error ! status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(json => {
+        data.value = json
+        exercisesBook = data.value
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+      .finally(() => {
+        loading.value = false
+      })
 })
 
-// Le programme par défaut
-//const defaultProgramme = require("/public/data/programme.json")
-let exercisesBook = defaultProgramme.value
 // Permet d'afficher le programme de l'utilisateur (stocké dans le local storage) à la place du programme par défaut
 updateDB()
 
@@ -32,7 +43,7 @@ function updateDB() {
     exercisesBook = JSON.parse(localStorage.getItem("data"))
     // Sinon, utilisation de celui par défaut.
   } else {
-    exercisesBook = defaultProgramme
+    exercisesBook = data.value
   }
 }
 
@@ -93,7 +104,8 @@ function resetDefaultProgramme() {
   <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
       rel="stylesheet">
-  <div id="body">
+  <div v-if="loading"><h1>Loading...</h1></div>
+  <div id="body" v-else>
 
     <!--La partie Exercices-->
     <div v-if="exerciseArea">
